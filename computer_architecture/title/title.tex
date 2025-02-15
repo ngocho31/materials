@@ -1,0 +1,48 @@
+\begin{titlepage}
+
+\begin{center}
+
+%% Extra whitespace at the top.
+\vspace*{2\bigskipamount}
+
+%%print author name
+\begin{otherlanguage*}{vietnamese}
+\makeatletter
+{\Large\titlefont\bfseries ĐẠI HỌC QUỐC GIA TP HỒ CHÍ MINH}\\
+{\Large\titlefont\bfseries TRƯỜNG ĐẠI HỌC BÁCH KHOA}
+
+{\Large\titlefont\bfseries\@firstname\ {\titleshape\@lastname}}
+\makeatother
+\end{otherlanguage*}
+
+\vspace{4cm}
+%% Print the title.
+{\makeatletter
+\titlestyle\bfseries\LARGE\@title
+\makeatother}
+
+%% Print the optional subtitle.
+{\makeatletter
+\ifx\@subtitle\undefined\else
+    \bigskip
+    \titlefont\titleshape\Large\@subtitle
+\fi
+\makeatother}
+
+\vfill
+
+{\Large\titlefont\bfseries NHÀ XUẤT BẢN ĐẠI HỌC QUỐC GIA}\\
+{\Large\titlefont\bfseries TP HỒ CHÍ MINH - 2017}
+\end{center}
+
+\cleardoublepage
+\thispagestyle{empty}
+
+
+\clearpage
+\thispagestyle{empty}
+%% The following line is dictated by the promotieregelement.
+%\noindent Dit proefschrift is goedgekeurd door de promotor:
+
+\end{titlepage}
+

@@ -1,0 +1,136 @@
+% This is a copy version from https://github.com/thanhhungqb/thesis-template
+% Please do not modified this project, when you want to start writing, make a clone of it for your own (Please read README.md)
+
+\documentclass[12pt,a4paper,oneside]{book} % twoside for draf
+
+%\usepackage{babel}
+\usepackage[utf8]{vietnam}
+\usepackage[utf8]{inputenc}
+\usepackage[unicode]{hyperref}
+\usepackage{tipa}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{mathptmx}	% same Time New Roma
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{sty/ipa}
+%\renewcommand{\rmdefault}{phv} % Arial
+%\renewcommand{\sfdefault}{phv} % Arial
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{algorithm2e}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks=false,
+    breaklinks=true,
+    citecolor=white,
+    citebordercolor=1 1 1,
+    filebordercolor=1 1 1,
+    linkbordercolor=1 1 1,
+    menubordercolor=1 1 1,
+    urlbordercolor=1 1 1,
+}
+\usepackage{xurl}
+\usepackage{float}
+
+\usepackage{sty/bkthesis}
+
+\usepackage{graphicx}
+\usepackage{listings}
+% \graphicspath{ {image/} }
+
+\setcounter{secnumdepth}{2}
+\crname{ĐỀ CƯƠNG LUẬN VĂN THẠC SĨ}
+\ctname{XÂY DỰNG ỨNG DỤNG CHATBOT TƯ VẤN KHÁCH HÀNG SỬ DỤNG MÔ HÌNH HỌC TĂNG CƯỜNG}
+\cstuname{
+HỒ PHƯƠNG NGỌC
+}
+
+\csCouncil{NGÀNH: KHOA HỌC MÁY TÍNH}
+\csdeptcode{MÃ NGÀNH: 60.48.01.01}
+\csSupervise{PGS.TS QUẢN THÀNH THƠ}
+\cttime{2020}
+
+\thesislayout
+
+\begin{document}
+%-	Bìa cứng - màu xanh dương, chữ mạ vàng (xem mẫu đính kèm)
+%-	Trang tên (tờ lót): chất liệu giấy, nội dung giống như bìa LV
+%-	Ở gáy LV: in nhan đề LV (có thể in tóm tắt nếu nhan đề quá dài), size 15 – 17
+%-	Phiếu Nhiệm vụ LV, chấm điểm Hướng dẫn & Phản biện (đã ký): nhận từ GVHD & GVPB sau khi bảo vệ (theo lịch hẹn).
+%-	Lời cam đoan
+%-	Lời cảm ơn/ Lời ngỏ
+%-	Tóm tắt LV
+%-	Mục lục
+%-	Danh mục, bảng biểu, hình ảnh, ... (nếu có)
+%-	Nội dung LV
+%-	Danh mục TL tham khảo
+%-	Phụ lục (nếu có)
+
+\hardcover
+
+\coverpage
+
+\frontmatter
+
+
+% \begin{declaration}
+% 	Nhận diện hướng nhìn trong ảnh (Nhận diện vật thể trong ảnh) không phải là một đề tài mới nhưng vẫn là một thách thức bởi: trong các ứng dụng: việc nhận diện hướng nhìn của con người qua hình ảnh đòi hỏi kết quả chính xác cao, ở Việt Nam, hiện tại không  thực sự có nhiều nghiên cứu chuyên sâu về đề tài. Trong quá trình nghiên cứu đề tài có rất nhiều kiến thức không nằm trong chương trình giảng dạy ở bậc Đại học tuy vậy chúng tôi xin cam đoan đây là công trình nghiên cứu của riêng tôi dưới sự hướng dẫn của tiến sĩ Nguyễn Đức Dũng. Nội dung nghiên cứu và các kết quả đều là trung thực và chưa từng được công bố trước đây. Các số liệu được sử dụng cho quá trình phân tích, nhận xét được chính tôi thu thập từ nhiều nguồn khác nhau và sẽ được ghi rõ trong phần tài liệu tham khảo.
+ 	
+%  	Ngoài ra, tôi cũng có sử dụng một số nhận xét, đánh giá và số liệu của các tác giả khác, cơ quan tổ chức khác. Tất cả đều có trích dẫn và chú thích nguồn gốc.
+ 	
+%  	Nếu phát hiện có bất kì sự gian lận nào, tôi xin hoàn toàn chịu trách nhiệm về nội dung luận văn của mình. Trường đại học Bách Khoa thành phố Hồ Chí Minh không liên quan đến những vi phạm tác quyền, bản quyền do tôi gây ra trong quá trình thực hiện.
+
+% \end{declaration}
+
+% \begin{acknowledgments}
+
+% 	Để hoàn thành kì đề cương luận văn này, tôi tỏ lòng biết ơn sâu sắc đến tiến sĩ Nguyễn Đức Dũng đã hướng dẫn tận tình trong suốt quá trình nghiên cứu.
+	
+% 	Chúng tôi chân thành cám ơn quý thầy, cô trong khoa Khoa Học Và Kỹ Thuật Máy Tính, trường đại học Bách Khoa thành phố Hồ Chí Minh đã tận tình truyền đạt kiến thức trong những năm chúng tôi học tập ở trường. Với vốn kiến thức tích lũy được trong suốt quá trình học tập không chỉ là nền tảng cho quá trình nghiên cứu mà còn là hành trang để bước vào đời một cách tự tin.
+
+% 	Cuối cùng, tôi xin chúc quý thầy, cô dồi dào sức khỏe và thành công trong sự nghiệp cao quý.
+	
+% \end{acknowledgments}
+	
+% \begin{abstract}
+% 	Nội dung chính của luận văn nhằm tìm hiểu, nghiên cứu xây dựng hệ thống nhận diện hướng nhìn thông qua ảnh chụp dựa trên những công trình, công nghệ mới được nghiên cứu và phát triển trong những năm gần đây của lĩnh vực Deep Learning. Trong quá trình nghiên cứu, tôi đã  tiến hành tổng hợp, đánh giá ưu và nhược điểm của cách phương pháp, công nghệ đã và đang được nghiên cứu, sử dụng. Tiếp cận vấn đề theo nhiều hướng khác nhau, tôi thực hiện một số phương pháp sử dụng học sâu (CNN) để phát hiện hướng nhìn của con người qua hình ảnh. Bên cạnh việc hoàn thành nội dung của đề tài, nhóm chúng tôi đã nghiên cứu thêm một số phần để từ đó đặt nền móng cho các nghiên cứu sau này. Phần còn lại của luận văn tập trung vào việc đánh giá mô hình, kết quả đạt được, đồng thời phân tích ưu nhược điểm của mô hình thực hiện và thảo luận những vấn đề mà mô hình còn gặp phải. Cuối cùng, nhóm chúng tôi đề xuất hướng phát triển tiếp theo của đề tài trong tương lai.
+% \end{abstract}	
+
+
+\tableofcontents
+%\listofsymbols
+% \listoftables
+\listoffigures
+%\listofalgorithms
+
+
+\mainmatter
+
+\fancyhead{}  % Clears all page headers and footers
+%\rhead{\thepage}  % Sets the right side header to show the page number
+%\lhead{}  % Clears the left side page header
+%\fancyfoot[positions]{footer}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+\input{chapter1/chapter1-dannhap.tex}
+% \input{chapter2/chapter2-congtrinhlq.tex}
+\input{chapter3/chapter3-kienthucnentang.tex}
+\input{chapter4/chapter4-phuongphap.tex}
+\input{chapter4.5/chapter4.5-kehoach.tex}
+% \input{chapter5/chapter5-congnghe.tex}
+% \input{chapter6/chapter6-hienthuc.tex}
+% \input{chapter7/chapter7-ketquadatduoc.tex}
+% \input{chapter8/chapter8-tongket.tex}
+
+\input{references.tex}
+
+\end{document}
