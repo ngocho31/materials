@@ -1,0 +1,44 @@
+\subchapter{Building environment setup}{Objective: Build an environment to
+ compile the programs needed for embedded software systems}
+
+\section{Setup}
+
+For this lab, you need a system running Ubuntu 20.04 and at least 4 GB of RAM.
+
+Or use the docker file provided at \url{https://github.com/ngocho31/materials/blob/master/utils/docker/Dockerfile_embedded}
+
+\section{Install needed packages}
+
+Install the packages needed for this lab:
+
+Common packages:
+
+\begin{bashinput}
+$ sudo apt-get install git gitk git-email ca-certificates wget
+\end{bashinput}
+
+For compile crosstool-ng:
+
+\begin{bashinput}
+$ sudo apt-get install autoconf automake libtool flex texinfo build-essential help2man gawk unzip libtool-bin bison libncurses5-dev gettext python3
+\end{bashinput}
+
+Install kernel build dependencies:
+
+\begin{bashinput}
+$ sudo apt-get install make bc rsync device-tree-compiler libssl-dev libelf-dev swig python3-dev python3-setuptools
+\end{bashinput}
+
+\section{Using docker}
+
+Build docker:
+
+\begin{bashinput}
+$ sudo docker build -t embedded -f utils/docker/Dockerfile_embedded .
+\end{bashinput}
+
+Run docker:
+
+\begin{bashinput}
+$ sudo docker run -u $(id -u):$(id -g) -v $(pwd):/embedded -it --rm embedded
+\end{bashinput}
