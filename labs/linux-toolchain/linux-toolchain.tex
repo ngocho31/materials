@@ -1,0 +1,270 @@
+\subchapter{Building a cross-compiling toolchain}{Objective: Learn how
+  to compile your own cross-compiling toolchain for the musl C
+  library}
+
+After this lab, you will be able to:
+
+\begin{itemize}
+\item Configure the {\em crosstool-ng} tool
+\item Execute {\em crosstool-ng} and build up your own cross-compiling toolchain
+\end{itemize}
+
+\section{Setup}
+
+Go to the \code{$HOME/__SESSION_NAME__-labs/toolchain} directory.
+
+For this lab, you need a system or VM with a least 4 GB of RAM.
+
+\section{Install needed packages}
+
+Install the packages needed for this lab:
+
+\begin{bashinput}
+$ sudo apt install build-essential git autoconf bison flex texinfo help2man gawk libtool-bin libncurses5-dev unzip gettext python3
+\end{bashinput}
+
+\section{Getting Crosstool-ng}
+
+Let's download the sources of Crosstool-ng, through its git
+source repository, and switch to a commit that we have tested:
+
+\begin{bashinput}
+$ git clone https://github.com/crosstool-ng/crosstool-ng
+$ cd crosstool-ng/
+$ git checkout crosstool-ng-1.27.0
+\end{bashinput}
+
+\section{Building and installing Crosstool-ng}
+
+As we are not building Crosstool-ng from a release archive but from
+a git repository, we first need to generate a \code{configure} script and
+more generally all the generated files that are shipped in the source
+archive for a release:
+
+\begin{bashinput}
+$ ./bootstrap
+\end{bashinput}
+
+We can then either install Crosstool-ng globally on the system, or keep it
+locally in its download directory. We'll choose the latter
+solution. As documented at
+\url{https://crosstool-ng.github.io/docs/install/#hackers-way}, do:
+
+\begin{bashinput}
+$ ./configure --enable-local
+$ make
+\end{bashinput}
+
+Then you can get Crosstool-ng help by running
+
+\begin{bashinput}
+$ ./ct-ng help
+\end{bashinput}
+
+\section{Configure the toolchain to produce}
+
+A single installation of Crosstool-ng allows to produce as many
+toolchains as you want, for different architectures, with different C
+libraries and different versions of the various components.
+
+Crosstool-ng comes with a set of ready-made configuration files for
+various typical setups: Crosstool-ng calls them {\em samples}. They can be
+listed by using \code{./ct-ng list-samples}.
+
+We will load the
+\ifdefstring{\labboard}{qemu}{Cortex A9}{}%
+\ifdefstring{\labboard}{beaglebone}{Cortex A8}{}%
+\ifdefstring{\arch}{ARM64}{\code{aarch64-unknown-linux-uclibc}}{}%
+\ifdefstring{\labboard}{stm32mp1}{Cortex A5}{}
+sample\ifdefstring{\labboard}{stm32mp1}{, as Crosstool-ng doesn't have
+any sample for Cortex A7 yet}{}. Load it with the \code{./ct-ng} command.
+
+Then, to refine the configuration, let's run the \code{menuconfig} interface:
+
+\begin{bashinput}
+$ ./ct-ng menuconfig
+\end{bashinput}
+
+In \code{Path and misc options}:
+\begin{itemize}
+\item If not set yet, enable \code{Try features marked as EXPERIMENTAL}
+\end{itemize}
+
+\ifdefstring{\labboard}{stm32mp1}{
+In \code{Target options}:
+\begin{itemize}
+\item Set \code{Emit assembly for CPU} (\code{ARCH_CPU}) to \code{cortex-a7}.
+\item Set \code{Use specific FPU} (\code{ARCH_FPU}) to \code{vfpv4}.
+\item Set \code{Floating point} to \code{hardware (FPU)}.
+\end{itemize}
+}{}
+
+\ifdefstring{\labboard}{beaglebone}{
+In \code{Target options}:
+\begin{itemize}
+\item Set \code{Use specific FPU} (\code{ARCH_FPU}) to \code{vfpv3}.
+\item Set \code{Floating point} to \code{hardware (FPU)}.
+\end{itemize}
+}{}
+
+\ifdefstring{\arch}{ARM64}{
+In \code{Target options}:
+\begin{itemize}
+\item Set \code{Emit assembly for CPU} (\code{ARCH_CPU}) to \code{cortex-a53}.
+\item Check that \code{Endianness} (\code{ARCH_ENDIAN}) is set to \code{Little endian}
+\end{itemize}
+}{}
+
+In \code{Toolchain options}:
+\ifdefstring{\arch}{ARM64}{
+\begin{itemize}
+\item Set \code{Tuple's vendor string} (\code{TARGET_VENDOR}) to \code{training}.
+\item Set \code{Tuple's alias} (\code{TARGET_ALIAS}) to \code{aarch64-linux}.
+      This way, we will be able to use the compiler as \code{aarch64-linux-gcc}
+      instead of \code{aarch64-training-linux-musl-gcc}, which is
+      much longer to type.
+\end{itemize}
+}
+{
+\begin{itemize}
+\item Set \code{Tuple's vendor string} (\code{TARGET_VENDOR}) to \code{training}.
+\item Set \code{Tuple's alias} (\code{TARGET_ALIAS}) to
+  \code{arm-linux}.  This way, we will be able to use the compiler
+  with \code{arm-linux-gcc}, a shorter name that the name based on
+  complete toolchain tuple.
+\end{itemize}
+}
+
+In \code{Operating System}:
+\begin{itemize}
+\item Set \code{Version of linux} to the closest, but older version to
+      \workingkernel. It's important that the kernel headers used in
+      the toolchain are not more recent than the kernel that will run
+      on the board (v\workingkernel).
+\end{itemize}
+
+In \code{C-library}:
+\begin{itemize}
+  \item If not set yet, set \code{C library} to \code{musl}
+        (\code{LIBC_MUSL})
+  \item Keep the default version that is proposed
+\end{itemize}
+
+In \code{C compiler}:
+\begin{itemize}
+  \item Set \code{Version of gcc} to \code{14.2.0}.
+  \item Make sure that \code{C++} (\code{CC_LANG_CXX}) is enabled
+\end{itemize}
+
+In \code{Debug facilities}:
+\begin{itemize}
+\item Remove all options here. Some debugging tools can be provided
+      in the toolchain, but they can also be built by filesystem
+      building tools.
+\end{itemize}
+
+Explore the different other available options by traveling through the
+menus and looking at the help for some of the options. Don't hesitate
+to ask your trainer for details on the available options. However,
+remember that we tested the labs with the configuration described
+above. You might waste time with unexpected issues if you customize the
+toolchain configuration.
+
+\section{Produce the toolchain}
+
+Nothing is simpler:
+
+\begin{bashinput}
+$ ./ct-ng build
+\end{bashinput}
+
+The toolchain will be installed by default in \code{$HOME/x-tools/}.
+That's something you could have changed in Crosstool-ng's configuration.
+
+And wait!
+
+\section{Testing the toolchain}
+
+You can now test your toolchain by adding
+\ifdefstring{\arch}{ARM64}{\code{$HOME/x-tools/aarch64-training-linux-musl/bin/}}
+{\code{$HOME/x-tools/arm-training-linux-musleabihf/bin/}} to your
+\code{PATH} environment variable and compiling the simple
+\code{hello.c} program in your main lab directory with
+\ifdefstring{\arch}{ARM64}{\code{aarch64-linux-gcc}}{\code{arm-linux-gcc}}:
+
+\begin{bashinput}
+$ %\ifdefstring{\arch}{ARM64}{aarch64-linux-gcc}{arm-linux-gcc}% -o hello hello.c
+\end{bashinput}
+You can use the \code{file} command on your binary to make sure it has
+correctly been compiled for the \ifdefstring{\arch}{ARM64}{AARCH64}{ARM}
+architecture.
+
+Did you know that you can still execute this binary from your x86 host?
+To do this, install the QEMU user emulator, which just emulates target
+instruction sets, not an entire system with devices:
+
+\begin{bashinput}
+$ sudo apt install qemu-user
+\end{bashinput}
+
+Now, try to run QEMU \ifdefstring{\arch}{ARM64}{AARCH64}{ARM} user emulator:
+
+\if\defstring{\arch}{ARM64}
+  \begin{bashinput}
+  $ qemu-aarch64 hello
+  qemu-aarch64: Could not open '/lib/ld-musl-aarch64.so.1': No such file or directory
+  \end{bashinput}
+\else
+  \begin{bashinput}
+  $ qemu-arm hello
+  qemu-arm: Could not open '/lib/ld-musl-armhf.so.1': No such file or directory
+  \end{bashinput}
+\fi
+
+What's happening is that \ifdefstring{\arch}{ARM64}{\code{qemu-aarch64}}{\code{qemu-arm}}
+is missing the shared library loader
+(compiled for \ifdefstring{\arch}{ARM64}{AARCH64}{ARM}) that this
+binary relies on. Let's find it in our newly compiled toolchain:
+
+\begin{bashinput}
+$ find ~/x-tools -name %\ifdefstring{\arch}{ARM64}{ld-musl-aarch64.so.1}{ld-musl-armhf.so.1}%
+\end{bashinput}
+
+\if\defstring{\arch}{ARM64}
+  \begin{terminaloutput}
+  /home/tux/x-tools/aarch64-training-linux-musl/aarch64-training-linux-musl/sysroot/lib/ld-musl-aarch64.so.1
+  \end{terminaloutput}
+\else
+  \begin{terminaloutput}
+  /home/tux/x-tools/arm-training-linux-musleabihf/arm-training-linux-musleabihf/sysroot/lib/ld-musl-armhf.so.1
+  \end{terminaloutput}
+\fi
+
+We can now use the \code{-L} option of \ifdefstring{\arch}{ARM64}
+{\code{qemu-aarch64}}{\code{qemu-arm}} to let it know where shared libraries are:
+
+\if\defstring{\arch}{ARM64}
+  \begin{bashinput}
+  $ qemu-aarch64 -L ~/x-tools/aarch64-training-linux-musl/aarch64-training-linux-musl/sysroot hello
+  \end{bashinput}
+\else
+  \begin{bashinput}
+  $ qemu-arm -L ~/x-tools/arm-training-linux-musleabihf/arm-training-linux-musleabihf/sysroot hello
+  \end{bashinput}
+\fi
+
+\begin{terminaloutput}
+Hello world!
+\end{terminaloutput}
+
+\section{Cleaning up}
+
+{\em Do this only if you have limited storage space. In case you made a
+mistake in the toolchain configuration, you may need to run Crosstool-ng
+again, keeping generated files would save a significant amount of time.}
+
+To save about 9 GB of storage space, do a \code{./ct-ng clean} in the
+Crosstool-NG source directory. This will remove the source code of the
+different toolchain components, as well as all the generated files
+that are now useless since the toolchain has been installed in
+\code{$HOME/x-tools}.
