@@ -164,9 +164,9 @@ LABS_CHAPTERS      = $($(call UPPERCASE, $(subst  -,_, $(LABS_MATERIALS)))_LABS)
 LABS_FOOTER        = common/labs-footer.tex
 else
 LABS_MATERIALS     = $(firstword $(subst -, , $(LABS)))
+LABS_HEADER        = common/single-lab-header.tex
 LABS_VARSFILE      = common/labs-vars/single-lab-vars.tex
 LABS_CHAPTERS      = $(LABS)
-LABS_HEADER        = common/single-lab-header.tex
 LABS_FOOTER        = common/labs-footer.tex
 endif
 

@@ -1,12 +1,12 @@
-# Docker file to create a container with everything needed to build my materials
+# Docker file to create a container with everything needed to build materials
 #
 # Build the container (once):
 #
-#  sudo docker build -t my-materials -f utils/docker/Dockerfile_ubuntu .
+#  sudo docker build -t materials -f utils/docker/Dockerfile .
 #
 # Use the container:
 #
-#  sudo docker run -u $(id -u):$(id -g) -v $(pwd):/materials -it --rm my-materials make <target>
+#  sudo docker run -u $(id -u):$(id -g) -v $(pwd):/materials -it --rm materials make <target>
 #
 # Note: "docker run" must run from the top-level directory of the materials
 
@@ -14,7 +14,7 @@
 FROM ubuntu:latest
 
 LABEL maintainer="Ngoc Ho" \
-description="Container with everything needed to build my materials"
+description="Container with everything needed to build materials"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
