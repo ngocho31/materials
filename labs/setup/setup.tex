@@ -29,6 +29,13 @@ Install kernel build dependencies:
 $ sudo apt-get install make bc rsync device-tree-compiler libssl-dev libelf-dev swig python3-dev python3-setuptools
 \end{bashinput}
 
+Install the QEMU user emulator, which just emulates target instruction sets,
+not an entire system with devices:
+
+\begin{bashinput}
+$ sudo apt-get install qemu-user
+\end{bashinput}
+
 \section{Using docker}
 
 Build docker:
@@ -40,5 +47,5 @@ $ sudo docker build -t embedded -f utils/docker/Dockerfile_embedded .
 Run docker:
 
 \begin{bashinput}
-$ sudo docker run -u $(id -u):$(id -g) -v $(pwd):/embedded -it --rm embedded
+$ sudo docker run -u $(id -u):$(id -g) -v $(pwd):/embedded -v $HOME/x-tools:/home/developer/x-tools -it --rm embedded
 \end{bashinput}

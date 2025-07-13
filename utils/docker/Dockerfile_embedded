@@ -6,7 +6,7 @@
 #
 # Use the container:
 #
-#  sudo docker run -u $(id -u):$(id -g) -v $(pwd):/embedded -it --rm embedded
+#  sudo docker run -u $(id -u):$(id -g) -v $(pwd):/embedded -v $HOME/x-tools:/home/developer/x-tools -it --rm embedded
 #
 
 # Use Ubuntu 20.04 as the base image
@@ -29,6 +29,9 @@ RUN apt-get install -y --no-install-recommends \
 # Kernel Build Dependencies
 RUN apt-get install -y \
     make bc rsync device-tree-compiler libssl-dev libelf-dev swig python3-dev python3-setuptools
+
+# QEMU user emulator
+RUN apt-get install -y qemu-user
 
 # To reduce image size
 RUN apt-get clean && \
