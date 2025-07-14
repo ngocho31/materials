@@ -1,3 +1,7 @@
+EMBEDDED_LINUX_BBB_SIMPLE_PROJECT_SLIDES = \
+    first-slide \
+    beagleboneblack-board
+
 EMBEDDED_LINUX_BBB_SIMPLE_PROJECT_LABS = \
     setup \
     linux-toolchain \

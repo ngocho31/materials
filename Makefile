@@ -34,7 +34,7 @@ PDFLATEX_ENV = TEXINPUTS=.:$(shell pwd):$(shell pwd)/common/sty: texfot --tee /t
 PDFLATEX_OPT = -shell-escape -file-line-error -halt-on-error
 
 # The common slide stylesheet
-STYLESHEET = common/beamerthemeBootlin.sty
+STYLESHEET = common/sty/beamerthemePersonal.sty
 
 #
 # === Picture lookup ===
@@ -79,45 +79,28 @@ COMMON_PICTURES   = $(call PICTURES,common)
 # The value of slide can be "full-kernel", "full-sysdev" (for the
 # complete trainings) or the name of an individual chapter.
 ifdef SLIDES
-# Compute the set of chapters to build depending on the name of the
-# PDF file that was requested.
 ifeq ($(firstword $(subst -, , $(SLIDES))),full)
-SLIDES_TRAINING      = $(strip $(subst -slides, , $(subst full-, , $(SLIDES))))
-SLIDES_COMMON_BEFORE = common/slide-header.tex \
-		       common/$(SLIDES_TRAINING)-title.tex
-SLIDES_CHAPTERS      = $($(call UPPERCASE, $(subst  -,_, $(SLIDES_TRAINING)))_SLIDES)
-SLIDES_COMMON_AFTER  = common/slide-footer.tex
+SLIDES_MATERIALS     = $(strip $(subst -slides, , $(subst full-, , $(SLIDES))))
+SLIDES_VARSFILE      = common/slides-vars/$(SLIDES_MATERIALS)-slides-vars.tex
+SLIDES_CHAPTERS      = $($(call UPPERCASE, $(subst  -,_, $(SLIDES_MATERIALS)))_SLIDES)
+SLIDES_HEADER        = common/slide-header.tex
+SLIDES_FOOTER        = common/slide-footer.tex
 else
-SLIDES_TRAINING      = $(firstword $(subst -, ,  $(SLIDES)))
-ifeq ($(SLIDES_TRAINING),sysdev)
-SLIDES_TRAINING = embedded-linux
-else ifeq ($(SLIDES_TRAINING),kernel)
-SLIDES_TRAINING = linux-kernel
-endif
-# We might be building multiple chapters that share a common
-# prefix. In this case, we want to build them in the order they are
-# listed in the <training>_SLIDES variable that corresponds to the
-# current training, as identified by the first component of the
-# chapter name.
-SLIDES_CHAPTERS      = $(filter $(SLIDES)%, $($(call UPPERCASE, $(SLIDES_TRAINING))_SLIDES))
-ifeq ($(words $(SLIDES_CHAPTERS)),1)
-SLIDES_COMMON_BEFORE = common/slide-header.tex common/single-subsection-slide-title.tex
-else
-SLIDES_COMMON_BEFORE = common/slide-header.tex common/single-slide-title.tex
-endif
-SLIDES_COMMON_AFTER  = common/slide-footer.tex
+SLIDES_MATERIALS     = $(firstword $(subst -, , $(SLIDES)))
+SLIDES_VARSFILE      = common/slides-vars/single-slides-vars.tex
+SLIDES_CHAPTERS      = $(SLIDES)
+SLIDES_HEADER        = common/slide-header.tex
+SLIDES_FOOTER        = common/slide-footer.tex
 endif
 
-TRAINING = $(SLIDES_TRAINING)
-ifeq ($(SLIDES_CHAPTERS),)
-$(error "No chapter to build, maybe you're building a single chapter whose name doesn't start with a training session name")
-endif
+TRAINING             = $(SLIDES_MATERIALS)
 
 # Compute the set of corresponding .tex files and pictures
 SLIDES_TEX      = \
-	$(SLIDES_COMMON_BEFORE) \
+	$(SLIDES_VARSFILE) \
+	$(SLIDES_HEADER) \
 	$(foreach s,$(SLIDES_CHAPTERS),$(wildcard slides/$(s)/$(s).tex)) \
-	$(SLIDES_COMMON_AFTER)
+	$(SLIDES_FOOTER)
 SLIDES_PICTURES = $(call PICTURES,$(foreach s,$(SLIDES_CHAPTERS),slides/$(s))) $(COMMON_PICTURES)
 
 # Check for all slides .tex file to exist
@@ -133,7 +116,7 @@ $(foreach file,$(SLIDES_TEX),$(if $(wildcard $(file)),,$(error Missing file $(fi
 	echo "\input{$(VARS)}" >> $(OUTDIR)/$(basename $@).tex
 	for f in $(filter %.tex,$^) ; do \
 		cp $$f $(OUTDIR)/`basename $$f` ; \
-		sed -i 's%__SESSION_NAME__%$(SLIDES_TRAINING)%' $(OUTDIR)/`basename $$f` ; \
+		sed -i 's%__SESSION_NAME__%$(SLIDES_MATERIALS)%' $(OUTDIR)/`basename $$f` ; \
 		printf "\input{%s}\n" `basename $$f .tex` >> $(OUTDIR)/$(basename $@).tex ; \
 	done
 	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(PDFLATEX_OPT) $(basename $@).tex)
@@ -282,9 +265,10 @@ clean:
 
 ALL_MATERIALS = $(sort $(patsubst %.mk,%,$(notdir $(wildcard mk/*.mk mk/**/*.mk))))
 
+ALL_SLIDES = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_SLIDES)),full-$(p)-slides.pdf))
 ALL_LABS = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_LABS)),full-$(p)-labs.pdf))
 
-all: $(ALL_LABS)
+all: $(ALL_SLIDES) $(ALL_LABS)
 
 list-materials:
 	@echo $(ALL_MATERIALS)
@@ -293,6 +277,10 @@ HELP_FIELD_FORMAT = " %-72s %s\n"
 
 help:
 	@echo "Available targets:"
+	@echo
+	@echo "Slides:"
+	$(foreach p,$(ALL_SLIDES),\
+		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete slides for the '$(patsubst full-%-slides.pdf,%,$(p))' course"$(sep))
 	@echo
 	@echo "Labs:"
 	$(foreach p,$(ALL_LABS),\

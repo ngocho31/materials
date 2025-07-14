@@ -1,0 +1,195 @@
+% Beamer theme for personal presentations
+
+\usepackage{common}
+\usepackage[absolute,verbose,overlay]{textpos}
+\usepackage{fancyvrb,xcolor}
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+
+
+\usetheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usecolortheme{seahorse}
+
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Inconsolata}
+
+\setbeamercolor*{palette primary}{bg=white}
+\definecolor{blorange}{rgb}{0.96,0.5,0.1}
+
+\definecolor{blcode}{rgb}{0.35,0.35,0.35}
+\setbeamercolor{code}{fg=blcode}
+
+\fvset{formatcom=\color{blcode}}
+\renewcommand\verbatim@font{\normalfont\ttfamily\color{blcode}}
+
+\definecolor{blcodebg}{rgb}{0.9,0.9,0.9}
+\setbeamercolor{block body}{bg=blcodebg}
+
+\setbeamerfont{block title}{size=\scriptsize}
+
+\definecolor{bldarkblue}{rgb}{0.25,0.25,0.75}
+\setbeamercolor{darkblue}{fg=bldarkblue}
+\hypersetup{colorlinks,linkcolor=,urlcolor=bldarkblue}
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+\setbeamercolor{itemize item}{fg=blorange}
+\setbeamercolor{itemize subitem}{fg=blorange}
+\setbeamercolor{itemize subsubitem}{fg=blorange}
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[square]
+\setbeamercolor{enumerate item}{fg=blorange}
+\setbeamercolor{enumerate subitem}{fg=blorange}
+\setbeamercolor{enumerate subsubitem}{fg=blorange}
+
+% Custom commands
+\newcommand{\codecolor}{\usebeamercolor[fg]{code}}
+\newcommand{\code}[1]{{\codecolor \path{#1}}}
+\newcommand{\codelink}[1]{{\usebeamercolor[fg]{darkblue} \path{#1}}}
+\newcommand{\codewithhash}[1]{{\codecolor \tt{#1}}}
+
+\usepackage{listings}
+\usepackage{environ}
+\usepackage{minted}
+\usepackage{setspace}
+\usepackage{etoolbox}
+\usepackage{makecell}
+
+% Display straight quotes instead of curly ones in verbatim mode
+\usepackage{upquote}
+
+\usepackage{ifthen}
+
+\lstloadlanguages{C}
+\lstset{%
+  basicstyle=\tiny \ttfamily,
+  emphstyle=\color{blue}\bfseries\ttfamily,
+}
+
+\lstnewenvironment{codeblock}
+ {\begin{block}{}}
+ {\end{block}}
+
+%% Mode presentation
+\mode<presentation>
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\defbeamertemplate*{frametitle}{personaltheme}
+{
+  \vskip-2pt
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.5ex]{frametitle}%
+      \usebeamerfont{frametitle}
+      \hspace{0.25cm}
+      \insertframetitle
+    \end{beamercolorbox}
+  }
+  \vskip-1em\vskip2pt
+  \hbox{\hskip-1cm\color{blorange}\vrule width \paperwidth height 1pt}%
+}
+
+% Footer
+\defbeamertemplate*{footline}{personaltheme}
+{
+  \hrule height 0.1pt%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,leftskip=0.5em,rightskip=0.5em]{palette primary}%
+    \Tiny%
+    Kernel, drivers and embedded Linux, RTOS, Android -
+    ~{\tt phuongngoc31@gmail.com} \hfill \insertframenumber{}/\inserttotalframenumber{}
+  \end{beamercolorbox}
+}
+
+\newcommand\tinyv{\@setfontsize\tinyv{4pt}{6}}
+
+\newcommand\titleframe
+{
+  \begin{frame}{\trainingtitle{}}
+    \begin{columns}[b]
+      \column{0.5\textwidth}
+      \Large
+      \trainingtitle{}\\
+      \vspace{3em}
+      \footnotesize
+      \tinyv
+      Latest update: \lastupdateen{}.\\
+      \vspace{1em}
+      Corrections, suggestions, contributions and translations are welcome!\\
+      Send them to \href{mailto:phuongngoc31@gmail.com}{phuongngoc31@gmail.com}
+      \column{0.5\textwidth}
+      % \begin{center}
+      %   \includegraphics[scale=0.45]{common/logo-square.pdf}
+      % \end{center}
+    \end{columns}
+  \end{frame}
+}
+
+\AtBeginSection[]
+{
+  \begin{frame}{\insertsectionhead}
+    \begin{columns}[b]
+      \column{0.5\textwidth}
+      \huge
+      \insertsection\\
+      \vspace{1.5cm}
+      \footnotesize
+      \vspace{1cm}
+      \tinyv
+      Latest update: \lastupdateen{}.\\
+      \vspace{1em}
+      Corrections, suggestions, contributions and translations are welcome!\\
+      Send them to \href{mailto:phuongngoc31@gmail.com}{phuongngoc31@gmail.com}
+      \column{0.5\textwidth}
+      % \begin{center}
+      %   \includegraphics[scale=0.45]{common/logo-square.pdf}
+      % \end{center}
+    \end{columns}
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}{\insertsectionhead}
+    \huge
+    \begin{center}
+      \insertsubsection
+    \end{center}
+  \end{frame}
+}
+
+\newcommand\todo[1]{
+  {\large \color{red}TODO: #1}
+}
+
+\usemintedstyle{perldoc}
+
+%% Create a slide announcing a lab, with the beautiful worker penguin
+%% on the left.
+%%  first argument: slide title (will be prepended by 'Practical lab - ')
+%%  second argument: contents of the slide
+\newcommand\setuplabframe[2]{
+  \begin{frame}{Practical lab - #1}
+    \begin{columns}
+      \column{0.4\textwidth}
+      \includegraphics[width=\textwidth]{common/lab-penguins.pdf}
+      \column{0.6\textwidth}
+      #2
+      \end{columns}
+  \end{frame}
+}
+
+\newcommand\setupdemoframe[2]{
+  \begin{frame}{Demo - #1}
+    \begin{columns}
+      \column{0.4\textwidth}
+      \includegraphics[width=\textwidth]{common/lab-penguins.pdf}
+      \column{0.6\textwidth}
+      #2
+      \end{columns}
+  \end{frame}
+}
