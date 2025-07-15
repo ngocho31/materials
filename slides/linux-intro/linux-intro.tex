@@ -1,0 +1,67 @@
+\section{Introduction to Embedded Linux}
+
+\subsection{Embedded Linux system architecture}
+
+\begin{frame}
+  \frametitle{Host and target}
+  \begin{center}
+    \includegraphics[height=0.8\textheight]{slides/linux-intro/host-and-target.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Software components}
+  \begin{itemize}
+  \item Cross-compilation toolchain
+    \begin{itemize}
+    \item Compiler that runs on the development machine, but generates
+      code for the target
+    \end{itemize}
+  \item Bootloader
+    \begin{itemize}
+    \item Started by the hardware, responsible for basic
+      initialization, loading and executing the kernel
+    \end{itemize}
+  \item Linux Kernel
+    \begin{itemize}
+    \item Contains the process and memory management, network stack,
+      device drivers and provides services to user space applications
+    \end{itemize}
+  \item C library
+    \begin{itemize}
+    \item Of course, a library of C functions
+    \item Also the interface between the kernel and the user space
+      applications
+    \end{itemize}
+  \item Libraries and applications
+    \begin{itemize}
+    \item Third-party or in-house
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Embedded Linux work}
+
+  Several distinct tasks are needed when deploying embedded Linux in a
+  product:
+
+  \begin{itemize}
+  \item {\bf Board Support Package development}
+    \begin{itemize}
+    \item A BSP contains a bootloader and kernel with the suitable
+      device drivers for the targeted hardware
+    \end{itemize}
+  \item {\bf System integration}
+    \begin{itemize}
+    \item Integrate all the components, bootloader, kernel,
+      third-party libraries and applications and in-house applications
+      into a working system
+    \end{itemize}
+  \item {\bf Development of applications}
+    \begin{itemize}
+    \item Normal Linux applications, but using specifically chosen
+      libraries
+    \end{itemize}
+  \end{itemize}
+\end{frame}
