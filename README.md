@@ -1,3 +1,6 @@
+<!-- The embedded linux materials are inherited from Bootlin trainning materials -->
+<!-- https://github.com/bootlin/training-materials/ -->
+
 - [How to compile these materials](#how-to-compile-these-materials)
   - [Install dependencies](#install-dependencies)
     - [Install docker](#install-docker)
@@ -67,7 +70,7 @@ make list-materials
 # Compile specific material
 make <target>
 
-Eg: make full-linux-kernel-slides.pdf
+Eg: make full-embedded-linux-bbb-simple-project-slides.pdf
 ```
 
 # How to add new materials
