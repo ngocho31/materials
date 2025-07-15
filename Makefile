@@ -64,7 +64,7 @@ PICTURES = \
 	$(call PICTURES_NO_TRANSFORMATION,$(1),pdf)
 
 # List of common pictures
-COMMON_PICTURES   = $(call PICTURES,common)
+COMMON_PICTURES   = $(call PICTURES,common/pictures)
 
 #
 # === Compilation of slides ===
