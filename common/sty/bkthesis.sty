@@ -1,0 +1,291 @@
+\ProvidesPackage{bkthesis}
+
+\RequirePackage{graphicx}
+\RequirePackage{geometry}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{indentfirst}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{unicode-math}
+\usepackage{ragged2e}
+
+\setmainfont{TeX Gyre Termes}
+\setmathfont{TeX Gyre Termes Math}
+\setmainlanguage{vietnamese}
+% Hoặc \setmathfont{Cambria Math}
+% Hoặc \setmathfont{Latin Modern Math}
+
+\usepackage[absolute,overlay]{textpos} % 'absolute' for absolute positioning, 'overlay' to allow text to overlap
+
+\def\thesislayout{	% A4: 210 × 297
+  \geometry{
+    a4paper,
+    left=35mm,
+    top=30mm,
+    bottom=30mm,
+    right=20mm,
+    heightrounded,% better use it
+  }
+}
+
+\def\coverpage {
+  \pagestyle{empty}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw [line width=1.5mm]
+    ($ (current page.north west) + (3.5cm,-3.0cm) $)
+    rectangle
+    ($ (current page.south east) + (-2.0cm,3.0cm) $);
+    \draw [line width=0.5mm]
+    ($ (current page.north west) + (3.65cm,-3.15cm) $)
+    rectangle
+    ($ (current page.south east) + (-2.15cm,3.15cm) $);
+
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=3.5cm, yshift=-3.2cm] at (current page.north west) {
+      \begin{minipage}[b][23.7cm][t]{15.5cm}
+        \raggedright
+        \parbox[t][4cm]{15.5cm}{\centering
+          \fontsize{12}{14}\selectfont
+          ĐẠI HỌC QUỐC GIA TP. HCM\\
+          \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\
+          \textbf{--------------------  *  ---------------------}
+        }
+
+        \parbox[t][3cm]{15.5cm}{\centering
+          \fontsize{15}{18}\selectfont \textbf{\thesisstudent}
+        }
+
+        \begin{center}
+        \parbox[b][3cm]{11cm}{\centering
+          \fontsize{17}{23}\selectfont \textbf{\thesistitle}
+        }
+        \end{center}
+        \vspace*{0.5cm}
+
+        \parbox[t][4cm]{15.5cm}{
+          \makebox[2.5cm][l]{}\fontsize{13}{15}\selectfont Chuyên ngành: \thesisdepartment\\
+          \makebox[2.5cm][l]{}\fontsize{13}{15}\selectfont Mã số: \thesisdepartmentcode
+        }
+
+        \parbox[t][6.5cm]{15.5cm}{\centering
+          {\fontsize{21}{25}\selectfont \textbf{\thesisname}}
+        }
+
+        \parbox[b][0.5cm]{15.5cm}{\centering
+          {\fontsize{12}{14}\selectfont TP. HỒ CHÍ MINH, \thesisdate}
+        }
+      \end{minipage}
+    };
+  \end{tikzpicture}
+  \newpage
+}
+
+\def\supervisepage {
+  \pagestyle{empty}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw [line width=0.5mm]
+    ($ (current page.north west) + (3.65cm,-3.15cm) $)
+    rectangle
+    ($ (current page.south east) + (-2.15cm,3.15cm) $);
+
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=3.5cm, yshift=-3.2cm] at (current page.north west) {
+      \parbox[t][1.5cm]{15.5cm}{\centering
+        {\fontsize{13}{15}\selectfont CÔNG TRÌNH ĐƯỢC HOÀN THÀNH TẠI}\\
+        {\fontsize{13}{15}\selectfont TRƯỜNG ĐẠI HỌC BÁCH KHOA – ĐHQG - HCM}
+      }
+    };
+
+    \node[anchor=north west, xshift=4.5cm, yshift=-4.7cm] at (current page.north west) {
+      \parbox[t][10cm]{13cm}{
+        \fontsize{13}{15}\selectfont
+        Cán bộ hướng dẫn khoa học: \thesisadvisor\\[1em]
+        Cán bộ chấm nhận xét 1: \thesisfirstreviewer\\[1em]
+        Cán bộ chấm nhận xét 2: \thesissecondreviewer\\[1em]
+        Luận văn \thesisdegree{} được bảo vệ tại Trường Đại học Bách Khoa,
+        ĐHQG Tp. HCM \thesisprotecteddate.\\[1em]
+        Thành phần Hội đồng đánh giá luận văn \thesisdegree{} gồm:\\
+        1. Chủ tịch hội đồng: \thesischairman\\
+        2. Thư ký hội đồng: \thesissecretary\\
+        3. Phản biện 1: \thesisfirstreviewer\\
+        4. Phản biện 2: \thesissecondreviewer\\
+        5. Ủy viên: \thesiscommissioner\\[1em]
+        Xác nhận của Chủ tịch Hội đồng đánh giá LV và
+        Trưởng Khoa quản lý chuyên ngành sau khi luận văn đã được sửa chữa (nếu có).
+      }
+    };
+
+    \node[anchor=north west, xshift=4.5cm, yshift=-14.7cm] at (current page.north west) {
+      \parbox[t][2cm]{6cm}{
+        {\fontsize{13}{15}\selectfont \textbf{CHỦ TỊCH HỘI ĐỒNG}}
+      }
+    };
+
+    \node[anchor=north west, xshift=11cm, yshift=-14.7cm] at (current page.north west) {
+      \parbox[t][2cm]{7cm}{\centering
+        {\fontsize{13}{15}\selectfont \textbf{TRƯỞNG KHOA KHOA HỌC\\
+        VÀ KỸ THUẬT MÁY TÍNH}}
+      }
+    };
+  \end{tikzpicture}
+  \newpage
+}
+
+\def\missionpage {
+  \pagestyle{empty}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=3.5cm, yshift=-3cm] at (current page.north west) {
+      \parbox[t][2.5cm]{6.8cm}{
+        \centering \fontsize{12}{14}\selectfont
+        ĐẠI HỌC QUỐC GIA TP.HCM\\
+        \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\
+        ---------------------------------
+      }
+    };
+
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=10.3cm, yshift=-3cm] at (current page.north west) {
+      \parbox[t][2.5cm]{8.7cm}{
+        \centering \fontsize{12}{14}\selectfont
+        \textbf{CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM}\\
+        \textbf{Độc lập - Tự do - Hạnh phúc}\\
+        ---------------------------------
+      }
+    };
+
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=3.5cm, yshift=-5.5cm] at (current page.north west) {
+      \parbox[t][1.5cm]{15.5cm}{
+        \centering \fontsize{16}{19}\selectfont
+        \textbf{NHIỆM VỤ \thesisname}
+      }
+    };
+
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=3.5cm, yshift=-7cm] at (current page.north west) {
+      \parbox[t][2.5cm]{10cm}{
+        \fontsize{13}{15}\selectfont
+        Họ tên học viên: \thesisstudent\\
+        Ngày, tháng, năm sinh: \thesisstubirth\\
+        Chuyên ngành: \thesisdepartment
+      }
+    };
+
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=13.5cm, yshift=-7cm] at (current page.north west) {
+      \parbox[t][2.5cm]{5.5cm}{
+        \fontsize{13}{15}\selectfont
+        MSHV: \thesisstudentcode\\
+        Nơi sinh: \thesisstupob\\
+        Mã số: \thesisdepartmentcode
+      }
+    };
+
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=3.5cm, yshift=-9.5cm] at (current page.north west) {
+      \parbox[t][6cm]{15.5cm}{
+        \fontsize{13}{18}\selectfont
+        \textbf{I. TÊN ĐỀ TÀI:} \thesistitle\\
+        \textbf{II. NHIỆM VỤ VÀ NỘI DUNG:}
+        \thesiscontent
+        \textbf{III. NGÀY GIAO NHIỆM VỤ:} \thesisdateofassignment\\
+        \textbf{IV. NGÀY HOÀN THÀNH NHIỆM VỤ:} \thesisdateofsubmission\\
+        \textbf{V. CÁN BỘ HƯỚNG DẪN:} \thesisadvisor\\[1em]
+        \fontsize{13}{25}\selectfont
+        \makebox[6.5cm][l]{} TP. Hồ Chí Minh, ngày ..... tháng ..... năm ..........\\
+        \makebox[0.5cm][l]{} \textbf{CÁN BỘ HƯỚNG DẪN}
+        \makebox[2cm][l]{} \textbf{CHỦ NHIỆM BỘ MÔN ĐÀO TẠO}
+        \\[3\baselineskip]
+        \makebox[\linewidth][c]{\textbf{TRƯỞNG KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}}
+      }
+    };
+  \end{tikzpicture}
+  \newpage
+}
+
+% \def\makeprintversion{}
+
+\makeatletter
+\newenvironment{acknowledgments}{
+  \clearpage
+  \null\vfil
+  \begin{center}
+    \bfseries Lời cảm ơn
+  \end{center}
+  \quotation
+}{}
+\makeatother
+
+%% Remember to load babel before loading this package or define the command \abstractname!
+\makeatletter
+\newenvironment{abstractTV}{
+  \clearpage
+  \null\vfil
+  \begin{center}
+    \bfseries Tóm tắt nội dung
+  \end{center}
+}
+\makeatother
+
+\makeatletter
+\newenvironment{abstractTA}{
+  \clearpage
+  \null\vfil
+  \begin{center}
+    \bfseries Abstract
+  \end{center}
+}
+\makeatother
+
+\makeatletter
+\newenvironment{declaration}{
+    \clearpage
+	\null\vfil
+	\begin{center}
+	  {\bfseries Lời cam đoan}
+	\end{center}
+	\quotation
+  }{}
+\makeatother
+
+\def\cvpage {
+  \newpage
+  \pagestyle{empty}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    % Define the top-left corner of your minipage relative to the page
+    \node[anchor=north west, xshift=3.5cm, yshift=-3cm] at (current page.north west) {
+      \parbox[t][1cm]{15.5cm}{
+      \fontsize{13}{15}\selectfont
+      \textbf{PHẦN LÝ LỊCH TRÍCH NGANG}
+      }
+    };
+
+    \node[anchor=north west, xshift=4.5cm, yshift=-4cm] at (current page.north west) {
+      \parbox[t][2.5cm]{15.5cm}{
+      \fontsize{13}{15}\selectfont
+      Họ và tên: \thesisstudent\\
+      Ngày, tháng, năm sinh: \thesisstubirth\\
+      Nơi sinh: \thesisstupob\\
+      Địa chỉ liên lạc: \thesisstuaddress
+      }
+    };
+
+    \node[anchor=north west, xshift=3.5cm, yshift=-6.5cm] at (current page.north west) {
+      \parbox[t][10cm]{15.5cm}{
+      \fontsize{13}{15}\selectfont
+      \textbf{QUÁ TRÌNH ĐÀO TẠO}
+      \thesiseducationprocess
+      \textbf{QUÁ TRÌNH CÔNG TÁC}
+      \thesisworkexperience
+      }
+    };
+  \end{tikzpicture}
+}
