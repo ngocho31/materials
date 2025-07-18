@@ -47,6 +47,10 @@ RUN apt-get update && apt-get install -y \
     texlive-lang-other \
     tex-gyre
 
+# To reduce image size
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN useradd -ms /bin/bash developer && \
     echo "developer ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
