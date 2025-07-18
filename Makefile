@@ -45,14 +45,14 @@ STYLESHEET = common/sty/beamerthemePersonal.sty
 # in .pdf in the output directory. This is used to compute the list of
 # .pdf files that need to be generated from .dia or .svg files.
 PICTURES_WITH_TRANSFORMATION = \
-	$(patsubst %.$(2),$(OUTDIR)/%.pdf,$(foreach s,$(1),$(wildcard $(s)/*.$(2))))
+	$(patsubst %.$(2),$(OUTDIR)/%.pdf,$(foreach s,$(1),$(wildcard $(s)/*.$(2) $(s)/**/*.$(2))))
 
 # Function that computes the list of pictures of the extension given
 # in $(2) from the directories in $(1). This is used for pictures that
 # to not need any transformation, such as bitmap files in the .png or
 # .jpg formats.
 PICTURES_NO_TRANSFORMATION = \
-	$(patsubst %,$(OUTDIR)/%,$(foreach s,$(1),$(wildcard $(s)/*.$(2))))
+	$(patsubst %,$(OUTDIR)/%,$(foreach s,$(1),$(wildcard $(s)/*.$(2) $(s)/**/*.$(2))))
 
 # Function that computes the list of pictures from the directories in
 # $(1) and returns output filenames in the output directory.
@@ -93,7 +93,7 @@ SLIDES_HEADER        = common/slide-header.tex
 SLIDES_FOOTER        = common/slide-footer.tex
 endif
 
-TRAINING             = $(SLIDES_MATERIALS)
+MATERIALS             = $(SLIDES_MATERIALS)
 
 # Compute the set of corresponding .tex files and pictures
 SLIDES_TEX      = \
@@ -153,7 +153,7 @@ LABS_CHAPTERS      = $(LABS)
 LABS_FOOTER        = common/labs-footer.tex
 endif
 
-TRAINING           = $(LABS_MATERIALS)
+MATERIALS           = $(LABS_MATERIALS)
 
 # Compute the set of corresponding .tex files and pictures
 LABS_TEX      = \
@@ -195,12 +195,78 @@ FORCE:
 endif
 
 #
+# === Compilation of thesis ===
+#
+
+ifdef THESIS
+ifeq ($(firstword $(subst -, , $(THESIS))),full)
+THESIS_MATERIALS     = $(strip $(subst -thesis, , $(subst full-, , $(THESIS))))
+THESIS_HEADER        = common/thesis-header.tex
+THESIS_VARSFILE      = common/thesis-vars/$(THESIS_MATERIALS)-thesis-vars.tex
+THESIS_CHAPTERS      = $($(call UPPERCASE, $(subst  -,_, $(THESIS_MATERIALS)))_THESIS)
+THESIS_FOOTER        = common/thesis-footer.tex
+else
+THESIS_MATERIALS     = $(firstword $(subst -, , $(THESIS)))
+THESIS_HEADER        = common/thesis-header.tex
+THESIS_VARSFILE      = common/thesis-vars/single-thesis-vars.tex
+ifeq ($(words $(subst -, ,$(THESIS))),1)
+	THESIS_CHAPTERS  = $(THESIS)
+	THESIS_TITLE     =
+else
+	THESIS_CHAPTERS  = $(lastword $(subst -, ,$(THESIS)))
+	THESIS_TITLE     = $(strip $(subst -$(THESIS_CHAPTERS), , $(THESIS)))/
+endif
+THESIS_FOOTER        = common/thesis-footer.tex
+endif
+
+MATERIALS           = $(THESIS_MATERIALS)
+
+# Compute the set of corresponding .tex files and pictures
+THESIS_TEX      = \
+	$(THESIS_VARSFILE) \
+	$(THESIS_HEADER) \
+	$(foreach s,$(THESIS_CHAPTERS),$(wildcard thesis/$(THESIS_TITLE)$(s)/$(s).tex)) \
+	$(THESIS_FOOTER)
+THESIS_PICTURES = $(call PICTURES,$(foreach s,$(THESIS_CHAPTERS),thesis/$(THESIS_TITLE)$(s))) $(COMMON_PICTURES)
+
+$(info PICTURES= $(THESIS_PICTURES))
+# Check for all thesis .tex file to exist
+$(foreach file,$(THESIS_TEX),$(if $(wildcard $(file)),,$(error Missing file $(file) !)))
+
+%-thesis.pdf: common/sty/bkthesis.sty $(VARS) $(THESIS_TEX) $(THESIS_PICTURES) $(OUTDIR)/last-update.tex
+	@mkdir -p $(OUTDIR)
+# We generate a .tex file with \input{} directives (instead of just
+# concatenating all files) so that when there is an error, we are
+# pointed at the right original file and the right line in that file.
+	rm -f $(OUTDIR)/$(basename $@).tex
+	echo "\input{last-update}" >> $(OUTDIR)/$(basename $@).tex
+	echo "\input{$(VARS)}" >> $(OUTDIR)/$(basename $@).tex
+	for f in $(filter %.tex,$^) ; do \
+		cp $$f $(OUTDIR)/`basename $$f` ; \
+		sed -i 's%__SESSION_NAME__%$(THESIS_MATERIALS)%' $(OUTDIR)/`basename $$f` ; \
+		printf "\input{%s}\n" `basename $$f .tex` >> $(OUTDIR)/$(basename $@).tex ; \
+	done
+	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex)
+# The second call to pdflatex is to be sure that we have a correct table of
+# content and index
+	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > /dev/null 2>&1)
+# We use cat to overwrite the final destination file instead of mv, so
+# that evince notices that the file has changed and automatically
+# reloads it (which doesn't happen if we use mv here). This is called
+# 'Maxime's feature'.
+	cat out/$@ > $@
+else
+FORCE:
+%-thesis.pdf: FORCE
+	@$(MAKE) $@ THESIS=$*
+endif
+
+#
 # === Last update file generation ===
 #
 $(OUTDIR)/last-update.tex: FORCE
 	mkdir -p $(@D)
 	t=`git log -1 --format=%ct` && printf "\def \lastupdateen{%s}\n" "`(LANG=en_EN.UTF-8 date -d @$${t} +'%B %d, %Y')`" > $@
-	t=`git log -1 --format=%ct` && printf "\def \lastupdatefr{%s}\n" "`(LANG=fr_FR.UTF-8 date -d @$${t} +'%d %B %Y')`" >> $@
 
 #
 # === Picture generation ===
@@ -251,9 +317,7 @@ $(OUTDIR)/%.pdf: %.pdf
 
 $(VARS): FORCE
 	@mkdir -p $(dir $@)
-	/bin/echo "\def \sessionurl {$(patsubst %/,%,$(SESSION_URL))}" > $@
-	/bin/echo "\def \training {$(TRAINING)}" >> $@
-	/bin/echo "\def \trainer {$(TRAINER)}" >> $@
+	/bin/echo "\def \materials {$(MATERIALS)}" >> $@
 
 #
 # ===================================
@@ -267,8 +331,9 @@ ALL_MATERIALS = $(sort $(patsubst %.mk,%,$(notdir $(wildcard mk/*.mk mk/**/*.mk)
 
 ALL_SLIDES = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_SLIDES)),full-$(p)-slides.pdf))
 ALL_LABS = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_LABS)),full-$(p)-labs.pdf))
+ALL_THESIS = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_THESIS)),full-$(p)-thesis.pdf))
 
-all: $(ALL_SLIDES) $(ALL_LABS)
+all: $(ALL_SLIDES) $(ALL_LABS) $(ALL_THESIS)
 
 list-materials:
 	@echo $(ALL_MATERIALS)
@@ -286,6 +351,12 @@ help:
 	$(foreach p,$(ALL_LABS),\
 		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete labs for the '$(patsubst full-%-labs.pdf,%,$(p))' course"$(sep))
 	@echo
+	@echo "Theses:"
+	$(foreach p,$(ALL_THESIS),\
+		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete thesis for the '$(patsubst full-%-thesis.pdf,%,$(p))' course"$(sep))
+	@echo
+	@printf $(HELP_FIELD_FORMAT) "<some-chapter>-slides.pdf" "Slides for a particular chapter in slides/"
 	@printf $(HELP_FIELD_FORMAT) "<some-chapter>-labs.pdf" "Labs for a particular chapter in labs/"
+	@printf $(HELP_FIELD_FORMAT) "<some-chapter>-thesis.pdf" "Theses for a particular chapter in thesis/"
 	@echo
 	@printf $(HELP_FIELD_FORMAT) "list-materials" "List all materials"
