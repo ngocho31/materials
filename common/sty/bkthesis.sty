@@ -19,6 +19,18 @@
 % Hoặc \setmathfont{Latin Modern Math}
 
 \usepackage[absolute,overlay]{textpos} % 'absolute' for absolute positioning, 'overlay' to allow text to overlap
+\usepackage{listings}
+\usepackage{enumitem}
+
+% Configurations Header/Footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}  % Clears all page headers
+\renewcommand{\headrulewidth}{0pt}
+
+%% Remove indentation on the first line of each paragraph, and add
+%% some space between each paragraph.
+\usepackage{parskip}
 
 \def\thesislayout{	% A4: 210 × 297
   \geometry{
