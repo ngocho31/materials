@@ -10,14 +10,16 @@
 #
 # Note: "docker run" must run from the top-level directory of the materials
 
-# Use the latest Ubuntu base image
-FROM ubuntu:latest
+# Use Ubuntu 20.04 as the base image
+FROM ubuntu:20.04
 
 LABEL maintainer="Ngoc Ho" \
 description="Container with everything needed to build materials"
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+# Set environment variables to non-interactive mode
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
     dia \
     fakeroot \
     ghostscript \
@@ -38,14 +40,17 @@ RUN apt-get update && \
     xfonts-scalable \
     lmodern \
     texlive-science \
-    texlive-plain-generic \
-    texlive-lang-french \
-    # To reduce image size
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    texlive-plain-generic
 
-# Set environment variables to non-interactive mode
-ENV DEBIAN_FRONTEND=noninteractive
+# Texlive packages for Vietnamese
+RUN apt-get update && apt-get install -y \
+    texlive-lang-other \
+    tex-gyre
+
+RUN useradd -ms /bin/bash developer && \
+    echo "developer ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER developer
 
 # Set default working directory
 WORKDIR /materials
