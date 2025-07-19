@@ -1,0 +1,1506 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Created by Dia -->
+<VisioDocument xmlns='urn:schemas-microsoft-com:office:visio'>
+  <Colors>
+    <ColorEntry IX='0' RGB='#000000'/>
+    <ColorEntry IX='1' RGB='#FFFFFF'/>
+    <ColorEntry IX='2' RGB='#B8E6FF'/>
+    <ColorEntry IX='3' RGB='#51BAF3'/>
+    <ColorEntry IX='4' RGB='#FFFFFF'/>
+  </Colors>
+  <Fonts>
+    <FontEntry ID='0' Unicode='0' Weight='0' Attributes='23040' CharSet='0' PitchAndFamily='18' Name='sans'/>
+  </Fonts>
+  <StyleSheets>
+    <StyleSheet ID='0' NameU='No Style'>
+      <StyleProp>
+        <EnableFillProps>1</EnableFillProps>
+        <EnableLineProps>1</EnableLineProps>
+        <EnableTextProps>1</EnableTextProps>
+        <HideForApply>0</HideForApply>
+      </StyleProp>
+      <Line>
+        <LineColor>#000000</LineColor>
+        <LinePattern>1</LinePattern>
+        <LineWeight>0.010000</LineWeight>
+      </Line>
+      <Fill>
+        <FillBkgnd>#000000</FillBkgnd>
+        <FillForegnd>#000000</FillForegnd>
+        <FillPattern>1</FillPattern>
+        <ShdwForegnd>#000000</ShdwForegnd>
+      </Fill>
+      <TextBlock>
+        <BottomMargin>0.000000</BottomMargin>
+        <DefaultTabStop>0.590551</DefaultTabStop>
+        <LeftMargin>0.000000</LeftMargin>
+        <RightMargin>0.000000</RightMargin>
+        <TextBkgnd>0</TextBkgnd>
+        <TextBkgndTrans>0.000000</TextBkgndTrans>
+        <TextDirection>0</TextDirection>
+        <TopMargin>0.000000</TopMargin>
+        <VerticalAlign>1</VerticalAlign>
+      </TextBlock>
+      <Char IX='0'>
+        <Color>#000000</Color>
+        <Font>0</Font>
+        <FontScale>1.000000</FontScale>
+        <Size>0.166667</Size>
+      </Char>
+      <Para IX='0'>
+        <BulletFontSize>-1</BulletFontSize>
+        <BulletStr>&amp;#xe000;</BulletStr>
+        <HorzAlign>0</HorzAlign>
+        <SpLine>-1.200000</SpLine>
+      </Para>
+      <Tabs IX='0'/>
+    </StyleSheet>
+  </StyleSheets>
+  <Pages>
+    <Page ID='0'>
+      <PageSheet ID='0'>
+        <PageProps>
+          <PageWidth>13.712756</PageWidth>
+          <PageHeight>8.525056</PageHeight>
+        </PageProps>
+      </PageSheet>
+      <Shapes>
+        <Shape ID='1' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.1'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.946796</Height>
+            <PinX>25.387613</PinX>
+            <PinY>-2.531119</PinY>
+            <Width>3.384180</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#B8E6FF</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#51BAF3</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.000000</X>
+              <Y>-1.946796</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>-1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='2' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.2'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>24.704346</PinX>
+            <PinY>-3.640337</PinY>
+            <Width>1.366535</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Bạn thân</Text>
+        </Shape>
+        <Shape ID='3' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.3'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.946796</Height>
+            <PinX>21.924788</PinX>
+            <PinY>-4.710635</PinY>
+            <Width>3.384180</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#B8E6FF</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#51BAF3</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.000000</X>
+              <Y>-1.946796</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>-1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='4' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.4'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>21.375574</PinX>
+            <PinY>-5.819852</PinY>
+            <Width>1.098425</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Từ chối</Text>
+        </Shape>
+        <Shape ID='5' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Line.5'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.084218</Height>
+            <PinX>24.541569</PinX>
+            <PinY>-3.991216</PinY>
+            <Width>1.591772</Width>
+          </XForm>
+          <XForm1D>
+            <BeginX>24.541569</BeginX>
+            <BeginY>-3.991216</BeginY>
+            <EndX>22.949797</EndX>
+            <EndY>-5.075435</EndY>
+          </XForm1D>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>1</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>-1.591772</X>
+              <Y>-1.084218</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='6' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.6'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.192165</Height>
+            <PinX>22.894386</PinX>
+            <PinY>-4.994087</PinY>
+            <Width>0.218103</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#000000</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>-0.107286</X>
+              <Y>-0.192165</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.110818</X>
+              <Y>-0.162695</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='7' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.7'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.748031</Height>
+            <PinX>22.624739</PinX>
+            <PinY>-4.726597</PinY>
+            <Width>1.231299</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#FFFFFF</FillForegnd>
+            <FillForegndTrans>1.000000</FillForegndTrans>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#FFFFFF</LineColor>
+            <LineColorTrans>1.000000</LineColorTrans>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.231299</X>
+              <Y>0.000000</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>1.231299</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='8' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.8'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>22.761452</PinX>
+            <PinY>-4.488400</PinY>
+            <Width>0.957874</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Không</Text>
+        </Shape>
+        <Shape ID='9' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.9'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.946796</Height>
+            <PinX>28.856462</PinX>
+            <PinY>-4.728686</PinY>
+            <Width>3.384180</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#B8E6FF</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#51BAF3</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.000000</X>
+              <Y>-1.946796</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>-1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='10' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.10'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>28.251738</PinX>
+            <PinY>-5.837903</PinY>
+            <Width>1.209449</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Lần đầu</Text>
+        </Shape>
+        <Shape ID='11' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Line.11'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.101315</Height>
+            <PinX>26.233658</PinX>
+            <PinY>-3.991216</PinY>
+            <Width>1.598449</Width>
+          </XForm>
+          <XForm1D>
+            <BeginX>26.233658</BeginX>
+            <BeginY>-3.991216</BeginY>
+            <EndX>27.832108</EndX>
+            <EndY>-5.092532</EndY>
+          </XForm1D>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>1</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.598449</X>
+              <Y>-1.101315</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='12' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.12'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.192735</Height>
+            <PinX>27.776264</PinX>
+            <PinY>-5.173582</PinY>
+            <Width>0.217943</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#000000</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>0.217943</X>
+              <Y>-0.030635</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.111685</X>
+              <Y>0.162100</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='13' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.13'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.748031</Height>
+            <PinX>26.860590</PinX>
+            <PinY>-4.718566</PinY>
+            <Width>1.106299</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#FFFFFF</FillForegnd>
+            <FillForegndTrans>1.000000</FillForegndTrans>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#FFFFFF</LineColor>
+            <LineColorTrans>1.000000</LineColorTrans>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.106299</X>
+              <Y>0.000000</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>1.106299</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='14' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.14'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>27.009804</PinX>
+            <PinY>-4.480369</PinY>
+            <Width>0.807874</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Đúng</Text>
+        </Shape>
+        <Shape ID='15' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.15'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.946796</Height>
+            <PinX>32.213993</PinX>
+            <PinY>-6.894835</PinY>
+            <Width>3.384180</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#B8E6FF</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#51BAF3</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.000000</X>
+              <Y>-1.946796</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>-1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='16' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.16'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>31.215370</PinX>
+            <PinY>-8.004052</PinY>
+            <Width>1.997244</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Cho mượn xe</Text>
+        </Shape>
+        <Shape ID='17' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Line.17'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.066672</Height>
+            <PinX>29.702507</PinX>
+            <PinY>-6.188783</PinY>
+            <Width>1.489396</Width>
+          </XForm>
+          <XForm1D>
+            <BeginX>29.702507</BeginX>
+            <BeginY>-6.188783</BeginY>
+            <EndX>31.191904</EndX>
+            <EndY>-7.255455</EndY>
+          </XForm1D>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>1</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.489396</X>
+              <Y>-1.066672</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='18' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.18'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.194638</Height>
+            <PinX>31.134596</PinX>
+            <PinY>-7.335475</PinY>
+            <Width>0.217349</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#000000</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>0.217349</X>
+              <Y>-0.034597</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.114617</X>
+              <Y>0.160040</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='19' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.19'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.748031</Height>
+            <PinX>30.332365</PinX>
+            <PinY>-6.893740</PinY>
+            <Width>1.106299</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#FFFFFF</FillForegnd>
+            <FillForegndTrans>1.000000</FillForegndTrans>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#FFFFFF</LineColor>
+            <LineColorTrans>1.000000</LineColorTrans>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.106299</X>
+              <Y>0.000000</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>1.106299</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='20' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.20'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>30.481577</PinX>
+            <PinY>-6.655543</PinY>
+            <Width>0.807874</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Đúng</Text>
+        </Shape>
+        <Shape ID='21' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.21'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.748031</Height>
+            <PinX>26.315964</PinX>
+            <PinY>-6.866663</PinY>
+            <Width>1.231299</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#FFFFFF</FillForegnd>
+            <FillForegndTrans>1.000000</FillForegndTrans>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#FFFFFF</LineColor>
+            <LineColorTrans>1.000000</LineColorTrans>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.231299</X>
+              <Y>0.000000</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>1.231299</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='22' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.22'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>26.452677</PinX>
+            <PinY>-6.628467</PinY>
+            <Width>0.957874</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Không</Text>
+        </Shape>
+        <Shape ID='23' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.23'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>2.040365</Height>
+            <PinX>25.471855</PinX>
+            <PinY>-6.848050</PinY>
+            <Width>3.546835</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#B8E6FF</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#51BAF3</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.773417</X>
+              <Y>-1.020183</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.000000</X>
+              <Y>-2.040365</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>-1.773417</X>
+              <Y>-1.020183</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='24' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.24'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>24.522840</PinX>
+            <PinY>-7.846572</PinY>
+            <Width>1.898031</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Kinh nghiệm</Text>
+        </Shape>
+        <Shape ID='25' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.25'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>24.753746</PinX>
+            <PinY>-8.161532</PinY>
+            <Width>1.436221</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>trước đây</Text>
+        </Shape>
+        <Shape ID='26' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Line.26'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.004636</Height>
+            <PinX>28.054373</PinX>
+            <PinY>-6.233854</PinY>
+            <Width>1.515334</Width>
+          </XForm>
+          <XForm1D>
+            <BeginX>28.054373</BeginX>
+            <BeginY>-6.233854</BeginY>
+            <EndX>26.539040</EndX>
+            <EndY>-7.238491</EndY>
+          </XForm1D>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>1</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>-1.515334</X>
+              <Y>-1.004636</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='27' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.27'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.190808</Height>
+            <PinX>26.484652</PinX>
+            <PinY>-7.156456</PinY>
+            <Width>0.218455</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#000000</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>-0.109681</X>
+              <Y>-0.190808</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.108774</X>
+              <Y>-0.164068</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='28' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.28'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.946796</Height>
+            <PinX>21.942839</PinX>
+            <PinY>-9.070009</PinY>
+            <Width>3.384180</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#B8E6FF</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#51BAF3</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.000000</X>
+              <Y>-1.946796</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>-1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='29' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.29'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>21.393625</PinX>
+            <PinY>-10.179226</PinY>
+            <Width>1.098425</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Từ chối</Text>
+        </Shape>
+        <Shape ID='30' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Line.30'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.059610</Height>
+            <PinX>24.585146</PinX>
+            <PinY>-8.378325</PinY>
+            <Width>1.615210</Width>
+          </XForm>
+          <XForm1D>
+            <BeginX>24.585146</BeginX>
+            <BeginY>-8.378325</BeginY>
+            <EndX>22.969936</EndX>
+            <EndY>-9.437934</EndY>
+          </XForm1D>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>1</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>-1.615210</X>
+              <Y>-1.059610</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='31' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.31'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.190274</Height>
+            <PinX>22.915949</PinX>
+            <PinY>-9.355637</PinY>
+            <Width>0.218582</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#000000</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>-0.110605</X>
+              <Y>-0.190274</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.107977</X>
+              <Y>-0.164594</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='32' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.32'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.748031</Height>
+            <PinX>22.687666</PinX>
+            <PinY>-9.204299</PinY>
+            <Width>1.231299</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#FFFFFF</FillForegnd>
+            <FillForegndTrans>1.000000</FillForegndTrans>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#FFFFFF</LineColor>
+            <LineColorTrans>1.000000</LineColorTrans>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.231299</X>
+              <Y>0.000000</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>1.231299</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='33' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.33'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>23.118473</PinX>
+            <PinY>-8.966102</PinY>
+            <Width>0.369685</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Tệ</Text>
+        </Shape>
+        <Shape ID='34' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.34'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.946796</Height>
+            <PinX>28.865488</PinX>
+            <PinY>-9.051958</PinY>
+            <Width>3.384180</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#B8E6FF</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#51BAF3</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.000000</X>
+              <Y>-1.946796</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>-1.692090</X>
+              <Y>-0.973398</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='35' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.35'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>27.866867</PinX>
+            <PinY>-10.161175</PinY>
+            <Width>1.997244</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Cho mượn xe</Text>
+        </Shape>
+        <Shape ID='36' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Line.36'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>1.036322</Height>
+            <PinX>26.358564</PinX>
+            <PinY>-8.378325</PinY>
+            <Width>1.483372</Width>
+          </XForm>
+          <XForm1D>
+            <BeginX>26.358564</BeginX>
+            <BeginY>-8.378325</BeginY>
+            <EndX>27.841936</EndX>
+            <EndY>-9.414646</EndY>
+          </XForm1D>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>1</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.483372</X>
+              <Y>-1.036322</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='37' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.37'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.193423</Height>
+            <PinX>27.785568</PinX>
+            <PinY>-9.495331</PinY>
+            <Width>0.217739</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#000000</FillForegnd>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#000000</LineColor>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>0.217739</X>
+              <Y>-0.032052</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>0.112737</X>
+              <Y>0.161370</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='38' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Polygon.38'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.748031</Height>
+            <PinX>26.848476</PinX>
+            <PinY>-9.195273</PinY>
+            <Width>1.231299</Width>
+          </XForm>
+          <Fill>
+            <FillBkgnd>#000000</FillBkgnd>
+            <FillForegnd>#FFFFFF</FillForegnd>
+            <FillForegndTrans>1.000000</FillForegndTrans>
+            <FillPattern>1</FillPattern>
+            <ShdwForegnd>#000000</ShdwForegnd>
+          </Fill>
+          <Line>
+            <LineCap>1</LineCap>
+            <LineColor>#FFFFFF</LineColor>
+            <LineColorTrans>1.000000</LineColorTrans>
+            <LinePattern>1</LinePattern>
+            <LineWeight>0.039370</LineWeight>
+          </Line>
+          <Geom IX='0'>
+            <NoFill>0</NoFill>
+            <NoLine>0</NoLine>
+            <NoShow>0</NoShow>
+            <NoSnap>0</NoSnap>
+            <MoveTo IX='1'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </MoveTo>
+            <LineTo IX='2'>
+              <X>1.231299</X>
+              <Y>0.000000</Y>
+            </LineTo>
+            <LineTo IX='3'>
+              <X>1.231299</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='4'>
+              <X>0.000000</X>
+              <Y>0.748031</Y>
+            </LineTo>
+            <LineTo IX='5'>
+              <X>0.000000</X>
+              <Y>0.000000</Y>
+            </LineTo>
+          </Geom>
+        </Shape>
+        <Shape ID='39' Type='Shape' FillStyle='0' LineStyle='0' TextStyle='0' NameU='Text.39'>
+          <Data1>0</Data1>
+          <Data2>0</Data2>
+          <Data3>0</Data3>
+          <XForm>
+            <Height>0.247563</Height>
+            <PinX>27.220228</PinX>
+            <PinY>-8.957076</PinY>
+            <Width>0.487795</Width>
+          </XForm>
+          <Char IX='0'>
+            <Color>#000000</Color>
+            <Font>0</Font>
+            <FontScale>1.000000</FontScale>
+            <Size>0.247563</Size>
+          </Char>
+          <Para IX='0'>
+            <HorzAlign>1</HorzAlign>
+          </Para>
+          <Text><pp IX='0'/><cp IX='0'/>Tốt</Text>
+        </Shape>
+      </Shapes>
+    </Page>
+  </Pages>
+</VisioDocument>
