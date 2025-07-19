@@ -13,32 +13,26 @@ Giả sử rằng xác suất để $x$ nhận các giá trị này là $p_i=p(x
 
 Ký hiệu phân phối này là $p=(p_1, p_2,..., p_n)$.
 Entropy của phân phối này được định nghĩa là:
-
 \begin{equation*}
     H(p)=-\sum_{n=1}^{n}p_ilog(p_i)
 \end{equation*}
-
 trong đó $log$ là logarit tự nhiên
 (Một số tài liệu dùng logarit cơ số 2, nhưng giá trị của $H(p)$
 chỉ khác đi bằng cách nhân với một hằng số.) và quy ước $0log(0)=0$
 
 Giả sử bạn tung một đồng xu, Entropy sẽ được tính như sau:
-
 \begin{equation*}
     H = -[0.5log(0.5) + 0.5log(0.5)]
 \end{equation*}
 
-\begin{center}
-    \begin{figure}[ht!]
-        \begin{center}
-         \includegraphics[scale=0.7]{thesis/decision-tree/mathematical/dt_ex2.png}
-        \end{center}
-        \caption{Hàm Entropy.}
-        \label{fig:dt_ex2}
-    \end{figure}
-\end{center}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{thesis/decision-tree/mathematical/dt_ex2.png}
+    \caption{Hàm Entropy}
+    \label{fig:dt_ex2}
+\end{figure}
 
-Hình vẽ trên biểu diễn sự thay đổi của hàm Entropy.
+Hình \ref{fig:dt_ex2} biểu diễn sự thay đổi của hàm Entropy.
 Ta có thể thấy rằng, Entropy đạt tối đa khi xác suất xảy ra của hai lớp bằng nhau.
 
 \begin{itemize}
@@ -49,6 +43,7 @@ Ta có thể thấy rằng, Entropy đạt tối đa khi xác suất xảy ra c�
 Entropy trong học máy và lý thuyết thông tin nói chung là thước đo tính ngẫu nhiên
 của thông tin đang được xử lý. Entropy càng cao, càng khó rút ra bất kỳ kết luận nào
 từ thông tin đó.
+
 Tung một đồng xu là một ví dụ về thông tin ngẫu nhiên,
 trong trường hợp này Entropy đạt cực đại bằng 1,
 không có kết luận nào giúp dự đoán được kết quả tung đồng xu.
@@ -85,7 +80,7 @@ Infomation Gain tại mỗi nút theo trình tự sau:
 \section{Gini Impurity}
 Đơn giản hơn so với Entropy và Information Gain, Gini Impurity
 là chỉ số thể hiện mức độ phân loại sai khi ta chọn ngẫu nhiên
-một phần tử từ tập data. Gini Impurity có công thức như sau:
+một phần tử từ tập dữ liệu. Gini Impurity có công thức như sau:
 
 \begin{equation*}
     G = \sum_{k=1}^{k}p_k*(1-p_k)^2 = 1 - \sum_{k=1}^{k}(p_k)^2
@@ -94,19 +89,24 @@ một phần tử từ tập data. Gini Impurity có công thức như sau:
 Trong đó:
 \begin{itemize}
     \item $G$ là giá trị Gini Impurity
-    \item $k$ số các lớp có trong tập data
+    \item $k$ số các lớp có trong tập dữ liệu
     \item $p_k$ là xác suất mà một phần tử ngẫu nhiên thuộc lớp $k$
 \end{itemize}
 
-Giá trị Gini Impurity sau khi chia của mỗi nhóm đều nhỏ hơn so với giá trị ban đầu
-=> Sau khi chia nhóm mức độ phân loại sai của hệ thống đã giảm.
-Độ giảm của Gini Impurity được gọi là Gini Gain và có công thức tính tương tự
-như Information Gain, chỉ khác là ta sẽ sử dụng giá trị Gini Impurity thay vì Entropy:
+Giá trị Gini Impurity sau khi chia của mỗi nhóm đều nhỏ hơn so với
+giá trị ban đầu.
+
+=> Sau khi chia nhóm, mức độ phân loại sai của hệ thống đã giảm.
+
+Độ giảm của Gini Impurity được gọi là Gini Gain.
+
+Gini Gain có công thức tính tương tự như Information Gain,
+chỉ khác là ta sẽ sử dụng giá trị Gini Impurity thay vì Entropy:
 
 \begin{equation*}
     GG(Q) = G_O - \sum_{i=1}^{q}\frac{N_i}{N}G_i
 \end{equation*}
 
-Cũng tương tự như với khi sử dụng Entropy, Gini Impurity của một Leaf Node
-sẽ là 0 và khi training Decision Tree, điều kiện được chọn để chia nhóm
-cũng sẽ được chọn sao cho giá trị Gini Gain là lớn nhất.
+Cũng tương tự như với khi sử dụng Entropy, Gini Impurity của một nút lá
+(leaf node) sẽ là 0 và khi huấn luyện Decision Tree, điều kiện được chọn
+để chia nhóm cũng sẽ được chọn sao cho giá trị Gini Gain là lớn nhất.
