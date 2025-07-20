@@ -3,7 +3,42 @@
 \usepackage{mathptmx}
 \usepackage{bkthesis}
 
+\usepackage{verbatim}
+\usepackage{lstautogobble}
+
 % Custom commands
+
+\lstset{
+  frame=tb,
+  language=python,
+  basicstyle=\ttfamily,
+  numbers=left,
+  numberstyle=\small,
+  frame=single, % Adds a frame around the code
+  rulecolor=\color{black},
+  aboveskip=3mm,
+  belowskip=3mm,
+  breaklines=true, % Automatically break long lines
+  showstringspaces=false,
+  columns=flexible,
+  breakatwhitespace=true,
+  tabsize=4
+}
+
+% Multi-line command environments ---------------------------------------------
+
+\lstnewenvironment{terminal}{\lstset{
+  autogobble,
+  language=[LaTeX]TeX,
+  escapechar={\%},
+  columns=fullflexible,
+  breakautoindent=false,
+  alsoletter={()[].=:-},
+  breakindent=0pt,
+  numbers=none,
+  prebreak=\textbackslash,
+  keepspaces=true
+}}{}
 
 % others... ------------------------------------------------------------------
 

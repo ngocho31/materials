@@ -45,36 +45,6 @@
 %% some space between each paragraph.
 \usepackage{parskip}
 
-\lstset{frame=tb,
-  language=python,
-  backgroundcolor=\color{gray!10},
-  basicstyle=\ttfamily\small,
-  breaklines=true, % Automatically break long lines
-  commentstyle=\color{green!50!black}\ttfamily,
-  keywordstyle=\color{blue}\bfseries,
-  stringstyle=\color{red}\ttfamily,
-  numbers=left,
-  numberstyle=\tiny\color{gray},
-  frame=single, % Adds a frame around the code
-  rulecolor=\color{black},
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=fixed, % Ensures that spaces in strings are shown as they are
-  tabsize=4
-}
-
-\lstnewenvironment{terminaloutput}{\lstset{
-  language=bash,
-  numbers=none,
-  columns=fullflexible,
-  belowskip=0pt,
-  breakautoindent=false,
-  alsoletter={()[].=:-},
-  breakindent=0pt,
-  keepspaces=true
-}}{}
-
 \def\thesislayout{	% A4: 210 × 297
   \geometry{
     a4paper,
@@ -265,8 +235,6 @@
   \newpage
 }
 
-% \def\makeprintversion{}
-
 \makeatletter
 \newenvironment{acknowledgments}{
   \clearpage
@@ -278,7 +246,6 @@
 }{}
 \makeatother
 
-%% Remember to load babel before loading this package or define the command \abstractname!
 \makeatletter
 \newenvironment{abstractTV}{
   \clearpage
@@ -338,6 +305,7 @@
       \fontsize{13}{15}\selectfont
       \textbf{QUÁ TRÌNH ĐÀO TẠO}
       \thesiseducationprocess
+      \vspace{1em}
       \textbf{QUÁ TRÌNH CÔNG TÁC}
       \thesisworkexperience
       }
