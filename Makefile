@@ -18,6 +18,12 @@ endif
 # Needed macros
 UPPERCASE = $(shell echo $1 | tr "[:lower:]-" "[:upper:]_")
 
+# To insert a separator
+define sep
+
+
+endef
+
 include $(wildcard mk/*.mk mk/**/*.mk)
 
 # Output directory
