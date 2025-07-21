@@ -14,14 +14,8 @@
 
 \setmainfont{TeX Gyre Termes}
 \setmathfont{TeX Gyre Termes Math}
+\setmonofont{DejaVu Sans Mono}
 \setmainlanguage{vietnamese}
-
-% Force straight quotes
-\usepackage{csquotes}
-\DeclareQuoteStyle{straight}
-  {\textquotedbl}{\textquotedbl}
-  {\textquoteright}{\textquoteright}
-\setquotestyle{straight}
 
 \usepackage[absolute,overlay]{textpos} % 'absolute' for absolute positioning, 'overlay' to allow text to overlap
 \usepackage{listings}
@@ -29,11 +23,14 @@
 \usepackage{xcolor}
 \usepackage{algorithm2e}
 
+\usepackage{verbatim}
 % Display straight quotes instead of curly ones in verbatim mode
 \usepackage{upquote}
 
 % We want hyphenation to be allowed after spaces and hyphens
 \usepackage[hyphens]{url}
+\usepackage[hidelinks]{hyperref}
+\renewcommand{\UrlFont}{\footnotesize\ttfamily}
 
 % Configurations Header/Footer
 \usepackage{fancyhdr}
@@ -41,9 +38,16 @@
 \fancyhead{}  % Clears all page headers
 \renewcommand{\headrulewidth}{0pt}
 
-%% Remove indentation on the first line of each paragraph, and add
-%% some space between each paragraph.
+% Remove indentation on the first line of each paragraph, and add
+% some space between each paragraph.
 \usepackage{parskip}
+
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.2}
+\usepackage{makecell}
 
 \def\thesislayout{	% A4: 210 × 297
   \geometry{
@@ -268,12 +272,12 @@
 
 \makeatletter
 \newenvironment{declaration}{
-    \clearpage
-	\null\vfil
-	\begin{center}
-	  {\bfseries Lời cam đoan}
-	\end{center}
-	\quotation
+  \clearpage
+  \null\vfil
+  \begin{center}
+    {\bfseries Lời cam đoan}
+  \end{center}
+  \quotation
   }{}
 \makeatother
 
@@ -284,14 +288,14 @@
   \begin{tikzpicture}[remember picture, overlay]
     % Define the top-left corner of your minipage relative to the page
     \node[anchor=north west, xshift=3.5cm, yshift=-3cm] at (current page.north west) {
-      \parbox[t][1cm]{15.5cm}{
+      \parbox[t][0.8cm]{15.5cm}{
       \fontsize{13}{15}\selectfont
       \textbf{PHẦN LÝ LỊCH TRÍCH NGANG}
       }
     };
 
-    \node[anchor=north west, xshift=4.5cm, yshift=-4cm] at (current page.north west) {
-      \parbox[t][2.5cm]{15.5cm}{
+    \node[anchor=north west, xshift=4.5cm, yshift=-3.8cm] at (current page.north west) {
+      \parbox[t][3cm]{14.5cm}{
       \fontsize{13}{15}\selectfont
       Họ và tên: \thesisstudent\\
       Ngày, tháng, năm sinh: \thesisstubirth\\
@@ -300,7 +304,7 @@
       }
     };
 
-    \node[anchor=north west, xshift=3.5cm, yshift=-6.5cm] at (current page.north west) {
+    \node[anchor=north west, xshift=3.5cm, yshift=-6.8cm] at (current page.north west) {
       \parbox[t][10cm]{15.5cm}{
       \fontsize{13}{15}\selectfont
       \textbf{QUÁ TRÌNH ĐÀO TẠO}

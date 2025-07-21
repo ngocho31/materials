@@ -2,18 +2,29 @@
 
 \usepackage{mathptmx}
 \usepackage{bkthesis}
-
-\usepackage{verbatim}
 \usepackage{lstautogobble}
+
+\usepackage{caption}
+\usepackage{newfloat}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+
+% Force straight quotes
+\usepackage{csquotes}
+\DeclareQuoteStyle{straight}
+  {\textquotedbl}{\textquotedbl}
+  {\textquoteright}{\textquoteright}
+\setquotestyle{straight}
 
 % Custom commands
 
 \lstset{
   frame=tb,
   language=python,
-  basicstyle=\ttfamily,
+  basicstyle=\ttfamily\footnotesize,
   numbers=left,
-  numberstyle=\small,
+  numberstyle=\footnotesize,
   frame=single, % Adds a frame around the code
   rulecolor=\color{black},
   aboveskip=3mm,
@@ -39,6 +50,36 @@
   prebreak=\textbackslash,
   keepspaces=true
 }}{}
+
+\DeclareFloatingEnvironment[fileext=text,placement={!ht},name=Text]{textboxenv}
+\makeatletter
+\@ifundefined{caption@textboxenv}{}{%
+  \captionsetup[textboxenv]{list=false,skip=2pt}%
+}
+\makeatother
+
+\newmdenv[
+  topline=true, bottomline=true,
+  rightline=true, leftline=true,
+  innerleftmargin=4pt,
+  innerrightmargin=4pt,
+  innertopmargin=4pt,
+  innerbottommargin=4pt,
+  linewidth=1pt,
+  roundcorner=0pt
+]{textframe}
+
+% textbox[<label>]{<caption>}
+\NewDocumentEnvironment{textbox}{O{} m}{%
+  \begin{textboxenv}
+  \caption{#2}
+  \IfValueT{#1}{\label{#1}}
+  \begin{textframe}
+  \footnotesize
+}{%
+  \end{textframe}
+  \end{textboxenv}
+}
 
 % others... ------------------------------------------------------------------
 

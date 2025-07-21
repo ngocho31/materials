@@ -125,10 +125,15 @@ $(foreach file,$(SLIDES_TEX),$(if $(wildcard $(file)),,$(error Missing file $(fi
 		sed -i 's%__SESSION_NAME__%$(SLIDES_MATERIALS)%' $(OUTDIR)/`basename $$f` ; \
 		printf "\input{%s}\n" `basename $$f .tex` >> $(OUTDIR)/$(basename $@).tex ; \
 	done
-	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(PDFLATEX_OPT) $(basename $@).tex)
+	cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > output.log 2>&1; \
+	STATUS=$$?; \
+	if [ $$STATUS -ne 0 ]; then \
+		cat output.log; \
+	fi; \
+	exit $$STATUS
 # The second call to pdflatex is to be sure that we have a correct table of
 # content and index
-	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(PDFLATEX_OPT) $(basename $@).tex > /dev/null 2>&1)
+	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(PDFLATEX_OPT) $(basename $@).tex)
 # We use cat to overwrite the final destination file instead of mv, so
 # that evince notices that the file has changed and automatically
 # reloads it (which doesn't happen if we use mv here). This is called
@@ -185,10 +190,15 @@ $(foreach file,$(LABS_TEX),$(if $(wildcard $(file)),,$(error Missing file $(file
 		sed -i 's%__SESSION_NAME__%$(LABS_MATERIALS)%' $(OUTDIR)/`basename $$f` ; \
 		printf "\input{%s}\n" `basename $$f .tex` >> $(OUTDIR)/$(basename $@).tex ; \
 	done
-	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex)
+	cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > output.log 2>&1; \
+	STATUS=$$?; \
+	if [ $$STATUS -ne 0 ]; then \
+		cat output.log; \
+	fi; \
+	exit $$STATUS
 # The second call to pdflatex is to be sure that we have a correct table of
 # content and index
-	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > /dev/null 2>&1)
+	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex)
 # We use cat to overwrite the final destination file instead of mv, so
 # that evince notices that the file has changed and automatically
 # reloads it (which doesn't happen if we use mv here). This is called
@@ -235,7 +245,6 @@ THESIS_TEX      = \
 	$(THESIS_FOOTER)
 THESIS_PICTURES = $(call PICTURES,$(foreach s,$(THESIS_CHAPTERS),thesis/$(THESIS_TITLE)$(s))) $(COMMON_PICTURES)
 
-$(info PICTURES= $(THESIS_PICTURES))
 # Check for all thesis .tex file to exist
 $(foreach file,$(THESIS_TEX),$(if $(wildcard $(file)),,$(error Missing file $(file) !)))
 
@@ -252,10 +261,15 @@ $(foreach file,$(THESIS_TEX),$(if $(wildcard $(file)),,$(error Missing file $(fi
 		sed -i 's%__SESSION_NAME__%$(THESIS_MATERIALS)%' $(OUTDIR)/`basename $$f` ; \
 		printf "\input{%s}\n" `basename $$f .tex` >> $(OUTDIR)/$(basename $@).tex ; \
 	done
-	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex)
+	cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > output.log 2>&1; \
+	STATUS=$$?; \
+	if [ $$STATUS -ne 0 ]; then \
+		cat output.log; \
+	fi; \
+	exit $$STATUS
 # The second call to pdflatex is to be sure that we have a correct table of
 # content and index
-	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > /dev/null 2>&1)
+	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex)
 # We use cat to overwrite the final destination file instead of mv, so
 # that evince notices that the file has changed and automatically
 # reloads it (which doesn't happen if we use mv here). This is called
