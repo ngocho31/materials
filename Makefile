@@ -282,6 +282,77 @@ FORCE:
 endif
 
 #
+# === Compilation of books ===
+#
+
+ifdef BOOKS
+ifeq ($(firstword $(subst -, , $(BOOKS))),full)
+BOOKS_MATERIALS     = $(strip $(subst -books, , $(subst full-, , $(BOOKS))))
+BOOKS_HEADER        = common/books-header.tex
+BOOKS_VARSFILE      = common/books-vars/$(BOOKS_MATERIALS)-books-vars.tex
+BOOKS_CHAPTERS      = $($(call UPPERCASE, $(subst  -,_, $(BOOKS_MATERIALS)))_BOOKS)
+BOOKS_FOOTER        = common/books-footer.tex
+else
+BOOKS_MATERIALS     = $(firstword $(subst -, , $(BOOKS)))
+BOOKS_HEADER        = common/books-header.tex
+BOOKS_VARSFILE      = common/books-vars/single-books-vars.tex
+ifeq ($(words $(subst -, ,$(BOOKS))),1)
+	BOOKS_CHAPTERS  = $(BOOKS)
+	BOOKS_TITLE     =
+else
+	BOOKS_CHAPTERS  = $(lastword $(subst -, ,$(BOOKS)))
+	BOOKS_TITLE     = $(strip $(subst -$(BOOKS_CHAPTERS), , $(BOOKS)))/
+endif
+BOOKS_FOOTER        = common/books-footer.tex
+endif
+
+MATERIALS           = $(BOOKS_MATERIALS)
+
+# Compute the set of corresponding .tex files and pictures
+BOOKS_TEX      = \
+	$(BOOKS_VARSFILE) \
+	$(BOOKS_HEADER) \
+	$(foreach s,$(BOOKS_CHAPTERS),$(wildcard books/$(BOOKS_TITLE)$(s)/$(s).tex)) \
+	$(BOOKS_FOOTER)
+BOOKS_PICTURES = $(call PICTURES,$(foreach s,$(BOOKS_CHAPTERS),books/$(BOOKS_TITLE)$(s))) $(COMMON_PICTURES)
+
+# Check for all books .tex file to exist
+$(foreach file,$(BOOKS_TEX),$(if $(wildcard $(file)),,$(error Missing file $(file) !)))
+
+%-books.pdf: common/sty/books.sty common/sty/dissertation.cls $(VARS) $(BOOKS_TEX) $(BOOKS_PICTURES) $(OUTDIR)/last-update.tex
+	@mkdir -p $(OUTDIR)
+# We generate a .tex file with \input{} directives (instead of just
+# concatenating all files) so that when there is an error, we are
+# pointed at the right original file and the right line in that file.
+	rm -f $(OUTDIR)/$(basename $@).tex
+	echo "\input{last-update}" >> $(OUTDIR)/$(basename $@).tex
+	echo "\input{$(VARS)}" >> $(OUTDIR)/$(basename $@).tex
+	for f in $(filter %.tex,$^) ; do \
+		cp $$f $(OUTDIR)/`basename $$f` ; \
+		sed -i 's%__SESSION_NAME__%$(BOOKS_MATERIALS)%' $(OUTDIR)/`basename $$f` ; \
+		printf "\input{%s}\n" `basename $$f .tex` >> $(OUTDIR)/$(basename $@).tex ; \
+	done
+	cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > output.log 2>&1; \
+	STATUS=$$?; \
+	if [ $$STATUS -ne 0 ]; then \
+		cat output.log; \
+	fi; \
+	exit $$STATUS
+# The second call to pdflatex is to be sure that we have a correct table of
+# content and index
+	(cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex)
+# We use cat to overwrite the final destination file instead of mv, so
+# that evince notices that the file has changed and automatically
+# reloads it (which doesn't happen if we use mv here). This is called
+# 'Maxime's feature'.
+	cat out/$@ > $@
+else
+FORCE:
+%-books.pdf: FORCE
+	@$(MAKE) $@ BOOKS=$*
+endif
+
+#
 # === Last update file generation ===
 #
 $(OUTDIR)/last-update.tex: FORCE
@@ -352,8 +423,9 @@ ALL_MATERIALS = $(sort $(patsubst %.mk,%,$(notdir $(wildcard mk/*.mk mk/**/*.mk)
 ALL_SLIDES = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_SLIDES)),full-$(p)-slides.pdf))
 ALL_LABS = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_LABS)),full-$(p)-labs.pdf))
 ALL_THESIS = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_THESIS)),full-$(p)-thesis.pdf))
+ALL_BOOKS = $(foreach p,$(ALL_MATERIALS),$(if $($(call UPPERCASE,$(p)_BOOKS)),full-$(p)-books.pdf))
 
-all: $(ALL_SLIDES) $(ALL_LABS) $(ALL_THESIS)
+all: $(ALL_SLIDES) $(ALL_LABS) $(ALL_THESIS) $(ALL_BOOKS)
 
 list-materials:
 	@echo $(ALL_MATERIALS)
@@ -365,18 +437,23 @@ help:
 	@echo
 	@echo "Slides:"
 	$(foreach p,$(ALL_SLIDES),\
-		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete slides for the '$(patsubst full-%-slides.pdf,%,$(p))' course"$(sep))
+		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete slides for the '$(patsubst full-%-slides.pdf,%,$(p))' material"$(sep))
 	@echo
 	@echo "Labs:"
 	$(foreach p,$(ALL_LABS),\
-		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete labs for the '$(patsubst full-%-labs.pdf,%,$(p))' course"$(sep))
+		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete labs for the '$(patsubst full-%-labs.pdf,%,$(p))' material"$(sep))
 	@echo
 	@echo "Theses:"
 	$(foreach p,$(ALL_THESIS),\
-		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete thesis for the '$(patsubst full-%-thesis.pdf,%,$(p))' course"$(sep))
+		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete thesis for the '$(patsubst full-%-thesis.pdf,%,$(p))' material"$(sep))
+	@echo
+	@echo "Books:"
+	$(foreach p,$(ALL_BOOKS),\
+		@printf $(sort $(HELP_FIELD_FORMAT)) "$(p)" "Complete books for the '$(patsubst full-%-books.pdf,%,$(p))' material"$(sep))
 	@echo
 	@printf $(HELP_FIELD_FORMAT) "<some-chapter>-slides.pdf" "Slides for a particular chapter in slides/"
 	@printf $(HELP_FIELD_FORMAT) "<some-chapter>-labs.pdf" "Labs for a particular chapter in labs/"
 	@printf $(HELP_FIELD_FORMAT) "<some-chapter>-thesis.pdf" "Theses for a particular chapter in thesis/"
+	@printf $(HELP_FIELD_FORMAT) "<some-chapter>-books.pdf" "Books for a particular chapter in books/"
 	@echo
 	@printf $(HELP_FIELD_FORMAT) "list-materials" "List all materials"

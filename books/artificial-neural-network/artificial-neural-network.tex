@@ -1,0 +1,28 @@
+% Use Roman numerals for the page numbers of the title pages and table of
+% contents.
+\frontmatter
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+%% Use Arabic numerals for the page numbers of the chapters.
+\mainmatter
+
+%% Turn on thumb indices.
+\thumbtrue
+
+\input{books/artificial-neural-network/chapter01/chapter01.tex}
+\input{books/artificial-neural-network/chapter02/chapter02.tex}
+\input{books/artificial-neural-network/chapter03/chapter03.tex}
+\input{books/artificial-neural-network/chapter04/chapter04.tex}
+\input{books/artificial-neural-network/chapter05/chapter05.tex}
+\input{books/artificial-neural-network/chapter06/chapter06.tex}
+\input{books/artificial-neural-network/chapter07/chapter07.tex}
+
+\thumbfalse
+
+%% Use letters for the chapter numbers of the appendices.
+\appendix
+
+\input{books/artificial-neural-network/references}

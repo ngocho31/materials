@@ -1,0 +1,207 @@
+% \section{Ví dụ minh họa mạng RNN}
+
+% define some typing shortcuts
+\def\a#1{$a^{<#1>}$}
+\def\y#1{$\widehat{y}^{<#1>}$}
+\def\x#1{$x^{<#1>}$}
+\def\wax{$W_{ax}$}
+\def\waa{$W_{aa}$}
+\def\wya{$W_{ya}$}
+\def\ba{$b_{a}$}
+\def\by{$b_{y}$}
+
+% \newpage
+% This is section V
+\section{Ví dụ minh họa mạng RNN}
+Sau đây chúng ta sẽ làm một ví dụ minh họa cho việc sử dụng \textit{RNN} trong các mô hình tự động sinh văn bản. \textit{RNN} cho phép ta dự đoán xác suất xuất hiện của chữ mới dựa vào các chữ đã có liền trước đó theo cơ chế các đầu ra của cụm này sẽ là đầu vào của cụm tiếp theo cho tới khi ta được câu (hoặc từ, tùy theo mô hình cụ thể) hoàn chỉnh. Giả sử ta có 1 \textit{từ điển (corpus)} gồm các chữ\textit{ (``H'', ``E'', ``L'', ``O'')} và ta muốn huấn luyện mạng \textit{RNN} sao cho sau khi đọc được chuỗi ``HE'', máy sẽ cho dự đoán chữ tiếp theo là ``L'' (để có từ ``HELLO'').
+
+Đầu tiên ta sẽ mã hóa các chữ cái trong từ điển dưới dạng \textit{one-hot encoding}. Vì từ điển chỉ có 4 chữ cái nên vector \textit{one-hot} có số chiều là 4:
+\begin{center}
+\begin{tabular}{ c c c c}
+   $H \longrightarrow \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix} $ ,
+   &
+   $E \longrightarrow \begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix} $,
+   &
+   $L \longrightarrow \begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix} $,
+   &
+   $O \longrightarrow \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \end{pmatrix} $,
+\end{tabular}
+\end{center}
+
+Giả sử mạng \textit{RNN} được xây dựng có: 3 là số nút trong 1 lớp ẩn, 4 là số chiều của vector \textit{ one-hot} đầu vào, khi đó số chiều của các ma trận \wax, \waa, \wya \space lần lượt là: (3, 4), (3, 3), (4, 3).
+Sơ đồ tính toán lặp được rút gọn như hình \ref{folding}:
+
+\begin{figure}[H]
+    \begin{center}
+        \input{books/artificial-neural-network/chapter06/figure-sec6/foldinggraph}
+    \end{center}
+    \caption{Sơ đồ tính toán RNN rút gọn}
+    \label{folding}
+\end{figure}
+
+Bắt đầu tính toán ta cần khởi tạo các ma trận \wax, \waa, \wya \space với các giá trị ngẫu nhiên:
+
+$W_{ax} =
+\begin{pmatrix}
+0.1 & 0.3 & 0.2 & 0.3\\
+0.1 & 0.7 & 0.3 & 0.2\\
+0.4 & 0.5 & 0.8 & 0.6\\
+0.5 & 0.5 & 0.5 & 0.5
+\end{pmatrix} $,
+
+$W_{aa} =
+\begin{pmatrix}
+0.3 & 0.8 & 0.2 \\
+0.6 & 0.4 & 0.1 \\
+0.4 & 0.3 & 0.9
+\end{pmatrix} $,
+
+$W_{ya} =
+\begin{pmatrix}
+0.4 & 0.2 & 0.6\\
+0.9 & 0.1 & 0.5\\
+0.2 & 0.2 & 0.6\\
+0.1 & 0.8 & 0.4
+\end{pmatrix}$,
+
+Như đã trình bày ở phần trước, tại bước thứ \textit{t} đầu vào $x^{<t>}$ sẽ được kết hợp với các nút ở lớp ẩn $a^{<t-1>}$ bằng hàm $g_{1}$ (thường dùng là \textit{tanh} hoặc \textit{ReLU}) để tính toán ra \a{t} và từ \a{t} sẽ tính ra được \y{t} thông qua hàm $g_{2}$ (thường là hàm \textit{softmax} hoặc hàm \textit{sigmoid} tùy theo số phân lớp, ở đây ta sẽ dùng \textit{softmax} vì giá trị đầu ra \y{t} có 4 chiều). Quá trình này lặp lại như sau:
+
+\textbf{Bước lan truyền thuận:}
+
+Giá trị \a{0} được lấy tùy ý, ví dụ, \a{0} = $\begin{pmatrix} 0 & 0 & 0 \end{pmatrix} ^{T}$,  ký tự đầu vào \x{1} = $H$ =  $\begin{pmatrix} 1 & 0 & 0 & 0 \end{pmatrix} ^{T} $, ta tính được $a^{<1>}$, $\widehat{y}^{<1>}$:
+
+\begin{equation*}
+    \begin{split}
+    a^{<1>} & = g_{1}(W_{aa}a^{<0>} + W_{ax}x^{<1>} + b_{a}) \\
+     & = tanh ( \space
+        \begin{pmatrix} .3 & .8 & .2 \\  .6 & .4 & .1 \\ .4 & .3 & .9 \end{pmatrix}
+        \begin{pmatrix}0\\0\\0\end{pmatrix} +
+        \begin{pmatrix}.1 & .3 & .2 & .3\\ .1 & .7 & .3 & .2\\.4 & .5 & .8 & .6\end{pmatrix}
+        \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}
+        + 0.6 \space  )\\
+     & = tanh( \begin{pmatrix}  .7 \\ .7 \\ 1. \end{pmatrix} ) \\
+     & = \begin{pmatrix} .6 \\ .6 \\ .76 \end{pmatrix}
+    \end{split}
+\end{equation*}
+
+\begin{equation*}
+    \begin{split}
+    \widehat{y}^{<1>} & = g_{2}(W_{ya}a^{<1>} + b_{y}) \\
+     & = softmax(
+     \begin{pmatrix}.4 & .2 & .6\\
+                    .9 & .1 & .5\\
+                    .2 & .2 & .6\\
+                    .1 & .8 & .4  \end{pmatrix}
+     \begin{pmatrix} .6 \\ .6 \\ .76 \end{pmatrix}
+     + .6 )\\
+     & = \begin{pmatrix} .24 \\ .29 \\ .21 \\ .26 \end{pmatrix}
+    \end{split}
+\end{equation*}
+
+Tiếp tục sử dụng tính toán tương tự ta tính được:
+\begin{equation*}
+    \begin{split}
+    a^{<2>} & =  \begin{pmatrix}.94 & .96 &.98 \end{pmatrix}^{T} \\
+    \widehat{y}^{<2>} & = \begin{pmatrix}.23 & .33 & .18 & .25 \end{pmatrix}^{T}
+    \end{split}
+\end{equation*}
+
+Tóm lại ta có \textit{sơ đồ tính toán (computational graph)} như hình dưới đây cho bước lan truyền thuận:
+\begin{figure}[!h]
+    \begin{center}
+        \input{books/artificial-neural-network/chapter06/figure-sec6/unfoldgraph}
+    \end{center}
+    \caption{Sơ đồ tính toán của bài toán dự đoán chữ cái dạng đầy đủ}
+\end{figure}
+
+Nếu ta chuyển đổi các xác suất này để hiểu dự đoán, chúng ta sẽ thấy rằng, tại đầu vào thứ 2, $x^{2}$, mô hình nói rằng xác suất cao nhất sẽ xuất hiện tiếp theo là chữ ``E''([0 1 0 0]) vì $\hat{y}^{<2>}$ =[.23  .33  .18  .25]. Điều đó cho thấy, với hệ thống hiện tại, máy sẽ dự đoán chữ tiếp theo sau khi nhập ``HE'’ sẽ là chữ ``E'' chứ không phải chữ ``L'' như mong muốn.
+
+Đó là vì ta chưa thực hiện cho máy học. Ở bước lan truyền ngược, ta cập nhật các thông số \wax, \waa, \wya, \ba, \by \space sao cho tối thiểu hàm mất mát.\\
+
+\textbf{Bước lan truyền ngược:}
+
+Ta viết lại các ma trận trọng số để cập nhật các bias \ba và \by cùng lúc với \wax và \wya:
+
+\begin{equation*}
+W_{ax} \longrightarrow (W_{ax} \mid b_a) \longrightarrow \begin{pmatrix} 0.1 & 0.3 & 0.2 & 0.3 & 0.6\\0.1 & 0.7 & 0.3 & 0.2 & 0.6\\0.4 & 0.5 & 0.8 & 0.6 & 0.6 \end{pmatrix}
+\end{equation*}
+
+Chọn hệ số học $\eta$ = 1.0, cập nhật $W_{ax}$ theo công thức:\\
+\begin{equation*}
+    \begin{split}
+    W_{ya} & = W_{ya} - \eta (\widehat{y}^{<2>} - y^{<2>}) \otimes a^{<2>} \\
+     & = \begin{pmatrix}0.4 & 0.2 & 0.6 & 0.6\\0.9 & 0.1 & 0.5 & 0.6\\ 0.2 & 0.2 & 0.6 & 0.6 \\0.1 & 0.8 & 0.4 & 0.6\end{pmatrix} - 1.0 (\begin{pmatrix}.23\\.33\\.18\\.25 \end{pmatrix}-
+    \begin{pmatrix}0\\0\\1\\0\end{pmatrix}) \otimes \begin{pmatrix}.94\\.96\\.98\\1 \end{pmatrix} \\
+     & = \begin{pmatrix}0.4 & 0.2 & 0.6 & 0.6\\0.9 & 0.1 & 0.5 & 0.6\\ 0.2 & 0.2 & 0.6 & 0.6 \\0.1 & 0.8 & 0.4 & 0.6\end{pmatrix} - \begin{pmatrix}0.2162 & 0.2208 & 0.2254 & 0.23\\0.3102 & 0.3168 & 0.3234 & 0.33\\ -0.7708 & -0.7872 & -0.8036 & -0.82 \\0.235 & 0.24 & 0.245 & 0.25 \end{pmatrix} \\
+     & = \begin{pmatrix}0.1838 & -0.0208 & 0.3746 & 0.37\\0.5898 & -0.2168 & 0.1766 & 0.27\\ 0.9708 & 0.9872 & 1.4036 & 1.42 \\-0.135 & 0.56 & 0.155 & 0.35 \end{pmatrix}
+    \end{split}
+\end{equation*}
+
+Tương tự ta cập nhật $W_{ax}$ và $W_{aa}$. Sau một số lần lặp đủ lớn ta thu được bộ tham số $(W, b)$ có thể sử dụng làm mô hình dự đoán. Đầu ra $\widehat{y}^{<t>}$ chính là giá trị dự đoán sau khi có \textit{t} kí tự được nhập.
+
+\newpage
+\section{Bài tập}
+\begin{exer}
+Nhận diện sequence data:
+
+Trong các ngữ cảnh sau đây, dữ liệu nào thuộc về dạng sequence data? Tại sao?
+    \begin{enumerate}[label=\alph*)]
+    \item Dữ liệu chứng khoán: dữ liệu về giá các mã cổ phiếu bao gồm loại mã, giá mở cửa, giá đóng cửa của một sàn chứng khoán được thu thập liên tục theo thời gian.
+    \item Dữ liệu về thời tiết: thông tin khí tượng thu thập được theo vùng miền về nhiệt độ, độ ẩm, lượng mưa, ...
+    \item Dữ liệu về chuỗi văn bản: một lượng lớn văn bản bao gồm nhiều câu ở một ngôn ngữ nào đó
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+Nhận dạng và phân tích dạng bài toán:
+
+Với các bài toán cụ thể sau đây, có thể mô hình hóa chúng để áp dụng RNN được không? Nếu có, hãy xếp dạng bài toán vào một dạng của RNN (one-to-many, many-to-one, many-to-many, sequence-to-sequence) và giải thích.
+    \begin{enumerate}[label=\alph*)]
+    \item Bài toán về Language model: Dự đoán kí tự hoặc từ tiếp theo xuất hiện trong một chuỗi văn bản đang nhập.
+    \item Bài toán dự báo thời tiết: Dự đoán thời tiết cho chiều hôm nay dựa vào các thông số khí tượng hiện có và thông tin thời tiết từ các ngày trước đó.
+    \item Dự đoán doanh số bán hàng: dựa vào thông tin doanh số của thời gian hiện tại, liền trước, cùng kì tháng trước, cùng kì quý trước và cùng kì năm trước, hãy dự báo doanh số bán hàng cho từng ngày trong một tháng tới.
+    \item Bài toán dịch máy: Từ một câu văn bản ở tiếng Việt, hãy dịch câu đó sang tiếng Anh. Dạng bài toán có giữ nguyên không nếu như hướng tiếp cận là dịch theo cặp từ (word-by-word)?
+    \end{enumerate}
+\end{exer}
+
+\clearpage
+\begin{exer}
+Lan truyền xuôi trong RNN:
+    \begin{enumerate}[label=\alph*)]
+    \item Trong đồ thị tính toán, ý nghĩa của các nút dữ liệu $\symbf x, \symbf a, \symbf y$ là gì? Giải thích ý nghĩa của các ma trận trọng số?
+    \item Tại sao trên đồ thị tính toán có nhiều nút R, nhưng chỉ có một bộ trọng số? Việc dùng chung một bộ trọng số cho các nút có tác dụng gì?
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+Lan truyền ngược trong RNN:
+    \begin{enumerate}[label=\alph*)]
+    \item Trong công thức tính đạo hàm, hãy viết dạng (shape) của từng thành phần (số chiều của vector, ma trận, tensor, ...). Các phép nhân trong chain-rule là phép nhân dạng gì?
+    Phép nhân đó với tensor nhiều hơn hai chiều được thực hiện như thế nào?
+    \item Dựa vào đồ thị tính toán và công thức truy hồi, chứng minh lại công thức tính đạo hàm cho từng bộ tham số trong mạng.
+    \item Giải thích hiện tượng vanishing/exploding gradient, tại sao mạng RNN cơ bản không hiệu quả trong việc ghi nhớ chuỗi dữ liệu dài? Vanishing/exploding gradient sẽ xảy ra với bộ trọng số cụ thể nào trong mạng?
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+\leavevmode
+    \begin{enumerate}[label=\alph*)]
+    \item So sánh RNN và mạng feed-forward truyền thống (MLP là một ví dụ).
+    \item Có thể dùng một mạng MLP để biểu diễn chính xác một mạng RNN cơ bản hay không? Nếu có, tại sao không nên dùng?
+    \end{enumerate}
+\end{exer}
+
+\begin{exer}
+Có phải RNN luôn tốt hơn mạng MLP không?
+\end{exer}
+
+\clearpage
+\begin{exer}
+Cho trước một corpus là "Goodbye", với mục tiêu huấn luyện là hệ thống sẽ đoán chữ "d" sau khi người dùng nhập chuỗi "Goo".
+
+Hãy:
+    \begin{enumerate}[label=\alph*)]
+    \item Tính toán giá trị $\widehat{y}$ và so sánh với kết quả mong muốn khi áp dụng lan truyền xuôi trong RNN. Giải thích kết quả đạt được.
+    \item Sử dụng kết quả tính toán được ở câu trên để cập nhật trọng số cho các ma trận trong mạng,biết rằng hệ thống có hệ số học là 0.1 và hàm mất mát là Cross Entropy.
+    \end{enumerate}
+\end{exer}
