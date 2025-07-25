@@ -1,0 +1,831 @@
+\chapter{Hiện thực hệ thống}
+
+\section{Dữ liệu}
+\label{sec:database}
+Dưới sự hỗ trợ của một cửa hàng thời trang thực tế (Thời trang Hume),
+đề tài thực hiện việc chuẩn hóa và gán nhãn cho các dữ liệu về
+sản phẩm, phục vụ cho nhu cầu tư vấn của người dùng. Ngoài ra, đề tài
+còn thu thập và tổng hợp một số loại dữ liệu khác phục vụ cho các
+mục đích khác nhau.
+
+\subsection{Dữ liệu sản phẩm}
+\label{subsec:productdb}
+Dữ liệu sản phẩm này chứa các thông tin sản phẩm dùng để tư vấn,
+tìm kiếm cho khách hàng một sản phẩm phù hợp với yêu cầu, một bản ghi
+trong cơ sở dữ liệu tương ứng với một sản phẩm. Mỗi trường thông tin
+của sản phẩm có thể có các định dạng khác nhau. Cụ thể:
+
+\begin{itemize}
+    \item \textbf{name\_product:} tên của sản phẩm, có thể có nhiều
+    alias của tên sản phẩm trong cơ sở dữ liệu sản phẩm, thuộc kiểu
+    dữ liệu chuỗi ký tự (string).
+    \item \textbf{size\_product:} kích cỡ của sản phẩm, có thể có
+    nhiều alias của kích cỡ sản phẩm trong cơ sở dữ liệu sản phẩm,
+    thuộc kiểu dữ liệu chuỗi ký tự (string).
+    \item \textbf{color\_product:} màu sắc của sản phẩm, có thể có
+    nhiều alias của màu sắc sản phẩm trong cơ sở dữ liệu sản phẩm,
+    thuộc kiểu dữ liệu chuỗi ký tự (string).
+    \item \textbf{material\_product:} chất liệu của sản phẩm, có thể
+    có nhiều alias của chất liệu sản phẩm trong cơ sở dữ liệu
+    sản phẩm, thuộc kiểu dữ liệu chuỗi ký tự (string).
+    \item \textbf{cost\_product:} đơn giá của sản phẩm, có thể có
+    nhiều alias của đơn giá sản phẩm trong cơ sở dữ liệu sản phẩm,
+    thuộc kiểu dữ liệu chuỗi ký tự (string).
+    \item \textbf{amount\_product:} số lượng sản phẩm hiện tại,
+    có thể có nhiều alias của số lượng sản phẩm trong cơ sở dữ liệu
+    sản phẩm, thuộc kiểu dữ liệu số (int).
+\end{itemize}
+
+Bản ghi mẫu của dữ liệu sản phẩm như ví dụ \ref{exam:productrecord}.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:productrecord]{Một bản ghi của dữ liệu sản phẩm}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "name_product": "set trắng cổ nơ",
+    "size_product": "M",
+    "color_product": "None",
+    "cost_product": "260",
+    "material_product": "vải cao cấp, mặc mát",
+    "amount_product": 10
+}
+\end{Verbatim}
+\end{textbox}
+
+\subsection{Dữ liệu kích cỡ}
+\label{subsec:sizedb}
+Dữ liệu kích cỡ này chứa các thông tin về kích thước dùng để tư vấn,
+tìm kiếm cho khách hàng một kích cỡ sản phẩm phù hợp với số đo cơ thể,
+một bản ghi trong cơ sở dữ liệu tương ứng với một bảng kích thước.
+Mỗi trường thông tin của dữ liệu có thể có các định dạng khác nhau.
+Các giá trị của cùng một thông tin có cùng một đơn vị. Cụ thể:
+
+\begin{itemize}
+    \item \textbf{size\_customer:} kích cỡ sản phẩm phù hợp với
+    khách hàng, có thể có nhiều alias của kích cỡ sản phẩm trong
+    cơ sở dữ liệu kích cỡ, thuộc kiểu dữ liệu chuỗi ký tự (string).
+    \item \textbf{waist\_customer:} số đo vòng eo của cơ thể, có thể
+    có nhiều alias của số đo vòng eo trong cơ sở dữ liệu kích cỡ,
+    thuộc kiểu dữ liệu chuỗi ký tự (string), đơn vị là centimet (cm).
+    \item \textbf{height\_customer:} số đo chiều cao của cơ thể,
+    có thể có nhiều alias của số đo chiều cao trong cơ sở dữ liệu
+    kích cỡ, thuộc kiểu dữ liệu chuỗi ký tự (string), đơn vị là
+    centimet (cm).
+    \item \textbf{weight\_customer:} số đo cân nặng của cơ thể,
+    có thể có nhiều alias của số đo cân nặng trong cơ sở dữ liệu
+    kích cỡ, thuộc kiểu dữ liệu chuỗi ký tự (string), đơn vị là
+    kilogram (kg).
+\end{itemize}
+
+Bản ghi mẫu của dữ liệu kích cỡ như ví dụ \ref{exam:sizerecord}.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:sizerecord]{Một bản ghi của dữ liệu kích cỡ}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "size_customer": "S",
+    "waist_customer": "65",
+    "height_customer": "164",
+    "weight_customer": "50"
+}
+\end{Verbatim}
+\end{textbox}
+
+\subsection{Từ điển thông tin sản phẩm}
+Từ điển (Dictionary) của thông tin sản phẩm chứa tất cả các giá trị
+có thể có của từng thông tin sản phẩm (như mô tả ở mục
+\ref{subsec:productdb}). Dữ liệu được sử dụng để tạo ra các
+\textit{User Goal} (mục tiêu người dùng), phục vụ cho việc
+huấn luyện. Ngoài ra được sử dụng bởi \textit{EMC} (bộ giả lập lỗi),
+bộ tạo ra các lỗi ngẫu nhiên của người dùng. Mỗi trường thông tin
+có định dạng danh sách (array). Được biểu diễn rút gọn như ví dụ
+\ref{exam:dictproduct}.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:dictproduct]{Từ điển thông tin sản phẩm}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "name_product": ["đầm nude cổ vest dáng dài", "đầm sơ mi carô", "set hồng vest váy ngắn", "đầm nude lưới tay phồng", ...],
+    "size_product": ["S", "M", "L", ...],
+    "color_product": ["nude", "carô xanh", "hồng", "xanh", ...],
+    "cost_product": ["280", "210", "260", "238", "195", "350", ...],
+    "material_product": ["vải cao cấp, mặc mát", ...],
+    "amount_product": ["2", "5", "hai", "9", "ba", "4", "3", "6", ...]
+}
+\end{Verbatim}
+\end{textbox}
+
+\subsection{Từ điển dữ liệu kích cỡ}
+Từ điển (Dictionary) của bảng dữ liệu kích cỡ chứa tất cả các giá trị
+có thể có của từng trường thông tin trong dữ liệu kích cỡ (như mô tả
+ở mục \ref{subsec:sizedb}). Dữ liệu được sử dụng để tạo ra các
+\textit{User Goal} (mục tiêu người dùng), phục vụ cho việc huấn luyện.
+Ngoài ra được sử dụng bởi \textit{EMC} (bộ giả lập lỗi), bộ tạo ra
+các lỗi ngẫu nhiên của người dùng. Mỗi trường thông tin có định dạng
+danh sách (array). Được biểu diễn rút gọn như ví dụ \ref{exam:dictsize}.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:dictsize]{Từ điển dữ liệu kích cỡ}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "size_customer": ["L", "S", "M"],
+    "waist_customer": ["anything", "66", "73", "68", "63", "58", ...],
+    "height_customer": ["163", "159", "166", "150", "anything", "155", "165", "156", ...],
+    "weight_customer": ["56", "45", "47", "46", "57", "48", "41", "52", "anything", ...]
+}
+\end{Verbatim}
+\end{textbox}
+
+\subsection{Mục tiêu người dùng (User Goal)}
+\label{subsec:usergoal}
+Mục tiêu người dùng (User Goal) chứa danh sách các trường hợp biểu diễn
+mục tiêu có thể có của người dùng. Dữ liệu được sử dụng bởi bộ mô phỏng
+người dùng sử dụng như mục tiêu thật của người dùng, phục vụ cho
+quá trình huấn luyện. Mỗi \textit{goal} chỉ chứa cho một mục tiêu
+xuyên suốt cuộc hội thoại. Cấu trúc cho một \textit{goal} như sau:
+
+\begin{itemize}
+    \item \textbf{intent:} mục tiêu chính của người dùng trong cuộc
+    hội thoại, kiểu dữ liệu chuỗi ký tự (string). Các mục tiêu khi
+    tham gia hội thoại của người dùng có thể có là:
+    \begin{itemize}
+        \item \textbf{request:} yêu cầu thông tin sản phẩm, hoặc
+        tư vấn kích cỡ sản phẩm cho khách hàng
+        \item \textbf{order:} mục tiêu đặt hàng sản phẩm của khách hàng
+    \end{itemize}
+    \item \textbf{inform\_slots:} chứa tất cả các thông tin cần
+    thông báo cho tác nhân trong suốt cuộc hội thoại. Các thông tin
+    cần thông báo có cấu trúc <tên thông tin>: <giá trị của thông tin>.
+    Trong đó:
+    \begin{itemize}
+        \item \textbf{<tên thông tin>:} tên thông tin là một trong các
+        trường thông tin đã được định nghĩa ở mục \ref{subsec:productdb}
+        và \ref{subsec:sizedb}.
+        \item \textbf{<giá trị của thông tin>:} giá trị của thông tin
+        này có thể nằm trong bộ từ điển của nó hoặc không.
+    \end{itemize}
+    \item \textbf{request\_slots:} chứa tất cả các thông tin yêu cầu
+    tác nhân cung cấp cho đến khi kết thúc cuộc hội thoại. Các
+    thông tin yêu cầu có cấu trúc <tên thông tin>: \enquote{UNK}. Trong đó:
+    \begin{itemize}
+        \item \textbf{<tên thông tin>:} tên thông tin là một trong
+        các trường thông tin đã được định nghĩa ở mục
+        \ref{subsec:productdb} và \ref{subsec:sizedb}.
+        \item \textbf{"UNK":} giá trị mặc định, có nghĩa \enquote{chưa biết},
+        cần được thông báo/ điền vào từ tác nhân.
+    \end{itemize}
+\end{itemize}
+
+Bản ghi mẫu của mục tiêu người dùng như ví dụ \ref{exam:goalrecord}.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:goalrecord]{Một bản ghi của mục tiêu người dùng}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "intent": "request",
+    "inform_slots": {
+        "name_product": "set dây kèm quần",
+        "amount_product": "4",
+        "color_product": "đen viền",
+        "waist_customer": "63",
+        "height_customer": "158",
+        "weight_customer": "59"
+    },
+    "request_slots": {
+        "size_product": "UNK",
+        "material_product": "UNK",
+        "cost_product": "UNK"
+    }
+}
+\end{Verbatim}
+\end{textbox}
+
+\subsection{Hội thoại (Dialog)}
+Dữ liệu hội thoại (Dialog) chứa danh sách các cuộc hội thoại tư vấn,
+như mô tả ở mục \ref{subsubsec:dialog}. Dữ liệu được sử dụng cho
+giai đoạn khởi động. Mỗi \textit{dialog} mô tả quá trình hội thoại
+tư vấn diễn ra như trong thực tế, chứa danh sách các hành động lần lượt
+là của người dùng và tác nhân, mỗi hành động có cấu trúc như sau:
+
+\begin{itemize}
+    \item \textbf{speaker:} mô tả lượt hành động do người dùng hay
+    tác nhân thực hiện, kiểu dữ liệu là chuỗi ký tự (string).
+    \item \textbf{intent:} ý định hành động của người dùng hoặc tác nhân
+    trong lượt thoại hiện tại, kiểu dữ liệu chuỗi ký tự (string).
+    Các mục tiêu có thể có được mô tả ở bảng \ref{tab:userintent}.
+    \item \textbf{inform\_slots:} chứa các thông tin cần thông báo trong
+    lượt thoại hiện tại. Các thông tin cần thông báo có cấu trúc
+    <tên thông tin>: <giá trị của thông tin>. Trong đó:
+    \begin{itemize}
+        \item \textbf{<tên thông tin>:} tên thông tin là một trong các
+        trường thông tin đã được định nghĩa ở mục \ref{subsec:productdb}
+        và \ref{subsec:sizedb}.
+        \item \textbf{<giá trị của thông tin>:} giá trị của thông tin
+        này có thể nằm trong bộ từ điển của nó hoặc không.
+    \end{itemize}
+    \item \textbf{request\_slots:} chứa các thông tin yêu cầu đối phương
+    cung cấp trong lượt thoại hiện tại. Trường thông tin yêu cầu này là
+    danh sách các thông tin có kiểu dữ liệu là chuỗi ký tự (string).
+    \begin{itemize}
+        \item \textbf{<tên thông tin>:} tên thông tin là một trong các
+        trường thông tin đã được định nghĩa ở mục \ref{subsec:productdb}
+        và \ref{subsec:sizedb}.
+    \end{itemize}
+\end{itemize}
+
+Bản ghi mẫu của hội thoại như ví dụ \ref{exam:dialogrecord}.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:dialogrecord]{Một đoạn hội thoại}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+[
+    {"speaker": "user", "intent": "request", "inform_slots": {}, "request_slots": ["cost_product"]},
+    {"speaker": "agent", "intent": "request", "inform_slots": {}, "request_slots": ["name_product"]},
+    {"speaker": "user", "intent": "inform", "inform_slots": {"name_product": "đầm body vest"}, "request_slots": []},
+    {"speaker": "agent", "intent": "inform", "inform_slots": {"cost_product": "260"}, "request_slots": []},
+    {"speaker": "user", "intent": "ok", "inform_slots": {}, "request_slots": []},
+    {"speaker": "agent", "intent": "match_found", "inform_slots": {}, "request_slots": []},
+    {"speaker": "user", "intent": "ok", "inform_slots": {}, "request_slots": []},
+    {"speaker": "agent", "intent": "done", "inform_slots": {}, "request_slots": []},
+    {"speaker": "user", "intent": "done", "inform_slots": {}, "request_slots": []}
+]
+\end{Verbatim}
+\end{textbox}
+
+\section{Bộ xử lý phản hồi người dùng}
+Do giới hạn của đề tài, trong luận án này không xử lý ngôn ngữ tự nhiên
+cho các câu phản hồi của người dùng. Tuy nhiên, hệ thống có thể tích hợp
+với bộ xử lý ngôn ngữ tự nhiên khác. Trong bộ xử lý phản hồi người dùng
+này, hệ thống sẽ tiến hành xử lý các thông tin nhập vào từ giao diện
+hệ thống Chabot hoặc kết quả trả về từ bộ xử lý ngôn ngữ tự nhiên
+bên ngoài thành một cấu trúc đồng nhất để sử dụng trong lõi hệ thống,
+lõi hệ thống như mô tả ở hình \ref{fig:chatbotapp}. Các hành động được
+biểu diễn như cấu trúc \ref{struct:action}.
+
+\renewcommand{\textboxenvname}{Cấu trúc}
+\begin{textbox}[struct:action]{Cấu trúc cho một hành động}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "intent": <value 1>,
+    "inform_slots": <value 2>,
+    "request_slots": <value 3>
+}
+\end{Verbatim}
+\end{textbox}
+
+Trong đó:
+
+\begin{itemize}
+    \item \textbf{<value 1>}: chứa ý định người dùng, các giá trị
+    hợp lệ được mô tả trong bảng \ref{tab:userintent}
+    \item \textbf{<value 2>}: là một dictionary (kiểu dữ liệu của
+    Python), có cấu trúc key:value, với key là tên thông tin
+    cung cấp, các trường thông tin được định nghĩa ở mục
+    \ref{subsec:productdb} và \ref{subsec:sizedb}, value là giá trị
+    của thông tin
+    \item \textbf{<value 3>}: là một dictionary, có cấu trúc
+    key:value, với key là tên thông tin yêu cầu, các trường
+    thông tin được định nghĩa ở mục \ref{subsec:productdb} và
+    \ref{subsec:sizedb}, value có giá trị mặc định là
+    chuỗi kí tự \enquote{UNK}.
+\end{itemize}
+
+\begin{table}[!ht]
+\caption{Các ý định hành động của người dùng}
+\label{tab:userintent}
+\centering
+\begin{tabular}{|C{1cm}|C{1.5cm}|L{11cm}|}
+\hline
+\textbf{STT} & \textbf{Ý định} & \textbf{Mô tả} \\ % inserts table %heading
+\hline
+1 &
+hello &
+Ý định khi người dùng thực hiện các câu chào, hỏi thăm với tác nhân \\
+\hline
+2 &
+inform &
+Ý định khi người dùng cần thông báo thông tin đến cho tác nhân \\
+\hline
+3 &
+request &
+Ý định khi người dùng yêu cầu tác nhân cung cấp thông tin \\
+\hline
+4 &
+order &
+Ý định khi người dùng muốn đặt hàng sản phẩm \\
+\hline
+5 &
+ok &
+Ý định khi người dùng thể hiện ý đồng tình, chỉ cho tác nhân
+biết rằng nó đã làm điều gì đó tốt, đúng hoặc người dùng đã
+sẵn sàng kết thúc cuộc trò chuyện \\
+\hline
+6 &
+reject &
+Ý định khi người dùng thể hiện ý phản đối, không đồng tình,
+với thông tin tác nhân cung cấp \\
+\hline
+7 &
+done &
+Ý định khi người dùng xác nhận kết thúc hội thoại. Đối với bộ
+mô phỏng người dùng, diễn ra khi nó nhận thấy tác nhân hoàn thành
+được yêu cầu hoặc khi hội thoại diễn ra quá lâu. \\
+\hline
+8 &
+other &
+Các ý định khác của người dùng chưa được định nghĩa trong hệ thống. \\
+\hline
+\end{tabular}
+\end{table}
+
+Một hành động người dùng được trình bày ở ví dụ \ref{exam:action}.
+Tương ứng một câu thoại của người dùng ở thực tế là:
+
+\textit{Cho mình hỏi áo hoa có những màu gì vậy shop?}
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:action]{Ví dụ cho một hành động}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "intent": "request",
+    "inform_slots": {"name_product": "áo hoa"},
+    "request_slots": {"color_product": "UNK"}
+}
+\end{Verbatim}
+\end{textbox}
+
+Các công việc trên sẽ được thực hiện qua hàm
+$process\_user\_response$, với giao thức được
+mô tả ở đoạn mã \ref{func:processuser}.
+
+\renewcommand{\lstlistingname}{Hàm}
+\begin{lstlisting}[caption={Hàm xử lý phản hồi người dùng},label={func:processuser},language=python]
+def process_user_response(user_action):
+    """
+    Processing user response.
+    Parameters:
+        user_action (dict or string): The user input
+    Returns:
+        dict: The user action has valid format.
+    """
+\end{lstlisting}
+
+Hàm này thực hiện các công việc sau:
+
+\begin{itemize}
+    \item Kiểm tra đầu vào của người dùng là ở dạng chuỗi hay dạng dictionary.
+    \item Nếu đầu vào là ở dạng chuỗi, tiếp tục xử lý theo các bước sau:
+    \begin{itemize}
+        \item Gửi nó sang một Bộ xử lý ngôn ngữ tự nhiên được xây dựng
+        ở một hệ thống khác (nếu có) với phương thức POST. Kết quả
+        trả về là gồm ý định người dùng, và các thông tin thông báo, yêu cầu.
+        \item Chuyển đổi cấu trúc đầu ra của hệ thống này thành cấu trúc
+        hành động như mô tả ở cấu trúc \ref{struct:action}
+    \end{itemize}
+    \item Hành động đầu vào hoặc đã xử lý ở dạng dictionary, sẽ được
+    chuẩn hóa một số thông tin tùy vào ý định hiện tại.
+    \begin{itemize}
+        \item Nếu ý định của người dùng không thuộc các ý định hợp lệ
+        được mô tả ở bảng \ref{tab:userintent}. Ta gán lại \enquote{intent}
+        thành một giá trị duy nhất là \enquote{other}.
+        \item Kiểm tra nếu có bất kỳ thông tin nào có giá trị được thông báo
+        (khác giá trị mặc định \enquote{UNK}), thì gán cặp tên thông tin
+        và giá trịcủa nó vào \enquote{inform\_slots}.
+        \item Kiểm tra nếu ý định người dùng là \enquote{inform}, và có
+        thông tin được yêu cầu thông báo (giá trị mặc định \enquote{UNK}),
+        gán lại giá trị \enquote{intent} là \enquote{request}.
+        \item Chuẩn hóa một số thông tin nhập vào bởi người dùng về cùng
+        một đơn vị giống với giá trị lưu trữ ở cơ sở dữ liệu (mô tả ở mục
+        \ref{subsec:productdb} và \ref{subsec:sizedb}) để thuận lợi
+        cho việc truy xuất dữ liệu được chính xác.
+    \end{itemize}
+\end{itemize}
+
+\section{Bộ quản lý trạng thái hội thoại}
+\label{sec:statetracker}
+Công việc chính của bộ quản lý trạng thái hội thoại là chuẩn bị
+trạng thái (state) cho tác nhân. Như đã đề cập ở mục \ref{sec:model},
+cần một trạng thái hữu ích để có thể làm đầu vào mạng Deep Q-Learning
+và lấy ra hành động một cách chính xác. Bộ quản lý trạng thái hội thoại
+cập nhật trạng thái lịch sử của hội thoại bằng việc thu thập toàn bộ
+hành động của người dùng và cả tác nhân từ lúc bắt đầu hội thoại cho tới
+thời điểm hiện tại. Đồng thời nó cũng theo dõi tất cả các thông tin
+đã được thông báo có trong bất kỳ hành động của người dùng hay của
+tác nhân trong hội thoại hiện tại. Trạng thái được sử dụng bởi tác nhân
+được biểu diễn dưới dạng mảng và mã hóa các thông tin như hình
+\ref{exam:state}. Bên cạnh đó, khi tác nhân muốn thông báo một giá trị
+của thông tin cho người dùng, bộ quản lý trạng thái hội thoại sẽ
+thực hiện công việc truy vấn lên cơ sở dữ liệu để lấy thông tin đó.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:state]{Ví dụ một trạng thái hội thoại}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+[1.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   1.   0.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   1.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.   1.   0.   0.   0.   1.   0.   0.   0.
+ 0.   0.   1.   0.   0.   1.   0.6  0.   0.   1.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   1.
+ 1.   1.   1.   1.   1.   1.   1.   1.   0.   1.   0.04 0.04 0.04 0.04
+ 0.04 0.04 6.48 0.04 0.04 0.   0.04]
+\end{Verbatim}
+\end{textbox}
+
+Một số thông tin được mã hóa (chủ yếu ở dạng one hot encoding),
+trạng thái bao gồm:
+
+\begin{itemize}
+    \item Ý định của người dùng trong hành động gần nhất
+    \item Thông tin được người dùng thông báo trong hành động gần nhất
+    \item Thông tin mà người dùng yêu cầu trong hành động gần nhất
+    \item Ý định của tác nhân trong hành động gần nhất
+    \item Thông tin được tác nhân thông báo trong hành động gần nhất
+    \item Thông tin mà tác nhân yêu cầu trong hành động gần nhất
+    \item Tất cả các thông tin được người dùng thông báo từ lúc bắt đầu
+    cuộc hội thoại cho tới thời điểm hiện tại
+    \item Số lượt qua lại diễn ra trong hội thoại
+    \item Kết quả trả về sau khi truy vấn lên cơ sở dữ liệu
+\end{itemize}
+
+Sau khi tổng hợp toàn bộ các thông tin trên và nối lại thành một mảng
+hoàn chỉnh, ta được một biểu diễn trạng thái với kích thước 105.
+Đồng thời, khi hành động được gửi tới cho bộ quản lý trạng thái
+hội thoại từ tác nhân là inform (cung cấp thông tin yêu cầu) hoặc
+match\_found (cung cấp toàn bộ thông tin sản phẩm) thì nó sẽ gọi lệnh
+truy vấn lên cơ sở dữ liệu để lấy thông tin về điền vào hành động.
+
+\section{Bộ sinh phản hồi}
+\label{sec:agentresponse}
+
+\subsection{Kiến trúc tổng quát và quá trình huấn luyện mô hình}
+Để đưa ra quyết định phản hồi hành động cho người dùng, cần có một
+hệ thống huấn luyện một mô hình phù hợp. Kiến trúc của hệ thống và
+quá trình huấn luyện được mô tả ở mục \ref{sec:trainingmodel}.
+Phần này mô tả cụ thể chi tiết hiện thực mạng nơ-ron.
+
+\subsection{Tập dữ liệu}
+Sử dụng toàn bộ dữ liệu đã được mô tả ở mục \ref{sec:database}
+cho việc huấn luyện mô hình. Các dữ liệu được lưu trữ ở dạng tệp
+(file) để tiện cho việc truy vấn khi huấn luyện. Cụ thể số liệu
+các dữ liệu được sử dụng như sau:
+
+\begin{itemize}
+    \item File dữ liệu thông tin sản phẩm chứa thông tin về 100
+    sản phẩm khác nhau.
+    \item File dữ liệu về kích cỡ chứa thông tin về 1000 bảng
+    kích cỡ khác nhau.
+    \item File từ điển thông tin sản phẩm cũng được sinh ra với
+    60 giá trị khác nhau của 6 loại thông tin sản phẩm.
+    \item File từ điển kích cỡ cũng được sinh ra với 90 giá trị
+    khác nhau của 4 loại thông tin kích cỡ.
+    \item File mục tiêu người dùng chứa 100 mục tiêu được sinh
+    ngẫu nhiên về số lượng các thông tin bên trong để mô phỏng
+    sự đa dạng về yêu cầu của người dùng.
+    \item File hội thoại chứa 2000 hội thoại được tạo từ bộ luật
+    mô tả đầy đủ các tình huống yêu cầu của người dùng.
+\end{itemize}
+
+\subsection{Mạng Deep Q-Learning}
+\label{subsec:agent}
+Sau nhiều lần xây dựng và thử nghiệm, đề tài hiện thực mô hình
+huấn luyện với các thông số như sau:
+
+\begin{itemize}
+    \item Tầng đầu vào: là trạng thái hiện tại của hội thoại, có
+    kích thước 105, cụ thể được đề cập ở mục \ref{sec:statetracker}
+    \item Tầng ẩn: mạng chỉ có một tầng ẩn, và có kích thước là 80.
+    \item Tầng đầu ra: là các hành động có thể có của tác nhân,
+    có kích thước 16, là tổ hợp của các ý định tác nhân cùng với các
+    thông tin sản phẩm và kích cỡ, các ý định tác nhân được mô tả
+    cụ thể ở bảng \ref{tab:agentintent}
+    \item Kích thước một bó (batch size): 16
+    \item Learning rate ($\alpha$): 1e-3
+    \item Gamma ($\gamma$): 0.9
+\end{itemize}
+
+\begin{table}[!ht]
+\caption{Các ý định hành động của tác nhân}
+\label{tab:agentintent}
+\centering
+\begin{tabular}{|C{1cm}|C{2.5cm}|L{10cm}|}
+\hline
+\textbf{STT} & \textbf{Ý định} & \textbf{Mô tả} \\ % inserts table %heading
+\hline
+1 &
+hello &
+Ý định khi tác nhân thực hiện các câu chào, hỏi thăm với người dùng \\
+\hline
+2 &
+inform &
+Ý định khi tác nhân cung cấp giá trị thông tin đến cho người dùng \\
+\hline
+3 &
+request &
+Ý định khi tác nhân muốn người dùng cung cấp giá trị thông tin
+cần thiết cho hoạt động tư vấn hoặc để chốt đơn hàng \\
+\hline
+4 &
+done &
+Ý định khi tác nhân muốn xác nhận kết thúc hội thoại. \\
+\hline
+5 &
+match\_found &
+Ý định khi tác nhân muốn cho người dùng biết rằng nó có một kết quả
+phù hợp mà nó cho rằng sẽ hoàn thành mục tiêu của người dùng \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Bộ hỗ trợ truy vấn dữ liệu}
+Công việc chính của bộ này là hỗ trợ truy vấn dữ liệu cho bộ quản lý
+trạng thái hội thoại (mô tả ở mục \ref{sec:statetracker}. Bộ hỗ trợ
+truy vấn dữ liệu nhận vào điều kiện được lập ra từ các thông tin
+cung cấp từ người dùng và trả về kết quả là giá trị gợi ý, thông tin
+của sản phẩm hoặc các kết quả hiện tại của quá trình tìm kiếm,
+tùy thuộc vào trạng thái của hội thoại.
+
+\subsubsection{Hàm đếm số lượng giá trị cho các thông tin}
+
+\renewcommand{\lstlistingname}{Hàm}
+\begin{lstlisting}[caption={Hàm đếm số lượng giá trị cho các thông tin},language=python]
+def get_db_results_for_slots(self, current_informs):
+    """
+    Parameters:
+        current_inform (dict): The current informs/constraints
+
+    Returns:
+        dict: Each key in current_informs with the count of the number of matches for that key
+    """
+\end{lstlisting}
+
+Hàm này có nhiệm vụ nhận vào điều kiện ở dạng \textit{key:value}, và
+trả về số lượng kết quả thỏa mãn cho từng điều kiện đơn cũng như
+toàn bộ điều kiện. Cụ thể:
+
+\begin{itemize}
+    \item Đếm số lần xuất hiện của mỗi vị trí thông báo hiện tại
+    (key và value) trong các bản ghi cơ sở dữ liệu.
+    \item Đối với mỗi bản ghi trong cơ sở dữ liệu và mỗi vị trí
+    thông báo hiện tại nếu vị trí đó nằm trong bản ghi cơ sở dữ liệu
+    (khớp với key và value) thì tăng số lượng cho key đó lên 1.
+    \item Nếu không có bất kỳ thông tin được thông báo nào,
+    hãy trả lại tất cả 0.
+\end{itemize}
+
+\subsubsection{Hàm đếm giá trị cho một thông tin}
+
+\renewcommand{\lstlistingname}{Hàm}
+\begin{lstlisting}[caption={Hàm đếm giá trị cho một thông tin},language=python]
+def _count_slot_values(self, key, db_subdict):
+    """
+    Parameters:
+        key (string): The key to be counted
+        db_subdict (dict): A sub-dict of the database
+
+    Returns:
+        dict: The values and their occurrences given the key
+    """
+\end{lstlisting}
+
+Hàm này có nhiệm vụ nhận vào loại thông tin cần đếm (ở dạng chuỗi)
+và danh sách các sản phẩm (ở dạng dictionary) và trả về số lần
+xuất hiện của từng giá trị (thuộc thông tin cần đếm)
+trong danh sách các sản phẩm.
+
+\subsubsection{Hàm lấy thông tin sản phẩm}
+
+\renewcommand{\lstlistingname}{Hàm}
+\begin{lstlisting}[caption={Hàm lấy thông tin sản phẩm},language=python]
+def get_db_results(self, constraints):
+    """
+    Parameters:
+        constraints (dict): The current informs
+
+    Returns:
+        array dict: The available items in the database
+    """
+\end{lstlisting}
+
+Hàm này có nhiệm vụ nhận vào điều kiện ở dạng \textit{key:value}.
+Nó xem xét từng bản ghi trong cơ sở dữ liệu và nếu các thông tin
+của nó chứa tất cả các ràng buộc và giá trị của chúng khớp nhau
+thì bản ghi đó sẽ được thêm vào danh sách trả về.
+
+\subsubsection{Hàm điền giá trị cho thông tin}
+
+\renewcommand{\lstlistingname}{Hàm}
+\begin{lstlisting}[caption={Hàm điền giá trị cho thông tin},language=python]
+def fill_inform_slot(self, inform_slot_to_fill, current_inform_slots, entity_list):
+    """
+    Parameters:
+        inform_slot_to_fill (dict): Inform slots to fill with values
+        current_inform_slots (dict): Current inform slots with values from the StateTracker
+
+    Returns:
+        dict: inform_slot_to_fill filled with values
+    """
+\end{lstlisting}
+
+Hàm này có nhiệm vụ nhận vào thông tin cần điền, lấy các sản phẩm
+thỏa điều kiện (dựa vào hàm $get\_db\_results$), sau đó đếm giá trị
+trong thông tin cần điền ($\_count\_slot\_values$) và lấy ra
+thông tin có số lần xuất hiện nhiều nhất điền vào thông tin.
+
+\section{Bộ sinh câu phản hồi}
+Ở mục \ref{sec:agentresponse} đã đề cập đến việc cách mà hệ thống
+phản hồi lại người dùng thông qua \textit{action} (hành động) - là
+một dạng biểu diễn thông tin mà mô hình có thể hiểu và sử dụng để
+giao tiếp giữa các thành phần với nhau và huấn luyện. Tuy nhiên,
+không thể sử dụng trực tiếp chúng để giao tiếp với người dùng.
+Để người dùng có thể hiểu được và giao tiếp một cách dễ dàng
+trong suốt quá trình diễn ra hội thoại, ta cần biểu diễn hành động
+dưới dạng câu thoại sử dụng ngôn ngữ tự nhiên, sử dụng theo đúng
+cấu trúc ngữ pháp Tiếng Việt. Để làm được điều này, sử dụng các
+mẫu câu đã được định nghĩa sẵn và để trống các trường thông tin
+và được điền vào sau khi truy vấn vào cơ sở dữ liệu. Cụ thể, chia
+các mẫu câu phản hồi vào từng các nhóm nhỏ dựa vào \textit{intent},
+mô tả ở bảng \ref{tab:agentintent}.
+
+Các câu hội thoại mẫu được lưu trữ với cấu trúc như ví dụ \ref{exam:actionnl}.
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:actionnl]{Câu hội thoại mẫu}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+"hello": [
+    "text": "Cảm ơn bạn đã quan tâm đến shop, bạn cần shop tư vấn sản phẩm nào ạ",
+    "text": "Chào bạn ạ, bạn cần shop hỗ trợ gì ạ", ...
+],
+"request": [
+    {
+        "request_slots": [
+            "waist_customer"
+        ],
+        "text": "Cho em xin số đo vòng eo của bạn, e tư vấn cho mình size phù hợp ạ."
+    },
+    {
+        "request_slots": [
+            "color_product"
+        ],
+        "inform_slots": [],
+        "text": "dạ bạn muốn lấy màu gì ạ?"
+    }, ...
+],
+"inform": [
+    {
+        "inform_slots": [
+            "size_customer"
+        ],
+        "text": "Bạn mặc size *size_customer* là chuẩn xinh nha"
+    },
+    {
+        "inform_slots": [
+            "name_product"
+        ],
+        "text": "dạ bên em có nhiều sản phẩm đẹp và chất lượng lắm ạ. Chị tham khảo các mẫu sau *name_product*"
+    },
+],
+...
+\end{Verbatim}
+\end{textbox}
+
+\section{Bộ mô phỏng người dùng}
+\label{sec:usersim}
+Mục đích của bộ mô phỏng người dùng là dùng để mô phỏng người dùng
+thật để tương tác với tác nhân cũng như chấm điểm nó. Việc này sẽ tốn
+rất nhiều thời gian nếu như làm với người thật. Bộ mô phỏng người dùng
+này sẽ được hiện thực theo dạng luật định sẵn. Cụ thể với mỗi lần
+tham gia cuộc hội thoại, ta đều quy định sẵn các mục tiêu người dùng
+(\textit{user goal}) và thực hiện các hành động phù hợp với mục tiêu
+đó, mỗi hành động sẽ kèm theo các thông tin mà nó sẽ yêu cầu hay
+thông báo.
+
+Mục tiêu người dùng có thể có được từ các cuộc hội thoại thực hoặc
+được làm thủ công (hoặc cả hai). Mỗi mục tiêu người dùng gồm các
+\textit{inform slots} (các cặp tên thông tin và giá trị cần được
+thông báo) và \textit{request slots} (các thông tin yêu cầu cung cấp
+bởi tác nhân). Ví dụ, ta có một cuộc hội thoại sau đây:
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:examdialog]{Một cuộc hội thoại tư vấn}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+User: Mẫu áo AT001 này có size XL không bạn?
+Admin: Có bạn nha.
+User: Có những màu nào nữa vậy bạn.
+Admin: Mẫu áo AT001 này có 3 màu ạ. Đỏ, Trắng, Đen.
+User: Ok cám ơn bạn.
+\end{Verbatim}
+\end{textbox}
+
+Trong cuộc hội thoại, khách hàng yêu cầu số lượng và màu sắc của
+sản phẩm với mã sản phẩm và kích thước mà họ cung cấp. Từ đó,
+ta sẽ có một mục tiêu người dùng như sau:
+
+\renewcommand{\textboxenvname}{Ví dụ}
+\begin{textbox}[exam:examgoal]{Một mục tiêu người dùng}
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+{
+    "request_slots": {
+    	"amount_product": "UNK",
+    	"color_product": "UNK"
+    },
+    "inform_slots": {
+    	"name_product": "AT001",
+    	"size_product": "XL"
+    }
+}
+\end{Verbatim}
+\end{textbox}
+
+Khi quá trình huấn luyện diễn ra, tại mỗi cuộc hội thoại, bộ mô phỏng
+người dùng sẽ ngẫu nhiên chọn ra một mục tiêu người dùng từ danh sách
+và sẽ lần lượt gửi các hành động tương ứng phù hợp với mục tiêu
+người dùng đã được chọn tới tác nhân.
+
+Để làm được điều trên, bộ mô phỏng người dùng cần phải lưu trữ
+trạng thái hội thoại cho riêng nó (trạng thái này khác với trạng thái
+của bộ quản lý trạng thái hội thoại). Trong đề tài này, nó sẽ được
+hiện thực theo cấu trúc dữ liệu dictionary trong Python, cụ thể:
+
+\begin{itemize}
+    \item \textbf{Rest slots:} Tất cả các \textit{inform slots} và
+    \textit{request slots} từ mục tiêu người dùng mà tác nhân hoặc
+    người dùng chưa được thông báo hoặc yêu cầu.
+    \item \textbf{History slots:} Tất cả các cặp tên thông tin và
+    giá trị từ các hành động của người dùng và tác nhân cho đến
+    thời điểm hiện tại.
+    \item \textbf{Request slots:} Các thông tin mà người dùng muốn
+    yêu cầu tác nhân tại hành động hiện tại.
+    \item \textbf{Inform slots:} Các thông tin sẽ được thông báo
+    cho tác nhân tại hành động hiện tại.
+    \item \textbf{Intent:} Ý định của hành động hiện tại.
+\end{itemize}
+
+Với mỗi hành động nhận được từ tác nhân, tùy vào \textit{intent} mà
+bộ mô phỏng người dùng sẽ phản hồi lại theo luật đã quy định sẵn:
+
+Đầu tiên, kiểm tra số câu thoại đã thực hiện. Nếu số lần đến tối đa
+(20 lần) thì trả lời với \enquote{intent} = \enquote{done}.
+
+Nếu không thì tạo ra một hành động dựa trên \textit{intent} của tác nhân:
+
+\begin{itemize}
+    \item \enquote{request}: tuỳ thuộc vào \textit{request slots},
+    phản hồi với \enquote{intent} = \enquote{inform} hoặc \enquote{request}.
+    \item \enquote{inform}: tuỳ thuộc vào trạng thái hiện tại của
+    cuộc hội thoại, phản hồi với \enquote{intent} = \enquote{inform}
+    hoặc \enquote{request} hoặc \enquote{ok}.
+    \item \enquote{match\_found}: tuỳ thuộc vào kết quả trả về của tác nhân,
+    phản hồi với \enquote{intent} = \enquote{ok} hoặc \enquote{reject}.
+    \item \enquote{done}: phản hồi với \enquote{intent} = \enquote{done},
+    đồng thời tuỳ thuộc vào trạng thái hội thoại mà quyết định cuộc hội thoại
+    có thành công hay không.
+\end{itemize}
+
+Một trong những thành phần quan trọng trong giải thuật nêu trên là
+\textit{reward} - phần thưởng cho mỗi hành động của tác nhân. Mỗi
+hành động phản hồi của bộ mô phỏng người dùng đều kèm theo điểm
+phần thưởng. Phần thưởng góp phần định hướng cho mỗi hành động của
+tác nhân: khuyến khích bằng cách cho điểm cao trước mỗi hành động
+chính xác hoặc dẫn đến thành công cho cuộc hội thoại, hoặc trừ điểm
+trước mỗi hành động không phù hợp hoặc sai lầm để tác nhân có thể
+tránh lặp lại trong tương lai. Tác nhân sẽ tự điều chỉnh hành vi
+sao cho tổng điểm thưởng nhận được là lớn nhất khi kết thúc hội thoại.
+Một số điểm thưởng đã được định nghĩa như sau:
+
+\begin{itemize}
+    \item \textbf{NO OUTCOME:} chưa thể kết thúc cuộc hội thoại.
+    Đây là giá trị mặc định mà trải qua mỗi lượt trong cuộc hội thoại
+    tác nhân sẽ bị trừ và điểm trừ này là thấp nhất. Nó có tác dụng
+    kích thích tác nhân mau chóng tìm ra kết quả để kết thúc hội thoại
+    sớm nhất có thể.
+    \item \textbf{UNSUITABLE:} phản hồi không phù hợp. Đây là điểm trừ
+    khi tác nhân yêu cầu thông tin mà người dùng đã yêu cầu hoặc thông báo
+    từ trước, hoặc khi tác nhân yêu cầu lại thông tin đã yêu cầu trước đó.
+    \item \textbf{FAIL:} kết thúc hội thoại nhưng thất bại vì không
+    thoả mãn người dùng. Đây là điểm trừ lớn nhất.
+    \item \textbf{GOOD INFORM:} tác nhân cung cấp giá trị hợp lý cho
+    người dùng sẽ được cộng điểm thưởng khuyến khích hành vi này.
+    \item \textbf{SUCCESS:} tác nhân phản hồi kết quả thoả mãn yêu cầu
+    của người dùng khi kết thúc cuộc hội thoại. Điểm cộng này là lớn nhất.
+\end{itemize}
+
+\section{Bộ giả lập lỗi}
+\label{sec:emc}
+Sau khi nhận được hành động tạo ra từ bộ mô phỏng người dùng, nó sẽ
+được gửi đến bộ giả lập lỗi (EMC) để tạo ra các lỗi ngẫu nhiên.
+Việc này giúp tác nhân có thể xử lý được tốt hơn với các tình huống
+thực tế có thể phát sinh lỗi xuất phát từ các thành phần xử lý ngôn ngữ
+tự nhiên hoặc do người dùng mắc lỗi trong câu trả lời của họ. Các lỗi
+mà bộ phận này có thể tạo ra bao gồm lỗi ở thông tin của hành động
+thông báo và ý định của hành động. Cụ thể ở mức thông tin ta có ba lỗi
+với xác suất xuất hiện bằng nhau:
+
+\begin{itemize}
+    \item Thay thế giá trị bằng một giá trị ngẫu nhiên cho thông tin đó.
+    \item Thay thế toàn bộ thông tin: chọn thông tin ngẫu nhiên và
+    giá trị ngẫu nhiên cho thông tin đó.
+    \item Xóa thông tin.
+\end{itemize}
+
+Đối với lỗi ở ý định, ta có thể tạo ra lỗi bằng cách thay thế ý định
+bằng một ý định ngẫu nhiên khác.
