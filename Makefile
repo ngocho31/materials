@@ -125,7 +125,7 @@ $(foreach file,$(SLIDES_TEX),$(if $(wildcard $(file)),,$(error Missing file $(fi
 		sed -i 's%__SESSION_NAME__%$(SLIDES_MATERIALS)%' $(OUTDIR)/`basename $$f` ; \
 		printf "\input{%s}\n" `basename $$f .tex` >> $(OUTDIR)/$(basename $@).tex ; \
 	done
-	cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(basename $@).tex > output.log 2>&1; \
+	cd $(OUTDIR); $(PDFLATEX_ENV) $(PDFLATEX) $(PDFLATEX_OPT) $(basename $@).tex > output.log 2>&1; \
 	STATUS=$$?; \
 	if [ $$STATUS -ne 0 ]; then \
 		cat output.log; \

@@ -3,7 +3,9 @@ EMBEDDED_LINUX_BBB_SIMPLE_PROJECT_SLIDES = \
     linux-intro \
     linux-dev-environment \
     linux-toolchains \
-    linux-toolchains-definition
+    linux-toolchains-definition \
+    linux-toolchains-options \
+    linux-toolchains-obtaining
 
 EMBEDDED_LINUX_BBB_SIMPLE_PROJECT_LABS = \
     setup \
