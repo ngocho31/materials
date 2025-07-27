@@ -1,0 +1,140 @@
+\subchapter{Kernel - Cross-compiling}{Objective: Compile
+  the Linux kernel for an ARM target platform.}
+
+\section{Cross-compiling environment setup}
+
+To cross-compile Linux, you need to have a cross-compiling
+toolchain. We will use the cross-compiling toolchain that we
+previously produced, so we just need to make it available in the PATH:
+
+\begin{bashinput}
+$ export PATH=$PATH:$HOME/x-tools/%\ifdefstring{\arch}{ARM64}{aarch64-none-linux-musl}{arm-none-linux-musleabihf}%/bin/
+\end{bashinput}
+
+Also, don't forget to either:
+
+\begin{itemize}
+\item Define the value of the \code{ARCH} and \code{CROSS_COMPILE}
+  variables in your environment (using \code{export})
+\item {\bf Or} specify them on the command line at every invocation of
+  \code{make}, i.e.: \code{make ARCH=... CROSS_COMPILE=... <target>}
+\end{itemize}
+
+% \ifdefstring{\labboard}{beagleplay}{
+% \textbf{Important:} The majority of tools use \code{aarch64} to define 64 bits
+% ARM processors. However in specific cases, the tools may use \code{arm64} to
+% define such architecture. In the case of the kernel Makefile we will use the
+% \code{arm64} one.
+% }{}
+
+\section{Linux kernel configuration}
+
+By running \code{make help}, look for the proper Makefile target to
+configure the kernel for your processor.
+
+% \ifdefstring{\labboard}{stm32mp1}
+% {The standard configuration for this kernel is actually \code{multi_v7_defconfig},
+% but this will generate a pretty big kernel with support for many other
+% SoCs. However, we can reduce it to compile faster and get a small
+% kernel.}{}
+
+\ifdefstring{\labboard}{beaglebone}
+{In our case look for a configuration for boards in the OMAP2 and
+later family which the AM335x found in the BeagleBone belongs to.}{}
+
+% \ifdefstring{\labboard}{beagleplay}
+% {If you search for a configuration file that corresponds to the \code{arm64}
+% architecture that the kernel will use, you might see that only one
+% \code{defconfig} file is available. We will therefore load this basic
+% configuration file and modify it later.}{}
+
+% \ifdefstring{\labboard}{qemu}
+% {In course case, use the configuration for the ARM Vexpress boards
+% (\code{vexpress_defconfig}).}{}
+
+So, apply this configuration, and then run \code{make menuconfig}.
+
+\begin{itemize}
+\item Disable \kconfig{CONFIG_GCC_PLUGINS} if it is set. This will skip
+  building special {\em gcc} plugins, which would require extra dependencies
+  for the build.
+
+% \ifdefstring{\labboard}{stm32mp1}{
+%   \item In the \code{System Type} menu, remove support for all the SoCs except
+%   the STM32MP157 ones. Don't forget to disable the TI ones too which are
+%   in a submenu.
+%   \item Disable \kconfig{CONFIG_DRM}, which will skip support for many display
+%   controller and GPU drivers.}{}
+
+% \ifdefstring{\labboard}{qemu}{
+%   Also start \code{make menuconfig} to
+%   add \kconfig{CONFIG_DEVTMPFS_MOUNT} to your configuration.}{}
+
+\ifdefstring{\labboard}{beaglebone}{
+\item Add options to support USB host and networking over USB device:
+\begin{itemize}
+  \item \kconfigval{CONFIG_USB}{y}
+  \item \kconfigval{CONFIG_USB_GADGET}{y}
+  \item \kconfigval{CONFIG_USB_MUSB_HDRC}{y} {\em Driver for the USB OTG
+        controller}
+  \item \kconfigval{CONFIG_USB_MUSB_DSPS}{y}
+  \item \kconfigval{CONFIG_USB_MUSB_DUAL_ROLE}{y} {\em Use the USB OTG
+        both in host and device (gadget) modes. This will be needed
+        later to use the board's USB host port.}
+  \item Check the dependencies of \kconfig{CONFIG_AM335X_PHY_USB}
+        and find the way to set \kconfigval{CONFIG_AM335X_PHY_USB}{y}
+  \item Find the {\em USB Gadget precomposed configurations} menu
+        and set it to {\em static} instead of {\em module}
+        so that \kconfigval{CONFIG_USB_ETH}{y}
+\end{itemize}
+\item Also compile your kernel with \kconfigval{CONFIG_INPUT_EVDEV}{y},
+  to have the same default setting as in our labs with the STM32MP1 boards.
+}{}
+
+% \ifdefstring{\labboard}{beagleplay}{
+% \item In the \code{Platform Selection} menu, remove support for all the SoCs except
+% for the Texas Instruments Inc. K3 multicore SoC architecture.
+% \item Disable \kconfig{CONFIG_DRM}, which will skip support for many display
+% controller and GPU drivers.
+% }{}
+
+\end{itemize}
+
+% \ifdefstring{\labboard}{stm32mp1}{
+% Please note that this will definitely not build the smallest
+% and most optimized kernel for STM32MP1: \code{multi_v7_defconfig}
+% enables plenty of features and drivers that will not be useful on our
+% particular board.}{}
+
+% \ifdefstring{\labboard}{beagleplay}{
+% Please note that this will definitely not build the smallest and most
+% optimized kernel for the BeaglePlay: the ARM64 \code{defconfig}
+% enables plenty of features and drivers that will not be useful on our
+% particular board.}{}
+
+\section{Cross compiling}
+
+You're now ready to cross-compile your kernel. Simply run:
+
+\bashcmd{$ make}
+
+and wait a while for the kernel to compile. Don't forget to use
+\code{make -j<n>} if you have multiple cores on your machine!
+
+Look at the kernel build output to see which file contains
+the kernel image.
+
+Also look in the Device Tree Source directory to see which \code{.dtb}
+files got compiled. Find which \code{.dtb} file corresponds to your board.
+
+\ifdefstring{\labboard}{beaglebone}
+{For the BeagleBone Black, its \code{am335x-boneblack.dtb},
+and for the BeagleBone Black Wireless, its
+\code{am335x-boneblack-wireless.dtb}.}
+{}
+
+\begin{notebox}
+Personal workspace: \url{https://github.com/ngocho31/bbb-linux}
+
+Compiling kernel run: \inlinebash{$ make kernel}
+\end{notebox}
