@@ -6,7 +6,10 @@
 #
 # Use the container:
 #
-#  sudo docker run -u $(id -u):$(id -g) -v $(pwd):/embedded -v $HOME/x-tools:/home/developer/x-tools -it --rm embedded
+#  sudo docker run -u $(id -u):$(id -g) \
+#    -v $(pwd):/embedded -v $HOME/x-tools:/home/developer/x-tools \
+#    --device=/dev/ttyUSB0 --group-add dialout \
+#    -it --rm embedded
 #
 
 # Use Ubuntu 20.04 as the base image
@@ -32,6 +35,8 @@ RUN apt-get install -y \
 
 # QEMU user emulator
 RUN apt-get install -y qemu-user
+
+RUN apt-get install -y picocom
 
 # To reduce image size
 RUN apt-get clean && \
