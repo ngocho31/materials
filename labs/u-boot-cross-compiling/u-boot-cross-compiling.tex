@@ -1,0 +1,83 @@
+\subchapter{Bootloader - U-Boot - Cross-compiling}{Objectives:
+Compile the U-Boot bootloader}
+
+As the bootloader is the first piece of software executed by a
+hardware platform, the installation procedure of the bootloader is
+very specific to the hardware platform. There are usually two cases:
+
+\begin{itemize}
+
+\item The processor offers nothing to ease the installation of the
+  bootloader, in which case the JTAG has to be used to initialize
+  flash storage and write the bootloader code to flash. Detailed
+  knowledge of the hardware is of course required to perform these
+  operations.
+
+\item The processor offers a monitor, implemented in ROM, and through
+  which access to the memories is made easier.
+
+\end{itemize}
+
+\ifdefstring{\labboard}{beaglebone}
+{
+The AM3358 SoC on the BeagleBone falls into the second category. The monitor
+integrated in the ROM reads the SD card to search for a valid
+bootloader.
+}{}
+
+\section{Compiling U-Boot and SPL}
+
+Get an understanding of U-Boot's configuration and compilation steps
+by reading the \code{README} file, and specifically the {\em Building
+the Software} section.
+
+Basically, you need to:
+
+\begin{enumerate}
+\item Specify the cross-compiler prefix
+(the part before \code{gcc} in the cross-compiler executable name):
+
+\begin{bashinput}
+$ export PATH=$PATH:$HOME/x-tools/%\ifdefstring{\arch}{ARM64}{aarch64-none-linux-musl}{arm-none-linux-musleabihf}%/bin/
+$ export CROSS_COMPILE=arm-linux-
+\end{bashinput}
+
+\ifdefstring{\labboard}{beaglebone}
+{
+\item Run \inlinebash{$ ls configs/ | grep am335} to see all predefined
+      configurations. The one that supports our board is not obvious:
+      it's \code{am335x_evm_defconfig} and not
+      \code{am335x_boneblack_vboot_defconfig} which is only for {\em
+      verified boot} on BeagleBone Black.
+\item So, run \inlinebash{$ make am335x_evm_defconfig}.
+}{}
+
+\item Now that you have a valid initial configuration, you can now
+  run \inlinebash{$ make menuconfig} to further edit your bootloader features.
+
+Here, though, the default configuration works fine for our needs,
+so no change is necessary.
+
+\item Finally, run
+  \ifdefstring{\labboard}{beaglebone}{
+    \bashcmd{make DEVICE_TREE=am335x-boneblack}
+    or \bashcmd{make DEVICE_TREE=am335x-boneblack-wireless}
+  }{}
+  which will build U-Boot
+  \footnote{You can speed up the
+  compiling by using the \code{-jX} option with \code{make}, where X
+  is the number of parallel jobs used for compiling. Twice the
+  number of CPU cores is a good value.}.
+  The \code{DEVICE_TREE} variable specifies the specific
+  Device Tree that describes our hardware board.
+  Alternatively, if you wish to run just \code{make},
+  specify our board's device tree name on
+  \code{Device Tree Control} $\rightarrow$ \code{Default Device Tree for DT Control}
+  option.
+\end{enumerate}
+
+\begin{notebox}
+Personal workspace: \url{https://github.com/ngocho31/bbb-linux}
+
+Compiling U-Boot run: \inlinebash{$ make bootloader}
+\end{notebox}
