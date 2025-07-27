@@ -166,7 +166,7 @@ You can now test your toolchain by adding
 \code{PATH} environment variable:
 
 \begin{bashinput}
-$ export PATH=$PATH:$HOME/x-tools/%\ifdefstring{\arch}{ARM64}{aarch64-none-linux-musl}{arm-none-linux-musleabihf}/bin/
+$ export PATH=$PATH:$HOME/x-tools/%\ifdefstring{\arch}{ARM64}{aarch64-none-linux-musl}{arm-none-linux-musleabihf}%/bin/
 \end{bashinput}
 
 Compiling the simple \code{hello.c} program with
