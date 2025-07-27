@@ -7,6 +7,8 @@
 \usepackage{moreverb}
 \usepackage{xcolor}
 \usepackage{mdframed}
+\usepackage{tcolorbox}
+\usepackage{fontawesome5} % hoặc pifont, tikz
 
 % Custom commands
 
@@ -23,6 +25,15 @@
 }
 
 % Multi-line command environments ---------------------------------------------
+
+\newtcolorbox{notebox}{
+  colback=gray!10,
+  colframe=gray!50,
+  fonttitle=\bfseries,
+  title=\faInfoCircle\ Notes,
+  left=2mm,
+  right=2mm
+}
 
 % The digits in 'alsoletter' are a workaround to avoid breaking things like
 % "bs=8M". Replacing 'alsoletter={...}' with 'breakatwhitespace=true' would
