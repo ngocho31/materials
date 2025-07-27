@@ -1,0 +1,56 @@
+\subchapter{Fetching Linux kernel sources}{Objective: fetch
+the Linux kernel sources from git, from both the master and stable
+branches.}
+
+\section{Cloning the mainline Linux tree}
+
+To begin working with the Linux kernel sources, we need to clone its
+reference git tree, the one managed by Linus Torvalds.
+
+\begin{bashinput}
+$ git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
+$ cd linux
+\end{bashinput}
+
+\section{Accessing stable releases}
+
+The Linux kernel repository from Linus Torvalds contains all the main
+releases of Linux, but not the stable versions: they are maintained by
+a separate team, and hosted in a separate repository.
+
+We will add this separate repository as another {\em remote} to be
+able to use the stable releases:
+
+\begin{bashinput}
+$ git remote add stable https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux
+$ git fetch stable
+\end{bashinput}
+
+\section{Choose a particular stable version of Linux}
+
+We will use the Linux \workingkernel,
+the remote branch we are interested in is
+\texttt{remotes/stable/linux-\workingkernel.y}.
+
+First, execute the following command to check which version you
+currently have:
+
+\begin{bashinput}
+$ make kernelversion
+\end{bashinput}
+
+You can also open the \code{Makefile} and look at the beginning of it
+to check this information.
+
+Now, let's create a local branch starting from that remote branch:
+
+\begin{bashinput}
+$ git checkout stable/linux-%\workingkernel%.y
+\end{bashinput}
+
+Check the version again using the \code{make kernelversion} command
+to make sure you now have a \workingkernel.x version.
+
+\begin{notebox}
+Personal workspace: \url{https://github.com/ngocho31/linux.git}
+\end{notebox}
