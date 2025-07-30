@@ -10,7 +10,12 @@ EMBEDDED_LINUX_BBB_SIMPLE_PROJECT_SLIDES = \
     linux-bootloaders \
     linux-bootloaders-sequence \
     linux-bootloaders-u-boot \
-    linux-bootloaders-tf-a
+    linux-bootloaders-tf-a \
+    linux-kernel-intro \
+    linux-kernel-intro-features \
+    linux-kernel-intro-configuration \
+    linux-kernel-intro-building \
+    linux-kernel-intro-booting
 
 EMBEDDED_LINUX_BBB_SIMPLE_PROJECT_LABS = \
     setup \
