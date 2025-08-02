@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
     ghostscript \
     git \
     inkscape \
-    fonts-inconsolata \
+    fonts-inconsolata-lgc \
     fonts-liberation \
     make \
     python3-pygments \

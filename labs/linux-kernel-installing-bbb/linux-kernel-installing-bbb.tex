@@ -1,0 +1,219 @@
+\subchapter{Kernel - Installing}{Objective: Install
+  the Linux kernel for an ARM target platform.}
+
+\section{Installing kernel using U-Boot}
+
+\subsection{Setting up networking}
+
+This step is to configure U-boot and your workstation to let your
+board download files, such as the kernel image and Device Tree Binary
+(DTB), using the TFTP protocol through a network connection.
+
+\subsubsection{Ethernet over USB}
+
+Networking will work through the USB device
+cable that is already used to power up the board.
+
+{\bf Caution}: For the following to work, make sure that your board
+is powered by a USB port on your PC. Otherwise, networking over USB
+cannot work.
+
+{\bf Network configuration on the target}
+
+Let's configure networking in U-Boot:
+
+\begin{itemize}
+  \item \code{ipaddr}: IP address of the board
+  \item \code{serverip}: IP address of the PC host
+\end{itemize}
+
+\begin{ubootinput}
+=> setenv ipaddr 192.168.0.100
+=> setenv serverip 192.168.0.1
+\end{ubootinput}
+
+Of course, make sure that this address belongs to a separate network
+segment from the one of the main company network.
+
+We also need to configure Ethernet over USB device:
+\begin{itemize}
+  \item \code{ethprime}: controls which interface gets used first
+  \item \code{usbnet_devaddr}: MAC address on the device side
+  \item \code{usbnet_hostaddr}: MAC address on the host side
+\end{itemize}
+
+\begin{ubootinput}
+=> setenv ethprime usb_ether
+=> setenv usbnet_devaddr f8:dc:7a:00:00:02
+=> setenv usbnet_hostaddr f8:dc:7a:00:00:01
+\end{ubootinput}
+
+To make these settings permanent, save the environment:
+
+\begin{ubootinput}
+=> saveenv
+\end{ubootinput}
+
+% Restart board to reload USB controller or re-bind
+
+% \begin{ubootinput}
+% => reset
+% \end{ubootinput}
+
+% or
+
+% \begin{ubootinput}
+% => unbind ethernet 1
+% => bind /ocp/usb@47400000/usb@47401000 usb_ether
+% \end{ubootinput}
+
+{\bf Network configuration on the PC host}
+
+To configure your network interface on the workstation side, we need
+to know the name of the network interface connected to your board.
+
+Note that when the board is waiting at the U-Boot prompt, no network
+interface will show up on the workstation side. It is only when U-Boot
+is actively executing a network-related command (such as \code{ping}
+or \code{tftp}) that it brings up the USB network connection.
+
+From the board, run \code{ping 192.168.0.1}, and while the \code{ping}
+command is running, you should see on your workstation a new network
+interface named \code{enx<macaddr>}. Given the value we gave to
+\code{usbnet_hostaddr}, it will therefore be
+\code{enxf8dc7a000001}. Note that pinging the board from your PC will
+not work: when U-Boot is waiting at its prompt, it is not able to
+reply to ping requests.
+
+Then, instead of configuring the host IP address from NetworkManager's
+graphical interface, let's do it through its command line interface,
+which is so much easier to use:
+
+\bashcmd{nmcli con add type ethernet ifname enxf8dc7a000001 ip4 192.168.0.1/24}
+
+\subsubsection{Using ethernet port}
+TBD
+
+\subsection{Setting up the TFTP server}
+
+Let's install a TFTP server on your development workstation:
+
+\begin{bashinput}
+$ sudo apt install tftpd-hpa
+\end{bashinput}
+
+% You can then test the TFTP connection. First, put a small text file in
+% the directory exported through TFTP on your development
+% workstation. Then, from U-Boot, do:
+
+% \begin{ubootinput}
+% => tftp %\zimageboardaddr% textfile.txt
+% \end{ubootinput}
+
+% The \code{tftp} command should have downloaded the
+% \code{textfile.txt} file from your development workstation into
+% the board's memory at location {\tt \zimageboardaddr}\footnote{
+% This location is part of the board DRAM. If you want
+% to check where this value comes from, you can check the SoC
+% datasheet at
+% \url{https://www.ti.com/lit/ug/spruh73q/spruh73q.pdf}.
+% It's a big document (more than 5,000 pages). In this document, look
+% for \code{ARM Cortex-A8 Memory Map} and you will find the SoC memory map.
+% You will see that the address range for the memory controller
+% ({\em EMIF0 SDRAM})
+% starts at the address we are looking for.
+% You can also try with other values in the RAM address range.}.
+
+% You can verify that the download was successful by dumping the
+% contents of the memory:
+
+% \begin{ubootinput}
+% => md %\zimageboardaddr%
+% \end{ubootinput}
+
+% We will see in the next labs how to use U-Boot to download, flash and
+% boot a kernel.
+
+\subsection{Load and boot the kernel using U-Boot}
+
+% As we are going to boot the Linux kernel from U-Boot,
+% we need to set the \code{bootargs} environment corresponding
+% to the Linux kernel command line:
+
+% \begin{ubootinput}
+% => setenv bootargs console=%\console%
+% => saveenv
+% \end{ubootinput}
+% We will use TFTP to load the kernel image on the board:
+
+% \begin{itemize}
+
+% \item On your workstation, copy the {\tt \ifdefstring{\labboard}{beagleplay}{Image.gz}{zImage}} and DTB
+% (\texttt{\dtname}\texttt{.dtb}) to the directory exposed by the TFTP server.
+
+% \item On the target (in the U-Boot prompt), load {\tt \ifdefstring{\labboard}{beagleplay}{Image.gz}{zImage}} from
+% TFTP into RAM:
+% \begin{ubootinput}
+% => tftp %\zimageboardaddr% %\ifdefstring{\labboard}{beagleplay}{Image.gz}{zImage}%
+% \end{ubootinput}
+
+% \item Now, also load the DTB file into RAM:
+% \begin{ubootinput}
+% => tftp %\dtbboardaddr% %\dtname%.dtb
+% \end{ubootinput}
+
+% \item Boot the kernel with its device tree:
+% \begin{ubootinput}
+% => %\ifdefstring{\labboard}{beagleplay}{booti}{bootz} \zimageboardaddr% - %\dtbboardaddr%
+% \end{ubootinput}
+
+% \end{itemize}
+
+% \if\defstring{\labboard}{beagleplay}
+% This last command should show you an error message of this type:
+% \bashcmd{kernel_comp_addr_r or kernel_comp_size is not provided!}
+
+% This is because the boot image that we use, \code{Image.gz}, is compressed, and
+% therefore, needs to be uncompressed by U-Boot before continue booting. To do so
+% U-Boot needs to know the maximum size of the uncompressed image and where to
+% store it.
+
+% If you look at the size of the uncompressed kernel (\code{Image} file),
+% you can estimate that 32 MB (0x2000000) is a reasonable upper bound
+% for the size of the uncompressed kernel, even with a more exhaustive
+% configuration.
+
+% This gives us,
+
+% \begin{ubootinput}
+% => setenv kernel_comp_addr_r 0x85000000
+% => setenv kernel_comp_size 0x2000000
+% => saveenv
+% \end{ubootinput}
+
+% Now you can retry the \code{booti} command and see the kernel be uncompressed
+% and then loaded.
+% \fi
+
+% You should see Linux boot and finally panicking. This is expected: we
+% haven't provided a working root filesystem for our device yet.
+
+% You can now automate all this every time the board is booted or
+% reset. Reset the board, and customize \code{bootcmd}:
+
+% \begin{ubootinput}
+% => setenv bootcmd 'tftp %\zimageboardaddr\ \ifdefstring{\labboard}{beagleplay}{Image.gz}{zImage}; tftp \dtbboardaddr\ {\dtname}.dtb; \ifdefstring{\labboard}{beagleplay}{booti}{bootz} \zimageboardaddr\ - \dtbboardaddr'%
+% => saveenv
+% \end{ubootinput}
+
+% \ifdefstring{\labboard}{beaglebone}
+% {{\bf Known issue}: with at least U-Boot 2023.04 and 2024.04 and with
+% USB networking, there is an issue running two \code{tftp} commands in a
+% row in \code{bootcmd}. To work around this issue before we get a chance
+% to fix it upstream, insert \code{sleep 0.1} between the two \code{tftp}
+% commands and everything will work as expected.}{}
+
+% Restart the board to make sure that booting the kernel is now automated.
+
+\section{Installing kernel directly to internal eMMC}
+TBD
