@@ -21,5 +21,7 @@ EMBEDDED_LINUX_SLIDES = \
     linux-kernel-root-filesystem-initramfs \
     linux-kernel-root-filesystem-contents \
     linux-kernel-root-filesystem-virtual-fs \
+    linux-kernel-root-filesystem-block-fs \
+    linux-kernel-root-filesystem-flash-fs \
     linux-kernel-root-filesystem-minimal \
     linux-kernel-root-filesystem-boot-sequence
