@@ -1,4 +1,4 @@
-EMBEDDED_LINUX_BBB_SIMPLE_PROJECT_LABS = \
+EMBEDDED_LINUX_BBB_LABS = \
     setup \
     setup-bbb-board \
     linux-toolchain \
