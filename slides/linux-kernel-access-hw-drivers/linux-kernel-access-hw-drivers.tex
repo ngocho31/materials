@@ -1,0 +1,202 @@
+\subsection{Kernel drivers}
+
+\begin{frame}{Typical software stack for hardware access}
+  \begin{columns}
+    \column{0.6\textwidth}
+    From the bottom to the top:
+    \begin{itemize}
+    \item A {\em bus controller driver} in the kernel drives an I2C,
+      SPI, USB, PCI controller
+    \item A {\em bus subsystem} provides an API for drivers to access
+      a particular type of bus: I2C, SPI, PCI, USB, etc.
+    \item A {\em device driver} in the kernel drives a particular
+      device connected to a given bus
+    \item A {\em driver subsystem} exposes features of certain class
+      of devices, through a standard {\em kernel/user-space interface}
+    \item An application can access the device through this standard {\em
+        kernel/user-space interface} either directly or through a
+      library.
+    \end{itemize}
+    \column{0.4\textwidth}
+    \begin{center}
+      \includegraphics[height=0.7\textheight]{slides/linux-kernel-access-hw-drivers/kernel-driver-stack.pdf}
+    \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Stack illustrated with a GPIO expander}
+  \begin{center}
+    \includegraphics[height=0.8\textheight]{slides/linux-kernel-access-hw-drivers/kernel-driver-stack-gpio-i2c.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Standardized user-space interface}
+  \begin{itemize}
+  \item Strong advantage of kernel drivers: they expose a standard
+    {\em kernel to user-space interface}
+  \item All devices of the same class (e.g GPIO controllers) will
+    expose the same {\em kernel to user-space interface}
+  \item Applications don't have to know the details of the GPIO
+    controller, they just need to know the standard user-space
+    interface valid for all GPIO controllers
+  \item Applications can use existing open-source libraries that
+    leverage this standard user-space interface
+  \item Such kernel drivers can also be used internally inside the
+    kernel, for example if one driver needs to control a GPIO directly
+    (reset signal, interrupt signal, etc.)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Numerous kernel subsystems for device classes}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{itemize}
+    \item Networking stack for Ethernet, WiFi, CAN, 802.15.4, etc.
+    \item GPIO
+    \item Video4Linux for camera, video encoders/decoders
+    \item DRM for display controllers, GPU
+    \item ALSA for audio
+    \item IIO for ADC, DAC, gyroscopes, sensors, and more
+    \item MTD for flash memory
+    \item PWM
+    \end{itemize}
+    \column{0.5\textwidth}
+    \begin{itemize}
+    \item Input for keyboard, mouse, touchscreen, joystick
+    \item Watchdog
+    \item RTC for real-time clocks
+    \item remoteproc for auxiliary processors
+    \item crypto for cryptographic accelerators
+    \item hwmon for hardware monitoring sensors
+    \item block layer for block storage
+    \end{itemize}
+  \end{columns}
+  \begin{center}
+    and many more
+  \end{center}
+\end{frame}
+
+\begin{frame}{Accessing devices directly from user-space}
+  \begin{itemize}
+  \item Even though device drivers in the kernel are preferred, it is
+    also possible to access devices directly from user-space
+  \item Especially useful for very specific devices that do not fit in
+    any existing kernel subsystems
+  \item The kernel provides the following mechanisms, depending on the
+    bus:
+    \begin{itemize}
+    \item I2C: \href{https://docs.kernel.org/i2c/dev-interface.html}{i2c-dev}
+    \item SPI: \href{https://docs.kernel.org/spi/spidev.html}{spidev}
+    \item Memory-mapped: \href{https://docs.kernel.org/driver-api/uio-howto.html}{UIO}
+    \item USB: \code{/dev/bus/usb}, through \href{https://libusb.info/}{libusb}
+    \item PCI: \href{https://docs.kernel.org/PCI/sysfs-pci.html}{sysfs entries for PCI}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Accessing devices directly from user-space: GPIO example}
+  \begin{columns}
+    \column{0.3\textwidth} {\small This diagram shows what's not
+      recommended to do $\rightarrow$ for a GPIO controller, a kernel driver
+      is preferred}
+    \column{0.7\textwidth}
+    \begin{center}
+      \includegraphics[height=0.8\textheight]{slides/linux-kernel-access-hw-drivers/kernel-driver-stack-gpio-i2c-direct-userspace.pdf}\\
+    \end{center}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{What can go wrong with a user-space driver?}
+  \begin{itemize}
+  \item You write your GPIO driver in user-space: other kernel drivers
+    cannot use GPIOs from this GPIO controller
+    \begin{itemize}
+    \item Other devices that use GPIO signals from this controller for reset, interrupt, etc. cannot control/configure those signals
+    \item Your application is less portable: it will take many changes to support another type of GPIO controller.
+    \end{itemize}
+  \item You write your touchscreen driver in user-space: the standard
+    Linux graphics stack components cannot use your touchscreen
+  \item You write your network driver in user-space
+    \begin{itemize}
+    \item You can probably send/receive packets
+    \item But you cannot leverage the Linux kernel networking stack
+      for IP, TCP, UDP, etc.
+    \item And none of the Linux networking applications can use your
+      network device
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Upstream drivers vs. out-of-tree drivers}
+  \begin{itemize}
+  \item The {\em upstream} Linux kernel contains thousands of drivers
+    \begin{itemize}
+    \item This is the best place to look for drivers
+    \item Drivers have been reviewed and approved by the community
+    \item They comply with standard interfaces
+    \end{itemize}
+  \item Vendor kernels often include additional drivers, directly in
+    the kernel tree
+  \item Device vendors sometimes also provide {\em out of tree
+      drivers}
+    \begin{itemize}
+    \item Their source code is provided separately from the Linux
+      kernel tree
+    \item Quality is often dubious
+    \item Compatibility issues when updating to newer kernel releases
+    \item Not always use standard user-space interfaces
+    \item Example: \url{https://github.com/lwfinger/rtl8723ds}
+    \item Avoid them when possible!
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Finding Linux kernel drivers}
+  \begin{itemize}
+  \item \code{grep} in the Linux kernel tree is your {\em best friend}
+    \begin{itemize}
+    \item For I2C, SPI and memory-mapped devices, matching of the
+      driver is done based on the device name $\rightarrow$ {\em grep}
+      for variants of the device name and vendor
+    \item For USB, PCI, matching is done either on the vendor
+      ID/product ID, or the class $\rightarrow$ {\em grep} for these
+    \end{itemize}
+  \item Driver file names are sometimes named in a ``generic'' way,
+    not necessarily reflecting all devices they support.
+    \begin{itemize}
+    \item Example: \kfile{drivers/gpio/gpio-pca953x.c} supports much
+      more than just PCA953x. See the
+      \href{https://elixir.bootlin.com/linux/v5.19/source/drivers/gpio/gpio-pca953x.c\#L1221}{full
+        list of devices} supported by this driver
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Finding Linux kernel drivers: an example}
+  \begin{itemize}
+  \item You have a
+    \href{https://www.maximintegrated.com/en/products/interface/controllers-expanders/MAX7313.html}{Maxim
+      Integrated MAX7313} GPIO expander on I2C
+  \item Search in the Linux kernel
+    \begin{block}{git grep -i max7313}
+      {\tiny
+\begin{verbatim}
+drivers/gpio/gpio-pca953x.c:    { "max7313", 16 | PCA953X_TYPE | PCA_INT, },
+drivers/gpio/gpio-pca953x.c:    { .compatible = "maxim,max7313", .data = OF_953X(16, PCA_INT), },
+\end{verbatim}
+      }
+    \end{block}
+  \item \kfile{drivers/gpio/gpio-pca953x.c} seems to support it
+  \item Read \kfile{drivers/gpio/Makefile} to learn which kernel
+    configuration option enables this driver
+    \begin{block}{\kfile{drivers/gpio/Makefile}}
+      {\tiny
+\begin{verbatim}
+obj-$(CONFIG_GPIO_PCA953X)              += gpio-pca953x.o
+\end{verbatim}
+      }
+    \end{block}
+  \item Conclusion: you need to enable \kconfig{CONFIG_GPIO_PCA953X} in
+    your kernel configuration
+  \end{itemize}
+\end{frame}

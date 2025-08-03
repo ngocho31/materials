@@ -1,0 +1,325 @@
+\subsection{User-space interfaces to drivers}
+
+\begin{frame}{User-space interfaces for hardware devices}
+
+  For a high-level perspective: three main interfaces to access
+  hardware devices exposed by the Linux kernel
+
+  \begin{itemize}
+  \item Device nodes in \code{/dev}
+  \item Entries in the {\em sysfs} filesystem
+  \item Network sockets and related APIs
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Devices in {\em /dev/}}
+  \begin{itemize}
+  \item One of the kernel important roles is to {\bf allow applications
+      to access hardware devices}
+  \item In the Linux kernel, most devices are presented to user space
+    applications through two different abstractions
+    \begin{itemize}
+    \item {\bf Character} device
+    \item {\bf Block} device
+    \end{itemize}
+  \item Internally, the kernel identifies each device by a triplet of
+    information
+    \begin{itemize}
+    \item {\bf Type} (character or block)
+    \item {\bf Major} (typically the category of device)
+    \item {\bf Minor} (typically the identifier of the device)
+    \end{itemize}
+  \item See \kfile{Documentation/admin-guide/devices.txt} for the
+    official list of reserved type/major/minor numbers.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Block vs. character devices}
+  \begin{itemize}
+  \item Block devices
+    \begin{itemize}
+    \item A device composed of fixed-sized blocks, that can be read
+      and written to store data
+    \item Used for hard disks, USB keys, SD cards, etc.
+    \end{itemize}
+  \item Character devices
+    \begin{itemize}
+    \item Originally, an infinite stream of bytes, with no beginning,
+      no end, no size. The pure example: a serial port.
+    \item Used for serial ports, terminals, but also sound cards,
+      video acquisition devices, frame buffers
+    \item Most of the devices that are not block devices are
+      represented as character devices by the Linux kernel
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Devices: everything is a file}
+  \begin{itemize}
+  \item A very important UNIX design decision was to represent most
+    {\em system objects} as files
+  \item It allows applications to manipulate all {\em system objects} with
+    the normal file API (\code{open}, \code{read}, \code{write},
+    \code{close}, etc.)
+  \item So, devices had to be represented as files to the applications
+  \item This is done through a special artifact called a {\bf device
+      file}
+  \item It is a special type of file, that associates a file name
+    visible to user space applications to the triplet {\em (type,
+      major, minor)} that the kernel understands
+  \item All {\em device files} are by convention stored in the
+    \code{/dev} directory
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Device files examples}
+
+Example of device files in a Linux system
+
+\small
+\begin{verbatim}
+$ ls -l /dev/ttyS0 /dev/tty1 /dev/sda /dev/sda1 /dev/sda2 /dev/sdc1 /dev/zero
+brw-rw---- 1 root disk    8,  0 2011-05-27 08:56 /dev/sda
+brw-rw---- 1 root disk    8,  1 2011-05-27 08:56 /dev/sda1
+brw-rw---- 1 root disk    8,  2 2011-05-27 08:56 /dev/sda2
+brw-rw---- 1 root disk    8, 32 2011-05-27 08:56 /dev/sdc
+crw------- 1 root root    4,  1 2011-05-27 08:57 /dev/tty1
+crw-rw---- 1 root dialout 4, 64 2011-05-27 08:56 /dev/ttyS0
+crw-rw-rw- 1 root root    1,  5 2011-05-27 08:56 /dev/zero
+\end{verbatim}
+\normalsize
+
+Example C code that uses the usual file API to write data to a serial port
+
+\small
+\begin{minted}{c}
+int fd;
+fd = open("/dev/ttyS0", O_RDWR);
+write(fd, "Hello", 5);
+close(fd);
+\end{minted}
+\end{frame}
+
+\begin{frame}{Creating device files}
+  \begin{itemize}
+    \item Before Linux 2.6.32, on basic Linux systems,
+    the device files had to be created manually using the
+    \code{mknod} command
+    \begin{itemize}
+    \item \code{mknod /dev/<device> [c|b] major minor}
+    \item Needs root privileges
+    \item Coherency between device files and devices handled by the
+      kernel was left to the system developer
+    \end{itemize}
+  \item The \code{devtmpfs} virtual filesystem can be mounted on
+    \code{/dev} $\rightarrow$ the kernel automatically creates/removes
+    device files
+    \begin{itemize}
+    \item \kconfig{CONFIG_DEVTMPFS_MOUNT} $\rightarrow$ asks the
+      kernel to mount {\em devtmpfs} automatically at boot time
+      (except when booting on an initramfs).
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Better handling of device files: {\em udev} and {\em mdev}}
+  \begin{itemize}
+  \item {\em devtmpfs} is great, but its capabilities are limited, so
+    complementary solutions exist
+  \item {\bf udev}
+    \begin{itemize}
+    \item daemon that receives events from the kernel about devices
+      appearing/disappearing
+    \item can create/remove device files (but that's done by
+      {\em devtmpfs} now), adjust permission/ownership,
+      load kernel modules automatically, create symbolic links to
+      devices
+    \item according to rules files in \code{/lib/udev/rules.d} and
+      \code{/etc/udev/rules.d}
+    \item used in almost all desktop Linux distributions
+    \item \url{https://en.wikipedia.org/wiki/Udev}
+    \end{itemize}
+  \item {\bf mdev}
+    \begin{itemize}
+    \item lightweight implementation of {\em udev}, part of Busybox
+    \item \url{https://wiki.gentoo.org/wiki/Mdev}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Examples of user-space interfaces in {\tt /dev}}
+  \begin{itemize}
+  \item Serial-ports: \code{/dev/ttyS*}, \code{/dev/ttyUSB*},
+    \code{/dev/ttyACM*}, etc.
+  \item GPIO controllers (modern interface): \code{/dev/gpiochipX}
+  \item Block storage devices: \code{/dev/sd*}, \code{/dev/mmcblk*}, \code{/dev/nvme*}
+  \item Flash storage devices: \code{/dev/mtd*}
+  \item Display controllers and GPUs: \code{/dev/dri/*}
+  \item Audio devices: \code{/dev/snd/*}
+  \item Camera devices: \code{/dev/video*}
+  \item Watchdog devices: \code{/dev/watchdog*}
+  \item Input devices: \code{/dev/input/*}
+  \item and many more...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{{\em sysfs} filesystem}
+  \begin{itemize}
+  \item \code{block/}, symlinks to all block devices, in
+    \code{/sys/devices}
+  \item \code{bus/}, one sub-folder by type of bus
+  \item \code{class/}, one sub-folder per class (category of devices):
+    input, leds, pwm, etc.
+  \item \code{dev/}
+    \begin{itemize}
+    \item \code{block/}, one symlink per block device, named after
+      major/minor
+    \item \code{char/}, one symlink per character device, named after
+      major/minor
+    \end{itemize}
+  \item \code{devices/}, all devices in the system, organized in a
+    slightly chaotic way, see \href{https://lwn.net/Articles/646617/}{this article}
+  \item \code{firmware/}, representation of firmware data
+    \begin{itemize}
+    \item \code{devicetree/}, directory and file representation of
+      Device Tree nodes and properties
+    \end{itemize}
+  \item \code{fs/}, properties related to filesystem drivers
+  \item \code{kernel/}, properties related to various kernel subsystems
+  \item \code{module/}, properties about kernel modules
+  \item \code{power/}, power-management related properties
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{{\em sysfs} filesystem example}
+  \begin{itemize}
+  \item \code{/sys/bus/i2c/drivers}: all device drivers for devices
+    connected on I2C busses
+    \begin{block}{}
+      {\tiny
+\begin{verbatim}
+[...]
+edt_ft5x06
+stpmic1
+[...]
+\end{verbatim}
+      }
+    \end{block}
+
+  \item \code{/sys/bus/i2c/devices}: all devices in the system
+    connected to I2C busses
+    \begin{block}{}
+      {\tiny
+\begin{verbatim}
+0-002a -> ../../../devices/platform/soc/40012000.i2c/i2c-0/0-002a
+0-0039 -> ../../../devices/platform/soc/40012000.i2c/i2c-0/0-0039
+0-004a -> ../../../devices/platform/soc/40012000.i2c/i2c-0/0-004a
+1-0028 -> ../../../devices/platform/soc/5c002000.i2c/i2c-1/1-0028
+1-0033 -> ../../../devices/platform/soc/5c002000.i2c/i2c-1/1-0033
+i2c-0 -> ../../../devices/platform/soc/40012000.i2c/i2c-0
+i2c-1 -> ../../../devices/platform/soc/5c002000.i2c/i2c-1
+i2c-2 -> ../../../devices/platform/soc/40012000.i2c/i2c-0/i2c-2
+\end{verbatim}
+      }
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{{\em sysfs} filesystem example}
+  \begin{block}{/sys/bus/i2c/devices/0-002a/}
+    {\tiny
+\begin{verbatim}
+lrwxrwxrwx    driver -> ../../../../../../bus/i2c/drivers/edt_ft5x06
+-rw-r--r--    gain
+drwxr-xr-x    input
+-r--r--r--    modalias
+-r--r--r--    name
+lrwxrwxrwx    of_node -> ../../../../../../firmware/devicetree/base/soc/i2c@40012000/touchscreen@2a
+-rw-r--r--    offset
+-rw-r--r--    offset_x
+-rw-r--r--    offset_y
+drwxr-xr-x    power
+-rw-r--r--    report_rate
+lrwxrwxrwx    subsystem -> ../../../../../../bus/i2c
+-rw-r--r--    threshold
+-rw-r--r--    uevent
+\end{verbatim}
+    }
+  \end{block}
+
+  \begin{itemize}
+  \item \code{driver}, symlink to the driver directory in \code{/sys/bus/i2c/drivers}
+  \item \code{of_node}, symlink to the directory for the Device Tree
+    node describing this device
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Example of driver interfaces in {\em sysfs}}
+  \begin{itemize}
+  \item All devices are visible in {\em sysfs}, whether they have an
+    interface in \code{/dev} or not
+    \begin{itemize}
+    \item Usually \code{/dev} is to access the device
+    \item \code{/sys} is more about properties of the devices
+    \end{itemize}
+  \item However, some devices only have a {\em sysfs} interface
+    \begin{itemize}
+    \item LED: \code{/sys/class/leds}, see \href{https://docs.kernel.org/leds/leds-class.html}{documentation}
+    \item PWM: \code{/sys/class/pwm}, see \href{https://docs.kernel.org/driver-api/pwm.html\#using-pwms-with-the-sysfs-interface}{documentation}
+    \item IIO: \code{/sys/bus/iio}, see \href{https://docs.kernel.org/driver-api/iio/index.html}{documentation}
+    \item etc.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Accessing GPIOs}
+  A class of devices worth mentioning is GPIOs ({\em General Purpose Input Output})
+  \begin{itemize}
+  \item The GPIOs can be accessed through a legacy interface in
+        \code{/sys/class/gpios}
+    \begin{itemize}
+       \item You will find many instructions on the Internet about how
+	     to drive GPIOs through this interface.
+       \item However, this interface is deprecated and has multiple
+             shortcomings:
+             \begin{itemize}
+		\item GPIOs remain exported if the process using them crashes
+		\item Need to compute the GPIO numbers, such numbers are not stable
+	     \end{itemize}
+    \end{itemize}
+  \item A new interface recommended: \href{https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/}{libgpiod}
+    \begin{itemize}
+	\item Based on \code{/dev/gpiochipx} character devices
+        \item Implementing advanced features not possible with the legacy interface
+	\item Of course, this is a C library
+        \item But it also provides command line utilities:
+              \code{gpiodetect}, \code{gpioset}, \code{gpioget}...
+	\item The only constraint is to cross-compile them for your target
+	      (the legacy interface could be used without any additional software).
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Other virtual filesystems}
+
+  \begin{itemize}
+
+  \item {\em debugfs}
+    \begin{itemize}
+    \item Conventionally mounted in \code{/sys/kernel/debug}
+    \item Contains lots of debug information from the kernel,
+      including device related
+    \item \code{/sys/kernel/debug/pinctrl} for pin-mux debugging,
+      \code{/sys/kernel/debug/gpio} for GPIO debugging,
+      \code{/sys/kernel/debug/pwm} for PWM debugging, etc.
+    \item \url{https://www.kernel.org/doc/html/latest/filesystems/debugfs.html}
+    \end{itemize}
+  \item {\em configfs}
+    \begin{itemize}
+    \item Conventionally mounted in \code{/sys/kernel/config}
+    \item Allows to manage configuration of advanced kernel mechanisms
+    \item Example: configuration of USB gadget functionalities
+    \item \kfile{Documentation/filesystems/configfs.rst}
+    \end{itemize}
+  \end{itemize}
+\end{frame}

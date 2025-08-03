@@ -1,0 +1,218 @@
+\subsection{Using kernel modules}
+
+\begin{frame}{Why kernel modules?}
+  \begin{columns}
+    \column{0.7\textwidth}
+    \begin{itemize}
+    \item Primary reason: keep the kernel image minimal, and load
+      drivers on-demand depending on the hardware detected
+      \begin{itemize}
+      \item Needed to create a generic kernel configuration that works
+        on many platforms
+      \item Used by all desktop/server Linux distributions
+      \end{itemize}
+    \item But also useful for
+      \begin{itemize}
+      \item Driver development: allows to modify, build and test a
+        driver without rebooting
+      \item Boot time reduction: allows to defer the initialization of
+        a driver after user-space has started critical applications
+      \end{itemize}
+    \end{itemize}
+    \column{0.3\textwidth}
+    \includegraphics[width=\textwidth]{slides/linux-kernel-access-hw-modules/modules-to-access-rootfs.pdf}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Module installation and metadata}
+  \begin{itemize}
+  \item As discussed earlier, modules are installed in
+    \code{/lib/modules/<kernel-version>/}
+  \item Compiled kernel modules are stored in \code{.ko} ({\em Kernel Object}) files
+  \item Metadata files:
+    \begin{itemize}
+    \item \code{modules.dep}
+    \item \code{modules.alias}
+    \item \code{modules.symbols}
+    \item \code{modules.builtin}
+    \end{itemize}
+  \item Each file has a corresponding \code{.bin} version, which is an optimized version of the corresponding text file
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Module dependencies: {\em modules.dep}}
+  \begin{itemize}
+  \item Some kernel modules can depend on other modules, based on the
+    symbols (functions and data structures) that they use.
+  \item Example: the \code{ubifs} module depends on the \code{ubi} and
+    \code{mtd} modules.
+    \begin{itemize}
+    \item \code{mtd} and \code{ubi} need to be loaded before \code{ubifs}
+    \end{itemize}
+  \item These dependencies are described both in
+    \code{/lib/modules/<kernel-version>/modules.dep} and in
+    \code{/lib/modules/<kernel-version>/modules.dep.bin}
+  \item Will be used by module loading tools.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Module alias: {\em modules.alias}}
+  \begin{center}
+    \includegraphics[width=\textwidth]{slides/linux-kernel-access-hw-modules/module-alias-usage.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Module utilities: {\em modinfo}}
+  \begin{itemize}
+  \item \code{modinfo <module_name>}, for modules in \code{/lib/modules}
+  \item \code{modinfo /path/to/module.ko}
+  \end{itemize}
+
+  \begin{block}{}
+    {\tiny
+\begin{verbatim}
+# modinfo usb_storage
+filename:       /lib/modules/5.18.13-200.fc36.x86_64/kernel/drivers/usb/storage/usb-storage.ko.xz
+license:        GPL
+description:    USB Mass Storage driver for Linux
+author:         Matthew Dharm <mdharm-usb@one-eyed-alien.net>
+alias:          usb:v*p*d*dc*dsc*dp*ic08isc06ip50in*
+alias:          usb:v*p*d*dc*dsc*dp*ic08isc05ip50in*
+alias:          usb:v*p*d*dc*dsc*dp*ic08isc04ip50in*
+[...]
+intree:         Y
+name:           usb_storage
+[...]
+parm:           option_zero_cd:ZeroCD mode (1=Force Modem (default), 2=Allow CD-Rom (uint)
+parm:           swi_tru_install:TRU-Install mode (1=Full Logic (def), 2=Force CD-Rom, 3=Force Modem) (uint)
+parm:           delay_use:seconds to delay before using a new device (uint)
+parm:           quirks:supplemental list of device IDs and their quirks (string)
+\end{verbatim}
+    }
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Module utilities: {\em lsmod}}
+
+  \begin{itemize}
+  \item Lists currently loaded kernel modules
+  \item Includes
+    \begin{itemize}
+    \item The reference count: incremented when the module is used by
+      another module or by a user-space process, prevents from unloading
+      modules that are in-use
+    \item Dependant modules: modules that depend on us
+    \end{itemize}
+  \item Information retrieved through \code{/proc/modules}
+  \end{itemize}
+
+  \begin{block}{}
+    {\footnotesize
+\begin{verbatim}
+$ lsmod
+Module                  Size  Used by
+tun                    61440  2
+tls                   118784  0
+rfcomm                 90112  4
+snd_seq_dummy          16384  0
+snd_hrtimer            16384  1
+wireguard              94208  0
+curve25519_x86_64      36864  1 wireguard
+libcurve25519_generic    49152  2 curve25519_x86_64,wireguard
+ip6_udp_tunnel         16384  1 wireguard
+\end{verbatim}
+    }
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Module utilities: {\em insmod} and {\em rmmod}}
+  \begin{itemize}
+  \item Basic tools to:
+    \begin{itemize}
+    \item {\em load} a module: \code{insmod}
+    \item {\em unload} a module: \code{rmmod}
+    \end{itemize}
+  \item Basic because:
+    \begin{itemize}
+    \item Need a full path to the module \code{.ko} file
+    \item Do not handle module dependencies
+    \end{itemize}
+  \end{itemize}
+
+  \begin{block}{}
+    {\footnotesize
+\begin{verbatim}
+# insmod /lib/modules/`uname -r`/kernel/fs/fuse/cuse.ko.xz
+# rmmod cuse
+\end{verbatim}
+    }
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Module utilities: {\em modprobe}}
+  \begin{itemize}
+  \item {\em modprobe} is the more advanced tool for loading/unloading
+    modules
+  \item Takes just a module name as argument: \code{modprobe <module-name>}
+  \item Takes care of dependencies automatically, using the
+    \code{modules.dep} file
+  \item Supports removing modules using \code{modprobe -r}, including
+    its no longer used dependencies
+  \end{itemize}
+
+  \begin{block}{}
+    {\footnotesize
+\begin{verbatim}
+# modinfo fat_test | grep depends
+depends:        kunit,fat
+# lsmod | grep -E "^(kunit|fat|fat_test)"
+fat                    86016  1 vfat
+# modprobe fat_test
+# lsmod | grep -E "^(kunit|fat|fat_test)"
+fat_test               24576  0
+kunit                  36864  1 fat_test
+fat                    86016  2 fat_test,vfat
+# sudo modprobe -r fat_test
+# lsmod | grep -E "^(kunit|fat|fat_test)"
+fat                    86016  1 vfat
+\end{verbatim}
+    }
+  \end{block}
+\end{frame}
+
+\begin{frame}{Passing parameters to modules}
+  \small
+  \begin{itemize}
+  \item Some modules have parameters to adjust their behavior
+  \item Mostly for debugging/tweaking, as parameters are global to the
+    module, not per-device managed by the module
+  \item Through \code{insmod} or \code{modprobe}:\\
+    \code{insmod ./usb-storage.ko delay_use=0}\\
+    \code{modprobe usb-storage delay_use=0}
+  \item \code{modprobe} supports configuration files: \code{/etc/modprobe.conf} or in any file in \code{/etc/modprobe.d/}:\\
+    \code{options usb-storage delay_use=0}
+  \item Through the kernel command line, when the module is built statically into the kernel:\\
+    \code{usb-storage.delay_use=0}
+    \begin{itemize}
+    \item \code{usb-storage} is the {\em module name}
+    \item \code{delay_use} is the {\em module parameter name}. It
+      specifies a delay before accessing a USB storage device (useful for
+      rotating devices).
+    \item \code{0} is the {\em module parameter value}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Modules in {\em sysfs}}
+  \begin{itemize}
+  \item All modules are visible in {\em sysfs}, under \code{/sys/module/<name>}
+  \item Lots of information available about each module
+  \item For example, the \code{/sys/module/<name>/parameters}
+    directory contains one file per module parameter
+  \item Can read the current value of module parameters
+  \item Some of them can even be changed at runtime (determined by the
+    module code)
+  \item Example:\\
+    \code{echo 0 > /sys/module/usb_storage/parameters/delay_use}
+  \end{itemize}
+\end{frame}
