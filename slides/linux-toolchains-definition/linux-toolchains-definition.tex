@@ -216,6 +216,56 @@ struct stat {
 \end{frame}
 
 \begin{frame}
+  \frametitle{Why musl is Fast and Lightweight (1)}
+  \begin{itemize}
+  \item Simpler, Cleaner Codebase
+    \begin{itemize}
+    \item musl is written from scratch with minimalism and correctness in mind.
+    \item No historical bloat or legacy hacks like in glibc.
+    \item This makes function calls more efficient, with fewer indirections.
+    \end{itemize}
+  \item Static Linking Efficiency
+    \begin{itemize}
+    \item musl supports static linking very well, producing small,
+    fast standalone binaries.
+    \item glibc-static binaries tend to be much larger and include more
+    runtime complexity.
+    \end{itemize}
+  \item Low Runtime Overhead
+    \begin{itemize}
+      \item musl does not use lazy symbol binding (ld.so) like glibc —
+      reducing overhead in dynamic linking.
+      \item Faster startup time and initialization of binaries.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Why musl is Fast and Lightweight (2)}
+  \begin{itemize}
+  \item No NSS (Name Service Switch) Bloat
+    \begin{itemize}
+    \item glibc uses nsswitch.conf for host lookup (DNS, files, LDAP, etc.)
+    with plug-in modules — slow and heavy.
+    \item musl uses a simple, fast DNS resolver built into libc, with no external
+    config needed.
+    \end{itemize}
+  \item Efficient Memory Management
+    \begin{itemize}
+    \item musl uses its own malloc implementation, which is small and
+    cache-friendly.
+    \item glibc's malloc is optimized for multi-threading but is much more complex
+    and may be overkill for small systems.
+    \end{itemize}
+  \item Well-Optimized Syscalls
+    \begin{itemize}
+      \item Direct, minimal-cost syscall wrappers.
+      \item Avoids unnecessary layers of abstraction or user-space threads (green threads).
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \frametitle{Other smaller C libraries}
   \begin{itemize}
   \item Several other smaller C libraries exist, but they do not
