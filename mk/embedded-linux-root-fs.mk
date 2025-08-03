@@ -1,8 +1,5 @@
 EMBEDDED_LINUX_ROOT_FS_SLIDES = \
     first-slide \
-    beagleboneblack-board \
-    linux-intro \
-    linux-dev-environment \
     linux-kernel-root-filesystem \
     linux-kernel-root-filesystem-principles \
     linux-kernel-root-filesystem-initramfs \

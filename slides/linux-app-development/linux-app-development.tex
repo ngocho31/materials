@@ -1,0 +1,107 @@
+\subsection{Developing applications on embedded Linux}
+
+\begin{frame}{Application development}
+  \begin{itemize}
+  \item An embedded Linux system is just a normal Linux system, with
+    usually a smaller selection of components
+  \item In terms of application development, developing on embedded
+    Linux is exactly the same as developing on a desktop Linux system
+  \item All existing skills can be re-used, without any particular
+    adaptation
+  \item All existing libraries, either third-party or in-house, can be
+    integrated into the embedded Linux system
+    \begin{itemize}
+    \item Taking into account, of course, the limitation of the
+      embedded systems in terms of performance, storage and memory
+    \end{itemize}
+  \item Application development could start on x86, even before
+      the hardware is available.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Leverage existing libraries and languages}
+  \begin{itemize}
+  \item Many developers getting started with embedded Linux limit
+    themselves to C, sometimes C++, and the C/C++ standard library.
+  \item However, there are a lot of libraries and languages that can
+    help you accelerate and simplify your application development
+    \begin{itemize}
+    \item Compiled languages like Rust and Go are increasingly popular
+    \item Interpreted languages, especially Python
+    \item Higher-level libraries: Qt, Glib, Boost, and many more
+    \end{itemize}
+  \item Make sure to evaluate what is the right choice for your
+    project, but pay attention to
+    \begin{itemize}
+    \item Footprint and performance on low-end platforms
+    \item Use well-maintained and well-known technologies
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Building your applications/libraries}
+  \begin{itemize}
+  \item Even for simple applications or libraries, make use of a build
+    system
+    \begin{itemize}
+    \item \href{https://cmake.org/}{CMake}
+    \item \href{https://mesonbuild.com/}{Meson}
+    \end{itemize}
+  \item This will simplify
+    \begin{itemize}
+    \item the build process of your application
+    \item the life of developers joining your project
+    \item the packaging of your application into an embedded Linux
+      build system
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Getting started with {\em meson}}
+  \begin{block}{Minimal {\tt meson.build}}
+\begin{verbatim}
+project('example', 'c')
+executable('demo', 'main.c')
+\end{verbatim}
+  \end{block}
+
+  \begin{block}{{\tt meson.build} for multiple programs and source files}
+\begin{verbatim}
+project('example', 'c')
+src_demo1 = ['demo1.c', 'foo1.c']
+executable('demo1', src_demo1)
+src_demo2 = ['demo2.c', 'foo2.c']
+executable('demo2', src_demo2)
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Options with {\em meson}}
+  \begin{block}{{\tt meson\_options.txt}}
+\begin{verbatim}
+option('demo-debug', type : 'feature', value : 'disabled')
+\end{verbatim}
+  \end{block}
+
+  \begin{block}{{\tt meson.build}}
+\begin{verbatim}
+project('tutorial', 'c')
+demo_c_args = []
+if get_option('demo-debug').enabled()
+   demo_c_args += '-DDEBUG'
+endif
+executable('demo', 'main.c', c_args: demo_c_args)
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Library dependencies with {\em meson}}
+  \begin{block}{{\tt meson.build}}
+\begin{verbatim}
+project('tutorial', 'c')
+gtkdep = dependency('gtk+-3.0')
+executable('demo', 'main.c', dependencies : gtkdep)
+\end{verbatim}
+  \end{block}
+  The dependency \code{gtk+-3.0} is searched using \code{pkg-config}.
+\end{frame}
