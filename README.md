@@ -73,5 +73,9 @@ make <target>
 Eg: make full-embedded-linux-bbb-simple-project-slides.pdf
 ```
 
-# How to add new materials
+# TODO
 
+1. Configure booting procedure on AM335x (BeagleBone Black board)
+2. ROM code recovery for AM335x (BeagleBone Black board)
+3. Install U-Boot to internal storage (eMMC) on BeagleBone Black board
+4. FIT image - How to boot with multiple images (kernel images, Device Trees, initramfs, etc.)
