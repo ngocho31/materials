@@ -9,6 +9,7 @@ EMBEDDED_LINUX_BBB_SLIDES = \
     linux-toolchains-obtaining \
     linux-bootloaders \
     linux-bootloaders-sequence \
+    linux-bootloaders-sw \
     linux-bootloaders-u-boot \
     linux-bootloaders-tf-a \
     linux-kernel-intro \

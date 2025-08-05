@@ -1,1 +1,26 @@
 \section{Bootloaders and firmware}
+
+\subsection{Introduction}
+
+\begin{frame}{Bootloader role}
+  \begin{itemize}
+  \item The bootloader is a piece of code responsible for
+    \begin{itemize}
+    \item Basic hardware initialization
+    \item Loading of an application binary, usually an operating
+      system kernel, from flash storage, from the network, or from
+      another type of non-volatile storage.
+    \item Possibly decompression of the application binary
+    \item Execution of the application
+    \end{itemize}
+  \item Besides these basic functions, most bootloaders provide a
+    shell or menu
+    \begin{itemize}
+    \item Menu to select the operating system to load
+    \item Shell with commands to load data from storage or network,
+      inspect memory, perform hardware testing/diagnostics
+    \end{itemize}
+  \item The first piece of code running by the processor that can be
+    modified by us developers.
+  \end{itemize}
+\end{frame}
