@@ -1,0 +1,310 @@
+\subchapter{Bootloader - U-Boot Installing}{Objectives: Install
+  the U-Boot bootloader, use basic U-Boot commands}
+
+\section{Flashing the bootloaders}
+
+The ROM monitor will look for the first stage bootloader in a
+partition named \code{fsbl1}. If it cannot find a valid bootloader in
+this partition, it will then try to load it from a partition named
+\code{fslb2}. This first stage bootloader (in our case the TF-A BL2)
+will load the second bootloader (U-Boot) from the Firmware Image
+Package located in the partition named \code{fip}. At the same time,
+BL2 will also load the BL32 monitor (SP-min) from the FIP. Finally,
+U-Boot will store its environment in the fourth partition, which we'll
+name \code{bootfs}.
+
+So, as far as bootloaders are concerned, the SD card partitioning will
+look like:
+
+\begin{verbatim}
+Number  Start   End      Size     File system  Name    Flags
+ 1      2048s   4095s    2048s                 fsbl1
+ 2      4096s   6143s    2048s                 fsbl2
+ 3      6144s   10239s   4096s                 fip
+ 4      10240s  131071s  120832s               bootfs
+\end{verbatim}
+
+On your workstation, plug in the SD card your instructor gave you. Type
+the \code{sudo dmesg} command to see which device is used by your
+workstation. In case the device is \code{/dev/mmcblk0}, you will see
+something like
+
+\begin{verbatim}
+[46939.425299] mmc0: new high speed SDHC card at address 0007
+[46939.427947] mmcblk0: mmc0:0007 SD16G 14.5 GiB
+\end{verbatim}
+
+The device file name may be different (such as \code{/dev/sdb}
+if the card reader is connected to a USB bus (either internally
+or using a USB card reader).
+
+In the following instructions, we will assume that your SD card is
+seen as \code{/dev/mmcblk0} by your PC workstation.
+
+Type the \code{mount} command to check your currently mounted
+partitions. If SD partitions are mounted, unmount them:
+
+\bashcmd{$ sudo umount /dev/mmcblk0p*}
+
+We will erase the existing partition table and partition contents
+by simply zero-ing the first 128 MiB of the SD card:
+
+\bashcmd{$ sudo dd if=/dev/zero of=/dev/mmcblk0 bs=1M count=128}
+
+Now, let's use the \code{parted} command to create the partitions that
+we are going to use:
+
+\bashcmd{$ sudo parted /dev/mmcblk0}
+
+The ROM monitor handles {\em GPT} partition tables, let's create one:
+
+\begin{verbatim}
+(parted) mklabel gpt
+\end{verbatim}
+
+Then, the 4 partitions are created with:
+\begin{verbatim}
+(parted) mkpart fsbl1 0% 4095s
+(parted) mkpart fsbl2 4096s 6143s
+(parted) mkpart fip 6144s 10239s
+(parted) mkpart bootfs 10240s 131071s
+\end{verbatim}
+
+You can verify everything looks right with:
+
+\begin{verbatim}
+(parted) print
+Model: SD SA08G (sd/mmc)
+Disk /dev/mmcblk0: 7747MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name    Flags
+ 1      1049kB  2097kB  1049kB               fsbl1
+ 2      2097kB  3146kB  1049kB               fsbl2
+ 3      3146kB  5243kB  2097kB               fip
+ 4      5243kB  67.1MB  61.9MB               bootfs
+
+(parted)
+\end{verbatim}
+
+Once done, quit:
+\begin{verbatim}
+(parted) quit
+\end{verbatim}
+
+{\em Note: \code{parted} is definitely not very user friendly compared
+to other tools to manipulate partitions (such as \code{cfdisk}), but
+that's the only tool which supports assigning names to GPT partitions.
+In your projects, you could use \code{gparted}, which is a more
+friendly graphical front-end on top of \code{parted}.}
+
+Now, format the boot partition as an ext4 filesystem. This is where
+U-Boot saves its environment:
+\bashcmd{$ sudo mkfs.ext4 -L boot -O ^metadata_csum /dev/mmcblk0p4}
+
+The \code{-O ^metadata_csum} option allows to create the filesystem
+without enabling metadata checksums, which U-Boot doesn't seem to
+support yet.
+
+Now write the TF-A binary in both \code{fsbl} partitions:
+
+\begin{bashinput}
+$ sudo dd if=build/stm32mp1/release/tf-a-stm32mp157a-dk1.stm32 of=/dev/mmcblk0p1 bs=1M conv=fdatasync
+$ sudo dd if=build/stm32mp1/release/tf-a-stm32mp157a-dk1.stm32 of=/dev/mmcblk0p2 bs=1M conv=fdatasync
+\end{bashinput}
+
+Then flash the {\em fip} partition with the Firmware Image Package
+containing U-Boot, the BL32 monitor and their configuration (device tree):
+
+\bashcmd{$ sudo dd if=build/stm32mp1/release/fip.bin of=/dev/mmcblk0p3 bs=1M conv=fdatasync}
+
+\section{Testing the bootloaders}
+
+Insert the SD card in the board slot. You can now power-up the board
+by connecting the USB-C cable to the board, in CN6, \code{PWR_IN} and
+to your PC at the other end. Check that it boots your new bootloaders.
+You can verify this by checking the build dates:
+
+\begin{verbatim}
+NOTICE:  Model: STMicroelectronics STM32MP157A-DK1 Discovery Board
+NOTICE:  Board: MB1272 Var3.0 Rev.C-02
+NOTICE:  BL2: v2.12.0(release):v2.12.0
+NOTICE:  BL2: Built : 11:38:56, Nov 30 2024
+NOTICE:  BL2: Booting BL32
+NOTICE:  SP_MIN: v2.12.0(release):v2.12.0
+NOTICE:  SP_MIN: Built : 11:38:49, Nov 30 2024
+
+
+U-Boot 2024.10 (Nov 30 2024 - 11:37:02 +0100)
+
+CPU: STM32MP157DAC Rev.Z
+Model: STMicroelectronics STM32MP157A-DK1 Discovery Board
+Board: stm32mp1 in trusted mode (st,stm32mp157a-dk1)
+Board: MB1272 Var3.0 Rev.C-02
+DRAM:  512 MiB
+Clocks:
+- MPU : 650 MHz
+- MCU : 208.878 MHz
+- AXI : 266.500 MHz
+- PER : 24 MHz
+- DDR : 533 MHz
+Core:  310 devices, 36 uclasses, devicetree: board
+NAND:  0 MiB
+MMC:   STM32 SD/MMC: 0
+Loading Environment from EXT4... ** File not found /uboot.env **
+
+** Unable to read "/uboot.env" from mmc0:4 **
+In:    serial
+Out:   serial
+Err:   serial
+Previous ADC measurements was not the one expected, retry in 20ms
+****************************************************
+*        WARNING 500mA power supply detected       *
+*     Current too low, use a 3A power supply!      *
+****************************************************
+
+Net:   eth0: ethernet@5800a000
+
+Hit any key to stop autoboot:  0
+STM32MP>
+\end{verbatim}
+
+In U-Boot, type the \code{help} command, and explore the few commands
+available.
+
+\subsection{Adding a new command to the U-Boot shell}
+
+Check whether the \code{config} command is available. This command
+allows to dump the configuration settings U-Boot was compiled from.
+
+If it's not, go back to U-Boot's configuration and enable it.
+
+Re-run the build of U-Boot, and then re-run the build of TF-A so that
+a new version of the \code{fip.bin} with the updated U-Boot is
+generated.
+
+Update the \code{fip} partition on the SD card with the new
+\code{fip.bin} image and test that the command is now available and
+works as expected.
+
+\subsection{Playing with the U-Boot environment}
+
+Display the U-Boot environment using \code{printenv}.
+
+Set a new U-Boot variable \code{foo} to a value of your choice, using
+\code{setenv}, and verify it has been set. Reset the board, and check
+if \code{foo} is still defined: it should not.
+
+Now repeat this process, but before resetting the board, use
+\code{saveenv}. After the reset, check the \code{foo} variable is
+still defined.
+
+Now reset the environment to its default settings using \code{env
+  default -a}, and save these changes using \code{saveenv}.
+
+\section{Setting up networking}
+
+The next step is to configure U-boot and your workstation to let your
+board download files, such as the kernel image and Device Tree Binary
+(DTB), using the TFTP protocol through a network connection.
+
+With a network cable, connect the Ethernet port of
+your board to the one of your computer. If your computer already has a
+wired connection to the network, your instructor will provide you with
+a USB Ethernet adapter. A new network interface should appear on your
+Linux system.
+
+\subsection{Network configuration on the target}
+
+Let's configure networking in U-Boot:
+
+\begin{itemize}
+  \item \code{ipaddr}: IP address of the board
+  \item \code{serverip}: IP address of the PC host
+\end{itemize}
+
+\begin{ubootinput}
+=> setenv ipaddr 192.168.0.100
+=> setenv serverip 192.168.0.1
+\end{ubootinput}
+
+Of course, make sure that this address belongs to a separate network
+segment from the one of the main company network.
+
+To make these settings permanent, save the environment:
+
+\begin{ubootinput}
+=> saveenv
+\end{ubootinput}
+
+\subsection{Network configuration on the PC host}
+
+To configure your network interface on the workstation side, we need
+to know the name of the network interface connected to your board.
+
+Find the name of this interface by typing:
+\bashcmd{=> ip a}
+
+The network interface name is likely to be
+\code{enxxx}\footnote{Following the {\em Predictable Network Interface
+Names} convention:
+\url{https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/}}.
+If you have a pluggable Ethernet device, it's easy to identify as it's
+the one that shows up after pluging in the device.
+
+Then, instead of configuring the host IP address from NetworkManager's
+graphical interface, let's do it through its command line interface,
+which is so much easier to use:
+
+\bashcmd{$ nmcli con add type ethernet ifname en... ip4 192.168.0.1/24}
+
+\section{Setting up the TFTP server}
+
+Let's install a TFTP server on your development workstation:
+
+\begin{verbatim}
+sudo apt install tftpd-hpa
+\end{verbatim}
+
+You can then test the TFTP connection. First, put a small text file in
+the directory exported through TFTP on your development
+workstation. Then, from U-Boot, do:
+
+\begin{ubootinput}
+=> tftp %\zimageboardaddr% textfile.txt
+\end{ubootinput}
+
+In case the download fails, make sure your host interface is correctly
+configured and if a firewall is enabled make sure it does not filter out our
+requests:
+\begin{verbatim}
+sudo ufw allow from 192.168.0.100
+\end{verbatim}
+
+Otherwise the \code{tftp} command should have downloaded the
+\code{textfile.txt} file from your development workstation into
+the board's memory at location {\tt \zimageboardaddr}\footnote{
+This location is part of the board DRAM. If you want
+to check where this value comes from, you can check the SoC
+datasheet at
+\url{https://www.st.com/resource/en/reference_manual/dm00327659.pdf}.
+It's a big document (more than 4,000 pages). In this document, look
+for \code{Memory organization} and you will find the SoC memory map.
+You will see that the address range for the memory controller
+({\em DDRC})
+starts at the address we are looking for.
+You can also try with other values in the RAM address range.}.
+
+You can verify that the download was successful by dumping the
+contents of the memory:
+
+\begin{ubootinput}
+=> md %\zimageboardaddr%
+\end{ubootinput}
+
+We will see in the next labs how to use U-Boot to download, flash and
+boot a kernel.
+
+% \input{../common/dk1-known-issues.tex}

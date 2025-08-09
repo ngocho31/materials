@@ -1,0 +1,73 @@
+\subchapter{Bootloader - TF-A}{Objectives: Set up TF-A.}
+
+\section{TF-A and U-Boot relationship}
+
+The boot process is done in two steps with the ROM monitor trying to
+execute a first piece of software, called {\em fsbl}, from its
+internal SRAM, that will initialize the DRAM, and a second program,
+{\em ssbl} that will in turn load Linux and execute it.
+
+In our case, {\em fsbl} is provided by TF-A BL2 and {\em ssbl}
+is provided by U-Boot.
+
+TF-A BL2 is loading U-Boot from the Firmware Image Package ({\em FIP}),
+that will also contain the configuration for this second part.
+The {\em FIP} is generated from TF-A sources, so we will build U-Boot
+first.
+
+\section{TF-A setup}
+
+Get the mainline TF-A sources:
+
+\begin{bashinput}
+$ cd ..
+$ git clone https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git
+$ cd trusted-firmware-a/
+$ git checkout v2.12.0
+\end{bashinput}
+
+Several configuration parameters have to be passed to the Makefile:
+\begin{itemize}
+\item Specify the cross-compiler prefix (the part before gcc in the
+      cross-compiler executable name), either using the environment
+      variable:\inlinebash{$ export CROSS_COMPILE=arm-linux-}, or just by
+      adding it to the \code{make} command line.
+\item The architecture has to be selected: \code{ARCH=aarch32}, as
+      well as the major version of Arm Architecture, here the Cortex A7 is
+      an Armv7, so we need to use \code{ARM_ARCH_MAJOR=7}
+\item The STM32MP1 platform is selected too with \code{PLAT=stm32mp1}
+\item Specify the AArch32 Secure Payload component, we are going to
+      use a minimal monitor implementation provided by TF-A: the
+      {\em SP-MIN}. For this we need to add the following variable:
+      \code{AARCH32_SP=sp_min}
+\item For this specific board, the device tree is generated and then
+      needs to be specifed: \code{DTB_FILE_NAME=stm32mp157a-dk1.dtb}
+\item Specify the configuration of this firmware which is actually
+      the Device Tree passed to U-Boot:
+      \code{BL33_CFG=../u-boot/u-boot.dtb}
+\item Specify that the fsbl will be located on the SD
+      card with \code{STM32MP_SDMMC=1}.
+\item Specify the location of the BL33 (Boot loader stage 3-3):
+      \code{BL33=../u-boot/u-boot-nodtb.bin}
+\end{itemize}
+
+We can now generate the \code{bl32}, \code{dtb}, and \code{fip} targets
+with a single command line:
+\begin{bashinput}
+$ make ARM_ARCH_MAJOR=7 ARCH=aarch32 PLAT=stm32mp1 AARCH32_SP=sp_min \
+  DTB_FILE_NAME=stm32mp157a-dk1.dtb BL33=../u-boot/u-boot-nodtb.bin \
+  BL33_CFG=../u-boot/u-boot.dtb STM32MP_SDMMC=1 fip all
+\end{bashinput}
+
+At the end of the build, the important output files generated are
+located in \code{build/stm32mp1/release/}. We will find there:
+
+\begin{itemize}
+
+\item \code{tf-a-stm32mp157a-dk1.stm32}, which is TF-A BL2, serving as
+  our first stage bootloader
+
+\item \code{fip.bin}, which is the FIP image, which itself includes
+  U-Boot. This image will serve as the second stage bootloader.
+
+\end{itemize}

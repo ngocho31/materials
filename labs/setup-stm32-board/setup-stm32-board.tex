@@ -1,0 +1,39 @@
+\subchapter{Setup STM32MP1 board}{Objectives: Set up serial
+  communication with the development workstation.}
+
+\section{Setting up serial communication with the board}
+
+Plug the USB-A to micro USB-B cable on the Discovery board. There is
+only one micro USB port on the board, it is CN11, also named ST-LINK.
+This is a debug interface and exposes multiple debugging interfaces,
+including a serial interface. When plugged in your computer, a serial
+port should appear, {\tt \hosttty}.
+
+You can also see this device appear by looking at the output of
+\code{sudo dmesg}.
+
+To communicate with the board through the serial port, install a
+serial communication program, such as \code{picocom}:
+
+\bashcmd{$ sudo apt install picocom}
+
+If you run {\tt ls -l \hosttty}, you can also see that only
+\code{root} and users belonging to the \code{dialout} group have
+read and write access to the serial console. Therefore, you need
+to add your user to the \code{dialout} group:
+
+\bashcmd{$ sudo adduser $USER dialout}
+
+{\bf Important}: for the group change to be effective, you have to
+reboot your computer (at least on Ubuntu 20.04) and log in again.
+A workaround is to run \code{newgrp dialout}, but it is not global.
+You have to run it in each terminal.
+
+Run {\tt picocom -b 115200 \hosttty}, to start serial
+communication on {\tt \hosttty}, with a baudrate of 115200.
+If you wish to exit \code{picocom}, press \code{[Ctrl][a]} followed by
+\code{[Ctrl][x]}.
+
+Don't be surprised if you don't get anything on the serial console yet,
+even if you reset the board. That's because the SoC has nothing to boot
+on yet. We will prepare a micro SD card to boot on in the next paragraphs.
