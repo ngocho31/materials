@@ -50,12 +50,12 @@ various typical setups: Crosstool-ng calls them {\em samples}. They can be
 listed by using \code{./ct-ng list-samples}.
 
 We will load the
-% \ifdefstring{\labboard}{qemu}{Cortex A9}{}%
-\ifdefstring{\labboard}{beaglebone}{Cortex A8}{}
-% \ifdefstring{\arch}{ARM64}{\code{aarch64-unknown-linux-uclibc}}{}%
-% \ifdefstring{\labboard}{stm32mp1}{Cortex A5}{}
+\ifdefstring{\labboard}{qemu}{Cortex A9}{}%
+\ifdefstring{\labboard}{beaglebone}{Cortex A8}{}%
+\ifdefstring{\arch}{ARM64}{\code{aarch64-unknown-linux-uclibc}}{}%
+\ifdefstring{\labboard}{stm32mp1}{Cortex A5}{}
 sample%
-% \ifdefstring{\labboard}{stm32mp1}{, as Crosstool-ng doesn't have any sample for Cortex A7 yet}{}
+\ifdefstring{\labboard}{stm32mp1}{, as Crosstool-ng doesn't have any sample for Cortex A7 yet}{}%
 . Load it with the \code{./ct-ng}
 \ifdefstring{\labboard}{beaglebone}{\code{arm-cortex_a8-linux-gnueabi}}{}
 command.
@@ -71,14 +71,14 @@ In \code{Path and misc options}:
 \item If not set yet, enable \code{Try features marked as EXPERIMENTAL}
 \end{itemize}
 
-% \ifdefstring{\labboard}{stm32mp1}{
-% In \code{Target options}:
-% \begin{itemize}
-% \item Set \code{Emit assembly for CPU} (\code{ARCH_CPU}) to \code{cortex-a7}.
-% \item Set \code{Use specific FPU} (\code{ARCH_FPU}) to \code{vfpv4}.
-% \item Set \code{Floating point} to \code{hardware (FPU)}.
-% \end{itemize}
-% }{}
+\ifdefstring{\labboard}{stm32mp1}{
+In \code{Target options}:
+\begin{itemize}
+\item Set \code{Emit assembly for CPU} (\code{ARCH_CPU}) to \code{cortex-a7}.
+\item Set \code{Use specific FPU} (\code{ARCH_FPU}) to \code{vfpv4}.
+\item Set \code{Floating point} to \code{hardware (FPU)}.
+\end{itemize}
+}{}
 
 \ifdefstring{\labboard}{beaglebone}{
 In \code{Target options}:
@@ -88,13 +88,13 @@ In \code{Target options}:
 \end{itemize}
 }{}
 
-% \ifdefstring{\arch}{ARM64}{
-% In \code{Target options}:
-% \begin{itemize}
-% \item Set \code{Emit assembly for CPU} (\code{ARCH_CPU}) to \code{cortex-a53}.
-% \item Check that \code{Endianness} (\code{ARCH_ENDIAN}) is set to \code{Little endian}
-% \end{itemize}
-% }{}
+\ifdefstring{\arch}{ARM64}{
+In \code{Target options}:
+\begin{itemize}
+\item Set \code{Emit assembly for CPU} (\code{ARCH_CPU}) to \code{cortex-a53}.
+\item Check that \code{Endianness} (\code{ARCH_ENDIAN}) is set to \code{Little endian}
+\end{itemize}
+}{}
 
 In \code{Toolchain options}:
 \ifdefstring{\arch}{ARM64}{

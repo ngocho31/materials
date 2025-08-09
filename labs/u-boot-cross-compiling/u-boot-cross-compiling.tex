@@ -25,6 +25,18 @@ integrated in the ROM reads the SD card to search for a valid
 bootloader.
 }{}
 
+\ifdefstring{\labboard}{stm32}
+{
+The STM32MP1 SoC, falls into the second category. The monitor
+integrated in the ROM reads the SD card to search for a valid
+bootloader (the boot mode is actually configurable via a few input
+pins). In case no bootloader is found, it will operate in a fallback
+mode, that will allow to use an external tool to reflash some
+executable through USB. Therefore, either by using an MMC/SD card or
+that fallback mode, we can start up an STM32MP1-based board without
+having anything installed on it.
+}{}
+
 \section{Compiling U-Boot and SPL}
 
 Get an understanding of U-Boot's configuration and compilation steps
@@ -52,16 +64,57 @@ $ export CROSS_COMPILE=arm-linux-
 \item So, run \inlinebash{$ make am335x_evm_defconfig}.
 }{}
 
+\ifdefstring{\labboard}{stm32}
+{
+\item Run \inlinebash{$ make <NAME>_defconfig}, where the list of available
+  configurations can be found in the \code{configs/} directory. There
+  are multiple stm32mp15 configurations. We will use the standard one
+  (\code{stm32mp15}).
+}{}
+
 \item Now that you have a valid initial configuration, you can now
   run \inlinebash{$ make menuconfig} to further edit your bootloader features.
 
-Here, though, the default configuration works fine for our needs,
-so no change is necessary.
+  \ifdefstring{\labboard}{stm32}
+  {
+  \begin{itemize}
+
+  \item In the \code{Environment} submenu, we will configure U-Boot so
+    that it stores its environment inside a file called \code{uboot.env}
+    in an ext4 filesystem:
+    \begin{itemize}
+    \item Disable \code{Environment is not stored}. We want changes to variables to
+        be persistent across reboots
+    \item Enable \code{Environment is in a EXT4 filesystem}. Disable all other
+        options for environment storage (e.g. MMC, SPI, UBI)
+% Environment in MMC also works, but we need to be careful with the size available
+% and the offset defined. tests showed that if MMC is selected it will take
+% precedence over ext4
+    \item The value for \code{Name of the block device for the environment} should be \code{mmc}
+    \item The value for \code{Device and partition for where to store
+      the environment in EXT4} should be \code{0:4}, which indicates
+      we want to store the environment in the 4th partition of the
+      first MMC device.
+    \item The value for \code{Name of the EXT4 file to use for the
+      environment} should be \code{/uboot.env}, which indicates the
+      filename inside which the U-Boot environment will be stored
+    \end{itemize}
+
+  \item In the \code{Device Drivers} $\rightarrow$ \code{Watchdog
+      Timer Support} submenu, disable \code{IWDG watchdog
+      driver for STM32 MP's family}, so that U-Boot doesn't start the
+    watchdog.
+  \end{itemize}
+  }{}
 
 \item Finally, run
   \ifdefstring{\labboard}{beaglebone}{
     \bashcmd{make DEVICE_TREE=am335x-boneblack}
     or \bashcmd{make DEVICE_TREE=am335x-boneblack-wireless}
+  }{}
+  \ifdefstring{\labboard}{stm32}
+  {
+    \bashcmd{make DEVICE_TREE=stm32mp157a-dk1}
   }{}
   which will build U-Boot
   \footnote{You can speed up the
